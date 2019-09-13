@@ -1,0 +1,15 @@
+/* pages/home/home.wxss */
+.page{
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.main{
+  height: 100vh;
+}
+.wave{
+  height: 185rpx;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}

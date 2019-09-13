@@ -1,0 +1,12 @@
+<!--components/main_card/main_card.wxml-->
+<view class='card'>
+  <scroll-view class='main' scroll-y>
+    <block wx:for="{{mainContent}}" wx:key="{{index}}">
+      <view class='card_content' data-index='{{index}}' item="{{index}}" bind:tap="click">
+        <image src='{{item.imgUrl}}' class='background_img'></image>
+        <image src='{{item.mainIcon}}' class='icon'></image>
+        <text class='text'>{{item.mainName}}</text>
+      </view>
+    </block>
+  </scroll-view>
+</view>

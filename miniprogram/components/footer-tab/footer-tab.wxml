@@ -1,0 +1,22 @@
+<!--components/footer-tab/footer-tab.wxml-->
+<view class='footer'>
+
+  <view class='shouye {{currentIndex == 0?"active":""}}' bind:tap="shouye_click">
+    <image src='{{currentIndex == 0?"/images/btn_home_select@2x.png":"/images/btn_home_normal@2x.png "}}' class='shouye_img'></image>
+    <!-- /images/btn_home_normal@2x.png -->
+    <view class='text'>首页</view>
+  </view>
+  <view class='yuechang {{currentIndex == 1?"active":""}}' bind:tap="yuechang_click">
+    <image src='{{currentIndex == 1?"/images/btn_yuechang_selected@2x.png":"/images/btn_yuechang_normal@2x.png"}}' class='yuechang_img'></image>
+    <view class='text'>约场</view>
+  </view>
+  <view class='jilu {{currentIndex == 2?"active":""}}' bind:tap="jilu_click">
+    <image src='{{currentIndex == 2?"/images/btn_record_select@2x.png":"/images/btn_record_normal@2x.png"}}' class='jilu_img'></image>
+    <view class='text'>记录</view>
+  </view>
+  <view class='jifenban {{currentIndex == 3?"active":""}}' bind:tap="jifenban_click">
+    <image src='{{currentIndex == 3?"/images/btn_counter_selected@2x.png":"/images/btn_counter_normal@2x.png"}}' class='jifenban_img'></image>
+    <view class='text'>计分板</view>
+  </view>
+
+</view>

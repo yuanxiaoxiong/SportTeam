@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "footer-tab":"/components/footer-tab/footer-tab"
+  },
+  "navigationBarTitleText": "篮球约场",
+  "enablePullDownRefresh": false
+}
