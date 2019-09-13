@@ -1,0 +1,7 @@
+<!--pages/home/home.wxml-->
+<view class='page'>
+  <view class='main'>
+    <main-card mainContent="{{mainContent}}" bind:itemClick="onClick"/>
+  </view>
+  <image class='wave' src='/images/image_wave@2x.png'></image>
+</view>

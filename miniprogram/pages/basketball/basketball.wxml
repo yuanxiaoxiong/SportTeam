@@ -1,0 +1,9 @@
+<!--pages/basketball/basketball.wxml-->
+<view class='page'>
+  <view class='footer'>
+    <footer-tab bind:shouye_click="shouye_click" 
+    bind:yuechang_click="yuechang_click"
+    bind:jilu_click="jilu_click"
+    bind:jifenban_click="jifenban_click"/>
+  </view>
+</view>

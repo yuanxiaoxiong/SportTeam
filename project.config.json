@@ -34,8 +34,10 @@
 			"list": [
 				{
 					"id": -1,
-					"name": "db guide",
-					"pathName": "pages/databaseGuide/databaseGuide"
+					"name": "卡片",
+					"pathName": "pages/basketball/basketball",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

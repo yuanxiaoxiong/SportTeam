@@ -1,0 +1,14 @@
+/* pages/basketball/basketball.wxss */
+.page{
+  position: fixed;
+  height: 100%;
+  width: 100%;
+  background: #efeff4;
+}
+.footer{
+  height: 98rpx;
+  width: 100%;
+  background: #f6f6f6;
+  position: absolute;
+  bottom: 0
+}
