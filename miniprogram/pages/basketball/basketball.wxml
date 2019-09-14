@@ -1,9 +1,43 @@
 <!--pages/basketball/basketball.wxml-->
 <view class='page'>
+
+  <!-- 首页 -->
+  <view class='shouye' hidden='{{currentIndex!=0}}'>
+    <!-- tab -->
+    <van-tabs swipeable border='{{false}}' bind:click='onClick' active='{{index}}' line-width="{{45}}" color='#e94f4f' nav-class="tabs">
+      <van-tab title="对方发起" />
+      <van-tab title="我的发起" />
+    </van-tabs>
+    <!-- item数据 -->
+    <view class='content' hidden='{{list==0}}'>
+      <scroll-view class='scroll' scroll-y>
+        <block wx:for='{{list}}' wx:key='{{index}}'>
+          <item-data />
+        </block>
+      </scroll-view>
+    </view>
+    <!-- 空数据页null -->
+    <view class='empty' hidden='{{list!=0}}'>
+    <image src='/images/icon_null@2x.png' class='empty_img'></image>
+      <view class='message'>{{nullMessage}}</view>
+    </view>
+  </view>
+
+
+
+  <!-- 约场 -->
+  <view class='shouye' hidden='{{currentIndex!=1}}'>约场</view>
+
+
+  <!-- 记录 -->
+  <view class='shouye' hidden='{{currentIndex!=2}}'>记录</view>
+
+
+  <!-- 计分板 -->
+  <view class='shouye' hidden='{{currentIndex!=3}}'>计分板</view>
+
+  <!-- 底部导航栏 -->
   <view class='footer'>
-    <footer-tab bind:shouye_click="shouye_click" 
-    bind:yuechang_click="yuechang_click"
-    bind:jilu_click="jilu_click"
-    bind:jifenban_click="jifenban_click"/>
+    <footer-tab cIndex="{{currentIndex}}" bind:shouye_click="shouye_click" bind:yuechang_click="yuechang_click" bind:jilu_click="jilu_click" bind:jifenban_click="jifenban_click" />
   </view>
 </view>

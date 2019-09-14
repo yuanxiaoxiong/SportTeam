@@ -45,7 +45,7 @@
 .jilu_img {
   margin-top: 10rpx;
   height: 49rpx;
-  width: 40rpx;
+  width: 50rpx;
 }
 
 .jifenban_img {

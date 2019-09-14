@@ -1,14 +1,60 @@
 /* pages/basketball/basketball.wxss */
-.page{
+
+.page {
   position: fixed;
   height: 100%;
   width: 100%;
   background: #efeff4;
 }
-.footer{
+
+.footer {
   height: 98rpx;
   width: 100%;
   background: #f6f6f6;
   position: absolute;
-  bottom: 0
+  bottom: 0;
+}
+
+.tabs {
+  background: #fafafa;
+}
+
+.shouye {
+  height: 100%;
+  width: 100%;
+}
+
+.content {
+  width: 100%;
+  position: absolute;
+  top: 90rpx;
+  bottom: 98rpx;
+}
+
+.scroll {
+  height: 100%;
+  width: 100%;
+}
+
+.empty {
+  height: 100%;
+  width: 100%;
+  background: #efeff4;
+  text-align: center;
+}
+
+.empty_img {
+  height: 172rpx;
+  width: 220rpx;
+  margin-top: 321rpx;
+}
+
+.message {
+  height: 30rpx;
+  width: 100%;
+  margin-top: 60rpx;
+  text-align: center;
+  line-height: 30rpx;
+  color: #b2b2b2;
+  font-size: 26rpx;
 }
