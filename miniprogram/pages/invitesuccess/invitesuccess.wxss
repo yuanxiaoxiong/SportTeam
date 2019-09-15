@@ -1,0 +1,27 @@
+/* pages/invitesuccess/invitesuccess.wxss */
+
+.page {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #fff;
+  text-align: center;
+}
+
+.img {
+  width: 188rpx;
+  height: 188rpx;
+  margin-top: 145rpx;
+}
+
+.success_text {
+  margin-top: 10rpx;
+  font-size: 40rpx;
+  color: #353535;
+}
+
+.tip_text {
+  margin-top: 56rpx;
+  font-size: 26rpx;
+  color: #b2b2b2;
+}

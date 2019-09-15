@@ -90,3 +90,29 @@
   border: solid #e18424 3rpx;
   font-size: 26rpx;
 }
+.yiyaoqing {
+  width: 120rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  position: absolute;
+  text-align: center;
+  right: 35rpx;
+  top: 56rpx;
+  color: #b2b2b2;
+  border-radius: 32rpx;
+  border: solid #b2b2b2 3rpx;
+  font-size: 26rpx;
+}
+.chexiao {
+  width: 120rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  position: absolute;
+  text-align: center;
+  right: 35rpx;
+  top: 56rpx;
+  color: #576b95;
+  border-radius: 32rpx;
+  border: solid #576b95 3rpx;
+  font-size: 26rpx;
+}

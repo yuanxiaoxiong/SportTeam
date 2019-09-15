@@ -3,7 +3,7 @@
     "footer-tab": "/components/footer-tab/footer-tab",
     "van-tab": "../../dist/tab/index",
     "van-tabs": "../../dist/tabs/index",
-    "item-data":"/components/item-data/item-data"
+    "item-data": "/components/item-data/item-data"
   },
   "navigationBarTitleText": "篮球约场",
   "enablePullDownRefresh": false

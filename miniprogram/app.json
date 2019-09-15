@@ -1,7 +1,10 @@
 {
   "pages": [
     "pages/home/home",
-    "pages/basketball/basketball"
+    "pages/basketball/basketball",
+    "pages/invite/invite",
+    "pages/invitesuccess/invitesuccess",
+    "pages/acceptinvite/acceptinvite"
   ],
   "window": {
     "backgroundColor": "#FFFFFF",

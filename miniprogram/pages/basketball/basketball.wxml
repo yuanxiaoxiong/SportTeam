@@ -1,6 +1,5 @@
 <!--pages/basketball/basketball.wxml-->
 <view class='page'>
-
   <!-- 首页 -->
   <view class='shouye' hidden='{{currentIndex!=0}}'>
     <!-- tab -->
@@ -11,14 +10,12 @@
     <!-- item数据 -->
     <view class='content' hidden='{{list==0}}'>
       <scroll-view class='scroll' scroll-y>
-        <block wx:for='{{list}}' wx:key='{{index}}'>
-          <item-data />
-        </block>
+        <item-data list='{{list}}' bind:inviteItemClick='inviteItemClick' acceptStatus='{{acceptStatus}}' acceptText='{{acceptText}}' />
       </scroll-view>
     </view>
     <!-- 空数据页null -->
     <view class='empty' hidden='{{list!=0}}'>
-    <image src='/images/icon_null@2x.png' class='empty_img'></image>
+      <image src='/images/icon_null@2x.png' class='empty_img'></image>
       <view class='message'>{{nullMessage}}</view>
     </view>
   </view>
