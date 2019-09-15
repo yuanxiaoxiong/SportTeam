@@ -1,0 +1,78 @@
+/* pages/invite/invite.wxss */
+
+.page {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #efeff4;
+}
+
+.card {
+  height: 189rpx;
+  background: #fff;
+  margin: 20rpx;
+  border-radius: 12rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.sure_btn {
+  margin-top: 100rpx;
+  height: 88rpx;
+  margin-left: 75rpx;
+  margin-right: 75rpx;
+  background: #ee3c3c;
+  border-radius: 44rpx;
+  opacity: 0.4;
+}
+
+.sure_btn_active {
+  margin-top: 100rpx;
+  height: 88rpx;
+  margin-left: 75rpx;
+  margin-right: 75rpx;
+  background: #ee3c3c;
+  border-radius: 44rpx;
+}
+
+.sure_text {
+  color: #fff;
+  font-size: 36rpx;
+  text-align: center;
+  line-height: 88rpx;
+  opacity: 0.6;
+}
+
+.sure_text_active {
+  color: #fff;
+  font-size: 36rpx;
+  text-align: center;
+  line-height: 88rpx;
+}
+
+.msg_wx {
+  flex: 1;
+  position: relative;
+  border-bottom: solid #efeff4 1rpx;
+}
+
+.msg_text {
+  font-size: 30rpx;
+  color: #353535;
+  position: absolute;
+  left: 30rpx;
+  top: 30rpx;
+}
+
+.input_wx {
+  color: #353535;
+  font-size: 30rpx;
+  position: absolute;
+  top: 30rpx;
+  left: 213rpx;
+}
+
+.msg_duiwu {
+  flex: 1;
+  position: relative;
+}

@@ -7,7 +7,9 @@ Page({
   data: {
     currentIndex: 0,
     nullMessage: '空空如也~',
-    list: 0
+    list: 0,
+    acceptStatus: 1,
+    acceptText: '已邀请'
   },
 
   /**
@@ -51,14 +53,46 @@ Page({
       /* 对方发起 */
       case 0:
         this.setData({
-          list: 10
+          list: 10,
+          acceptStatus: 0,
+          acceptText: '邀请'
         })
         break
         /* 我的发起 */
       case 1:
         this.setData({
-          list: 0,
-          nullMessage: '你还没发起约场呢~'
+          list: 2,
+          acceptStatus: 2,
+          acceptText: '撤销'
+          // nullMessage: '你还没发起约场呢~'
+        })
+        break
+    }
+  },
+  /* 首页邀请、撤销 */
+  inviteItemClick(event) {
+    console.log('------', event.detail.index)
+    switch (this.data.acceptStatus) {
+      /* 邀请 */
+      case 0:
+        wx.navigateTo({
+          url: '/pages/invite/invite',
+        })
+        break
+        /* 撤销 */
+      case 2:
+        wx.showModal({
+          title: '',
+          cancelColor:'#353535',
+          confirmColor:'#de213a',
+          content: '是否撤销你发起的约场？',
+          success(res){
+            if(res.confirm){
+              console.log('确认')
+            }else if(res.cancel){
+              console.log('取消')
+            }
+          }
         })
         break
     }

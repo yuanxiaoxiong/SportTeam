@@ -30,12 +30,33 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 0,
+			"current": 3,
 			"list": [
 				{
 					"id": 0,
 					"name": "篮球约场",
 					"pathName": "pages/basketball/basketball",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "信息填写",
+					"pathName": "pages/invite/invite",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "邀请成功",
+					"pathName": "pages/invitesuccess/invitesuccess",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "约场邀请",
+					"pathName": "pages/acceptinvite/acceptinvite",
 					"query": "",
 					"scene": null
 				}

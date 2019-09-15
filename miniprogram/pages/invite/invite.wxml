@@ -1,0 +1,19 @@
+<!--pages/invite/invite.wxml-->
+<view class='page'>
+  <!-- 填写信息栏 -->
+  <view class='card'>
+    <view class='msg_wx'>
+      <text class='msg_text'>微信号</text>
+      <input type='text' placeholder='请输入微信号' class='input_wx' maxlength='{{30}}' bindinput='wx_input'></input>
+    </view>
+    <view class='msg_duiwu'>
+      <text class='msg_text'>队伍/班级名</text>
+      <input type='text' placeholder='请输入队伍/班级名' class='input_wx' maxlength='{{30}}'  bindinput='duiwu_input'></input>
+    </view>
+  </view>
+  <!-- 确认按钮 -->
+  <view class='{{disabled==true?"sure_btn":"sure_btn_active"}}' bindtap='{{disabled==true?"":"sureClick"}}'>
+    <view class='{{disabled==true?"sure_text":"sure_text_active"}}'>确认</view>
+  </view>
+
+</view>
