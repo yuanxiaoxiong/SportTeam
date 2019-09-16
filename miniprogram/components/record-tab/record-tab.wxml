@@ -1,0 +1,15 @@
+<!--components/record-tab/record-tab.wxml-->
+<view class='tab_jilu'>
+  <view class='tab_1' bind:tap='daiqueren_click' >
+    <view class='text'>待确认</view>
+    <view class='{{index==0?"line":""}}' />
+  </view>
+  <view class='tab_2' bind:tap='jinxingzhong_click'>
+    <view class='text'>进行中</view>
+    <view class='{{index==1?"line":""}}' />
+  </view>
+  <view class='tab_3' bindtap='yishixiao_click'>
+    <view class='text'>已失效</view>
+    <view class='{{index==2?"line":""}}' />
+  </view>
+</view>

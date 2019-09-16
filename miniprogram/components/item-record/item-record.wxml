@@ -1,0 +1,24 @@
+<!--components/item-record/item-record.wxml-->
+<!-- <view class='top'></view> -->
+<block wx:for='{{list}}' wx:key='{{index}}'>
+
+  <view class='card' bind:tap='{{recordStatus==4?"onClickToRunning":""}}' data-index='{{index}}'>
+    <image class='icon' src='/images/btn_arrow@2x.png' hidden='{{recordStatus!=4}}'></image>
+    <view class='title'>篮球全场</view>
+    <view class='right' data-index='{{index}}' item="{{index}}">
+      <view class='{{recordStatus==3?"daiqueren":""||recordStatus==4?"jinxingzhong":""||recordStatus==5?"yishixiao":""}}'>{{recordText}}</view>
+    </view>
+    <view class='line' />
+    <view class='content'>
+      <view class='duiwu'>
+        <text>我的队伍：</text> 17级软件工程2班{{}}
+      </view>
+      <view class='duifang'>
+        <text>对方队伍：</text> 17级计算机科学于技术1班{{}}
+      </view>
+      <view class='gametime'>
+        <text>游戏时间：</text> 2019年9月9日 15:00-17:00{{}}
+      </view>
+    </view>
+  </view>
+</block>

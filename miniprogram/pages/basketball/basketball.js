@@ -6,10 +6,14 @@ Page({
    */
   data: {
     currentIndex: 0,
-    nullMessage: '空空如也~',
+    nullMessage: '这里空空如也~',
     list: 0,
     acceptStatus: 1,
-    acceptText: '已邀请'
+    acceptText: '已邀请',
+    indexTab: 0,
+    listRecord: 0,
+    recordStatus: '3',
+    recordText: '待确认'
   },
 
   /**
@@ -83,18 +87,56 @@ Page({
       case 2:
         wx.showModal({
           title: '',
-          cancelColor:'#353535',
-          confirmColor:'#de213a',
+          cancelColor: '#353535',
+          confirmColor: '#de213a',
           content: '是否撤销你发起的约场？',
-          success(res){
-            if(res.confirm){
+          success(res) {
+            if (res.confirm) {
               console.log('确认')
-            }else if(res.cancel){
+            } else if (res.cancel) {
               console.log('取消')
             }
           }
         })
         break
     }
+  },
+  /* 记录页面 */
+  //待确认
+  daiqueren_click(e) {
+    console.log("+++", e.detail.index)
+    this.setData({
+      indexTab: e.detail.index,
+      listRecord: 10,
+      recordStatus: '3',
+      recordText: '待确认'
+    })
+  },
+  //进行中
+  jinxingzhong_click(e) {
+    console.log("+++", e.detail.index)
+    this.setData({
+      indexTab: e.detail.index,
+      listRecord: 5,
+      recordStatus: '4',
+      recordText: '进行中'
+    })
+  },
+  //已失效
+  yishixiao_click(e) {
+    console.log("+++", e.detail.index)
+    this.setData({
+      indexTab: e.detail.index,
+      listRecord: 2,
+      recordStatus: '5',
+      recordText: '已失效'
+    })
+  },
+  //点击进行中的item
+  onClickToRunning(e) {
+    //模拟item项
+    wx.showToast({
+      title: '' + e.detail.index
+    })
   }
 })
