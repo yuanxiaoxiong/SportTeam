@@ -1,7 +1,7 @@
 <!--pages/basketball/basketball.wxml-->
-<view class='page'>
-  <!-- 首页 -->
-  <view class='shouye' hidden='{{currentIndex!=0}}'>
+<!-- 首页 -->
+<view class='page' hidden='{{currentIndex!=0}}'>
+  <view class='shouye'>
     <!-- tab -->
     <van-tabs swipeable border='{{false}}' bind:click='onClick' active='{{index}}' line-width="{{45}}" color='#e94f4f' nav-class="tabs">
       <van-tab title="对方发起" />
@@ -19,22 +19,38 @@
       <view class='message'>{{nullMessage}}</view>
     </view>
   </view>
+</view>
 
 
-
-  <!-- 约场 -->
-  <view class='shouye' hidden='{{currentIndex!=1}}'>约场</view>
-
-
-  <!-- 记录 -->
-  <view class='shouye' hidden='{{currentIndex!=2}}'>记录</view>
+<!-- 约场 -->
+<view class='shouye' hidden='{{currentIndex!=1}}'>约场</view>
 
 
-  <!-- 计分板 -->
-  <view class='shouye' hidden='{{currentIndex!=3}}'>计分板</view>
-
-  <!-- 底部导航栏 -->
-  <view class='footer'>
-    <footer-tab cIndex="{{currentIndex}}" bind:shouye_click="shouye_click" bind:yuechang_click="yuechang_click" bind:jilu_click="jilu_click" bind:jifenban_click="jifenban_click" />
+<!-- 记录 -->
+<view class='page' hidden='{{currentIndex!=2}}'>
+  <!-- tab -->
+  <record-tab index="{{indexTab}}" bind:daiqueren_click='daiqueren_click' bind:jinxingzhong_click='jinxingzhong_click' bind:yishixiao_click='yishixiao_click' />
+  <!-- item数据 -->
+  <view class='content' hidden='{{listRecord==0}}'>
+    <scroll-view class='scroll' scroll-y>
+      <view class='top_record'></view>
+      <item-record list='{{listRecord}}' bind:onClickToRunning='onClickToRunning' recordStatus='{{recordStatus}}' recordText='{{recordText}}' />
+    </scroll-view>
   </view>
+  <!-- 空数据页null -->
+  <view class='empty' hidden='{{listRecord!=0}}'>
+    <image src='/images/icon_null@2x.png' class='empty_img'></image>
+    <view class='message'>{{nullMessage}}</view>
+  </view>
+</view>
+
+
+<!-- 计分板 -->
+<view class='shouye' hidden='{{currentIndex!=3}}'>计分板</view>
+
+
+
+<!-- 底部导航栏 -->
+<view class='footer'>
+  <footer-tab cIndex="{{currentIndex}}" bind:shouye_click="shouye_click" bind:yuechang_click="yuechang_click" bind:jilu_click="jilu_click" bind:jifenban_click="jifenban_click" />
 </view>

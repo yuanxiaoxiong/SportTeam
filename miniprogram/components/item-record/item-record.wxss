@@ -1,0 +1,108 @@
+/* components/item-record/item-record.wxss */
+
+.card {
+  height: 240rpx;
+  margin-top: 8rpx;
+  background: #fff;
+  position: relative;
+}
+
+.icon {
+  position: absolute;
+  height: 25rpx;
+  width: 16rpx;
+  top: 22rpx;
+  right: 30rpx;
+}
+
+.title {
+  color: #888;
+  font-size: 30rpx;
+  height: 70rpx;
+  width: 100%;
+  margin-left: 30rpx;
+  font-style: italic;
+  line-height: 70rpx;
+}
+
+.line {
+  height: 1rpx;
+  background: #e5e5e5;
+  left: 55rpx;
+  right: 55rpx;
+  position: absolute;
+}
+
+.right {
+  width: 100%;
+}
+
+.daiqueren {
+  width: 120rpx;
+  line-height: 60rpx;
+  position: absolute;
+  text-align: center;
+  right: 56rpx;
+  top: 5rpx;
+  color: #576b95;
+  font-size: 30rpx;
+}
+
+.jinxingzhong {
+  width: 120rpx;
+  line-height: 60rpx;
+  position: absolute;
+  text-align: center;
+  right: 56rpx;
+  top: 5rpx;
+  color: #e18424;
+  font-size: 30rpx;
+}
+
+.yishixiao {
+  width: 120rpx;
+  line-height: 60rpx;
+  position: absolute;
+  text-align: center;
+  right: 56rpx;
+  top: 5rpx;
+  color: #888;
+  font-size: 30rpx;
+}
+
+.content {
+  margin-top: 20rpx;
+  height: 150rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.duiwu {
+  flex: 1;
+  height: 50rpx;
+  line-height: 50rpx;
+  font-size: 26rpx;
+  color: #353535;
+}
+
+.duifang {
+  height: 50rpx;
+  line-height: 50rpx;
+  flex: 1;
+  font-size: 26rpx;
+  color: #353535;
+}
+
+.gametime {
+  flex: 1;
+  height: 50rpx;
+  line-height: 50rpx;
+  color: #353535;
+  font-size: 26rpx;
+}
+
+text {
+  font-size: 26rpx;
+  color: #b2b2b2;
+  margin-left: 30rpx;
+}
