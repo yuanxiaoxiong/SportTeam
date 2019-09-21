@@ -30,6 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
+<<<<<<< HEAD
 			"current": 4,
 			"list": [
 				{
@@ -65,6 +66,14 @@
 					"name": "添加好友",
 					"pathName": "pages/addfriend/addfriend",
 					"scene": null
+=======
+			"current": 0,
+			"list": [
+				{
+					"id": -1,
+					"name": "db guide",
+					"pathName": "pages/databaseGuide/databaseGuide"
+>>>>>>> d44f9977231f39dcfbb1215f8f89cd2059c2d832
 				}
 			]
 		}
