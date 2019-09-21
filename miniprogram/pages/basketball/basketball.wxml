@@ -23,7 +23,43 @@
 
 
 <!-- 约场 -->
-<view class='shouye' hidden='{{currentIndex!=1}}'>约场</view>
+<view class='page' hidden='{{currentIndex!=1}}'>
+  <view class='card'>
+    <view class='msg_wx'>
+      <text class='msg_text'>微信号</text>
+      <input type='text' placeholder='请输入微信号' class='input_wx' maxlength='{{30}}' bindinput='wx_input'></input>
+    </view>
+    <view class='msg_duiwu'>
+      <text class='msg_text'>队伍/班级名</text>
+      <input type='text' placeholder='请输入队伍/班级名' class='input_wx' maxlength='{{30}}'  bindinput='duiwu_input'></input>
+    </view>
+  </view>
+  <view class="card">
+      <view class="msg_wx">
+          <text class='msg_text'>起始时间</text>
+          <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+            <text class="selector_ph" >{{str_start}}</text>
+            <view class="msg_selector">
+             {{multiArray[0][multiIndex[0]]}}{{multiArray[1][multiIndex[1]]}}{{multiArray[2][multiIndex[2]]}}
+              {{multiArray[3][multiIndex[3]]}}{{str_time}}{{multiArray[4][multiIndex[4]]}}
+            </view>
+        </picker>
+      </view>
+      <view class="msg_duiwu">
+            <text class='msg_text'>结束时间</text>
+           <picker mode="multiSelector" bindchange="bindMultiPickerChange2" bindcolumnchange="bindMultiPickerColumnChange2" value="{{multiIndex2}}" range="{{multiArray}}">
+             <text class="selector_ph">{{str_end}}</text>
+             <view class="msg_selector">
+               {{multiArray[0][multiIndex2[0]]}}{{multiArray[1][multiIndex2[1]]}}{{multiArray[2][multiIndex2[2]]}}
+               {{multiArray[3][multiIndex2[3]]}}{{str_time2}}{{multiArray[4][multiIndex2[4]]}}
+             </view>
+        </picker>
+      </view>
+  </view>
+  <view class='{{disabled==true?"sure_btn":"sure_btn_active"}}' bindtap='{{disabled==true?"":"sureClick"}}'>
+    <view class='{{disabled==true?"sure_text":"sure_text_active"}}'>发起约场</view>
+  </view>
+</view>
 
 
 <!-- 记录 -->

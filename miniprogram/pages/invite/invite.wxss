@@ -76,3 +76,8 @@
   flex: 1;
   position: relative;
 }
+
+.img{
+  position: absolute;
+  margin: 30rpx 43rpx 32rpx;
+}

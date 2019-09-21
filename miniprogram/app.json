@@ -4,7 +4,9 @@
     "pages/basketball/basketball",
     "pages/invite/invite",
     "pages/invitesuccess/invitesuccess",
-    "pages/acceptinvite/acceptinvite"
+    "pages/acceptinvite/acceptinvite",
+    "pages/addfriend/addfriend"
+    
   ],
   "window": {
     "backgroundColor": "#FFFFFF",
