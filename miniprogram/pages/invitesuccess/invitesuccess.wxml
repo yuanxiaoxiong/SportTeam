@@ -1,0 +1,7 @@
+<!--pages/invitesuccess/invitesuccess.wxml-->
+<view class='page'>
+
+<image src='/images/icon_succeed@2x.png' class='img'></image>
+<view class='success_text'>邀请成功</view>
+<view class='tip_text'>邀请已发出，请等待对方确认</view>
+</view>

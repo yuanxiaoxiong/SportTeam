@@ -1,0 +1,42 @@
+/* components/record-tab/record-tab.wxss */
+
+.tab_jilu {
+  height: 95rpx;
+  width: 100%;
+  display: flex;
+  background: #fafafa;
+  flex-direction: row;
+  text-align: center;
+  position: relative;
+  justify-content: center;
+}
+
+.text {
+  height: 60rpx;
+  font-size: 30rpx;
+  line-height: 90rpx;
+}
+
+.line {
+  height: 8rpx;
+  width: 60rpx;
+  background: #e94f4f;
+  margin: 0 auto;
+  text-align: center;
+  margin-top:31rpx; 
+}
+
+.tab_1 {
+  flex: 1;
+  height: 80rpx;
+}
+
+.tab_2 {
+  flex: 1;
+  height: 80rpx;
+}
+
+.tab_3 {
+  flex: 1;
+  height: 80rpx;
+}

@@ -1,0 +1,119 @@
+/* pages/addfriend/addfriend.wxss */
+
+.page {
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background: #efeff4;
+  }
+
+.image{
+    position: relative;
+    height: 359rpx;
+    width: 100%;
+    z-index: 0;
+}
+
+.card {
+    position: absolute;
+    z-index: 1;
+    margin-top: -45rpx;
+    width: 710rpx;
+    height: 264rpx;
+    background: #fff;
+    margin-left: 20rpx;
+    margin-right: 20rpx;
+    border-radius: 12rpx;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .card1 {
+    height: 84rpx;
+    background: #fff;
+    margin:239rpx 20rpx 20rpx; 
+    border-radius: 12rpx;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .msg_wx {
+    flex: 1;
+    position: relative;
+    border-bottom: solid #efeff4 1rpx;
+  }
+  
+  .msg_wxh {
+    height: 90rpx;
+    font-size: 30rpx;
+    color: #353535;
+    position: absolute;
+    left: 113rpx;
+    top: 25rpx;
+  }
+  .msg_class {
+    height: 84rpx;
+    font-size: 30rpx;
+    color: #353535;
+    position: absolute;
+    left: 113rpx;
+    top: 25rpx;
+  }
+  .msg_time {
+    height: 90rpx;
+    font-size: 30rpx;
+    color: #353535;
+    position: absolute;
+    left: 113rpx;
+    top: 25rpx;
+  }
+  .msg_tips {
+    height: 90rpx;
+    font-size: 30rpx;
+    color: #353535;
+    position: absolute;
+    left: 113rpx;
+    top: 25rpx;
+  }
+  .msg_duiwu {
+    flex: 1;
+    position: relative;
+  }
+.img_wxh{
+    position: absolute;
+    height: 31rpx;
+    width: 40rpx;
+    margin: 30rpx 43rpx 33rpx;
+}  
+.img_team{
+  position: absolute;
+  height: 31rpx;
+  width: 40rpx;
+  margin: 28rpx 42rpx 32rpx;
+}
+.img_time{
+  position: absolute;
+  height: 36rpx;
+  width: 36rpx;
+  margin: 26rpx 43rpx 30rpx;
+}
+.img_tips{
+  position: absolute;
+  height: 40rpx;
+  width: 40rpx;
+  margin: 25rpx 42rpx 30rpx;
+}
+.sure_btn_active {
+  margin-top: 100rpx;
+  height: 88rpx;
+  margin-left: 75rpx;
+  margin-right: 75rpx;
+  background: #ee3c3c;
+  border-radius: 44rpx;
+}
+.sure_text_active {
+  color: #fff;
+  font-size: 36rpx;
+  text-align: center;
+  line-height: 88rpx;
+}

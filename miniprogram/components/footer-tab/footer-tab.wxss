@@ -1,0 +1,64 @@
+/* components/footer-tab/footer-tab.wxss */
+
+.footer {
+  height: 98rpx;
+  width: 100%;
+  display: flex;
+}
+
+.shouye {
+  flex: 1;
+  height: 98rpx;
+  text-align: center;
+}
+
+.yuechang {
+  flex: 1;
+  height: 98rpx;
+  text-align: center;
+}
+
+.jilu {
+  flex: 1;
+  height: 98rpx;
+  text-align: center;
+}
+
+.jifenban {
+  flex: 1;
+  height: 98rpx;
+  text-align: center;
+}
+
+.shouye_img {
+  margin-top: 10rpx;
+  height: 51rpx;
+  width: 54rpx;
+}
+
+.yuechang_img {
+  margin-top: 6rpx;
+  height: 56rpx;
+  width: 54rpx;
+}
+
+.jilu_img {
+  margin-top: 10rpx;
+  height: 49rpx;
+  width: 50rpx;
+}
+
+.jifenban_img {
+  margin-top: 10rpx;
+  height: 45rpx;
+  width: 58rpx;
+}
+
+.text {
+  font-size: 23rpx;
+  margin-top: -10rpx;
+}
+
+.active {
+  color: #de213a;
+}

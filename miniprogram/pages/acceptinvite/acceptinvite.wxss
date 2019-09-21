@@ -1,0 +1,54 @@
+/* pages/acceptinvite/acceptinvite.wxss */
+
+.page {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #fff;
+  text-align: center;
+}
+
+.img {
+  margin-top: 204rpx;
+  width: 308rpx;
+  height: 241rpx;
+}
+
+.tip_text {
+  margin-top: 65rpx;
+  font-size: 36rpx;
+  color: #353535;
+}
+
+.sure_btn_accept {
+  margin-top: 166rpx;
+  height: 88rpx;
+  margin-left: 75rpx;
+  margin-right: 75rpx;
+  background: #ee3c3c;
+  border-radius: 44rpx;
+}
+
+.sure_text_accept {
+  color: #fff;
+  font-size: 36rpx;
+  text-align: center;
+  line-height: 88rpx;
+}
+
+.sure_btn_refuse {
+  margin-top: 45rpx;
+  height: 88rpx;
+  margin-left: 75rpx;
+  margin-right: 75rpx;
+  border: solid #ee3c3c 1rpx;
+  border-radius: 44rpx;
+}
+
+.sure_text_refuse {
+  color: #ee3c3c;
+  font-size: 36rpx;
+  text-align: center;
+  line-height: 88rpx;
+}
+

@@ -1,0 +1,118 @@
+/* components/item-data/item-data.wxss */
+
+.card {
+  height: 250rpx;
+  margin-top: 30rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  margin-bottom: 30rpx;
+  border-radius: 12rpx;
+  background: #fff;
+}
+
+.title {
+  color: #e38c36;
+  font-size: 26rpx;
+  height: 50rpx;
+  width: 100%;
+  margin-left: 30rpx;
+  font-style: italic;
+  line-height: 50rpx;
+}
+
+.line {
+  height: 1rpx;
+  background: #e5e5e5;
+  left: 55rpx;
+  right: 55rpx;
+  position: absolute;
+}
+
+.con {
+  height: 170rpx;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+}
+
+.left {
+  flex: 3;
+  position: relative;
+}
+
+.duiwu {
+  position: absolute;
+  left: 95rpx;
+  top: 30rpx;
+  font-size: 34rpx;
+  color: #353535;
+}
+
+.up_img {
+  position: absolute;
+  left: 40rpx;
+  top: 38rpx;
+  height: 31rpx;
+  width: 40rpx;
+}
+
+.down_img {
+  width: 36rpx;
+  height: 36rpx;
+  position: absolute;
+  left: 42rpx;
+  top: 88rpx;
+}
+
+.time {
+  position: absolute;
+  left: 101rpx;
+  top: 88rpx;
+  font-size: 26rpx;
+  color: #b2b2b2;
+}
+
+.right {
+  flex: 1;
+  position: relative;
+}
+
+.yaoqing {
+  width: 120rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  position: absolute;
+  text-align: center;
+  right: 35rpx;
+  top: 56rpx;
+  color: #e18424;
+  border-radius: 32rpx;
+  border: solid #e18424 3rpx;
+  font-size: 26rpx;
+}
+.yiyaoqing {
+  width: 120rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  position: absolute;
+  text-align: center;
+  right: 35rpx;
+  top: 56rpx;
+  color: #b2b2b2;
+  border-radius: 32rpx;
+  border: solid #b2b2b2 3rpx;
+  font-size: 26rpx;
+}
+.chexiao {
+  width: 120rpx;
+  height: 60rpx;
+  line-height: 60rpx;
+  position: absolute;
+  text-align: center;
+  right: 35rpx;
+  top: 56rpx;
+  color: #576b95;
+  border-radius: 32rpx;
+  border: solid #576b95 3rpx;
+  font-size: 26rpx;
+}

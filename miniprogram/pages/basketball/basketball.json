@@ -1,0 +1,12 @@
+{
+  "usingComponents": {
+    "footer-tab": "/components/footer-tab/footer-tab",
+    "van-tab": "../../dist/tab/index",
+    "van-tabs": "../../dist/tabs/index",
+    "item-data": "/components/item-data/item-data",
+    "record-tab": "/components/record-tab/record-tab",
+    "item-record": "/components/item-record/item-record"
+  },
+  "navigationBarTitleText": "篮球约场",
+  "enablePullDownRefresh": false
+}

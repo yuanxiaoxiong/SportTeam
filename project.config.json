@@ -1,0 +1,72 @@
+{
+	"miniprogramRoot": "miniprogram/",
+	"cloudfunctionRoot": "cloudfunctions/",
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"appid": "wx92a1abf46cf2e0e4",
+	"projectname": "Sports%20platform",
+	"libVersion": "2.2.5",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"list": []
+		},
+		"miniprogram": {
+			"current": 4,
+			"list": [
+				{
+					"id": 0,
+					"name": "篮球约场",
+					"pathName": "pages/basketball/basketball",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "信息填写",
+					"pathName": "pages/invite/invite",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "邀请成功",
+					"pathName": "pages/invitesuccess/invitesuccess",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "约场邀请",
+					"pathName": "pages/acceptinvite/acceptinvite",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "添加好友",
+					"pathName": "pages/addfriend/addfriend",
+					"scene": null
+				}
+			]
+		}
+	}
+}
