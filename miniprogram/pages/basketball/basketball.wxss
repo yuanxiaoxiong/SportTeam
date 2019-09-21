@@ -1,7 +1,10 @@
 /* pages/basketball/basketball.wxss */
 
+<<<<<<< HEAD
 
 
+=======
+>>>>>>> 9bb2a593a510b53e6c24aae517ba4caa49dc0880
 .page {
   position: fixed;
   height: 100%;
@@ -70,6 +73,7 @@
   color: #b2b2b2;
   font-size: 26rpx;
 }
+<<<<<<< HEAD
 
 .card {
   height: 189rpx;
@@ -156,3 +160,5 @@
   top: 30rpx;
   left: 185rpx;
 }
+=======
+>>>>>>> 9bb2a593a510b53e6c24aae517ba4caa49dc0880
