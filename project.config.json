@@ -30,48 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-			"current": 4,
-			"list": [
-				{
-					"id": 0,
-					"name": "篮球约场",
-					"pathName": "pages/basketball/basketball",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "信息填写",
-					"pathName": "pages/invite/invite",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "邀请成功",
-					"pathName": "pages/invitesuccess/invitesuccess",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "约场邀请",
-					"pathName": "pages/acceptinvite/acceptinvite",
-					"query": "",
-					"scene": null
-				},
-				{
-					"id": -1,
-					"name": "添加好友",
-					"pathName": "pages/addfriend/addfriend",
-					"scene": null
-=======
-			"current": 0,
-=======
 			"current": 3,
->>>>>>> 9bb2a593a510b53e6c24aae517ba4caa49dc0880
 			"list": [
 				{
 					"id": 0,
@@ -96,16 +55,10 @@
 				},
 				{
 					"id": -1,
-<<<<<<< HEAD
-					"name": "db guide",
-					"pathName": "pages/databaseGuide/databaseGuide"
->>>>>>> d44f9977231f39dcfbb1215f8f89cd2059c2d832
-=======
 					"name": "约场邀请",
 					"pathName": "pages/acceptinvite/acceptinvite",
 					"query": "",
 					"scene": null
->>>>>>> 9bb2a593a510b53e6c24aae517ba4caa49dc0880
 				}
 			]
 		}

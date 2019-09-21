@@ -1,14 +1,9 @@
 {
   "pages": [
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> 9bb2a593a510b53e6c24aae517ba4caa49dc0880
     "pages/home/home",
     "pages/basketball/basketball",
     "pages/invite/invite",
     "pages/invitesuccess/invitesuccess",
-<<<<<<< HEAD
     "pages/acceptinvite/acceptinvite",
     "pages/addfriend/addfriend"
     
@@ -19,32 +14,6 @@
     "navigationBarBackgroundColor": "#de213a",
     "navigationBarTitleText": "体育竞技",
     "navigationBarTextStyle": "white"
-=======
-    "pages/index/index",
-    "pages/userConsole/userConsole",
-    "pages/storageConsole/storageConsole",
-    "pages/databaseGuide/databaseGuide",
-    "pages/addFunction/addFunction",
-    "pages/deployFunctions/deployFunctions",
-    "pages/chooseLib/chooseLib",
-    "pages/openapi/openapi"
-=======
-    "pages/acceptinvite/acceptinvite"
->>>>>>> 9bb2a593a510b53e6c24aae517ba4caa49dc0880
-  ],
-  "window": {
-    "backgroundColor": "#FFFFFF",
-    "backgroundTextStyle": "light",
-<<<<<<< HEAD
-    "navigationBarBackgroundColor": "#F6F6F6",
-    "navigationBarTitleText": "云开发 QuickStart",
-    "navigationBarTextStyle": "black"
->>>>>>> d44f9977231f39dcfbb1215f8f89cd2059c2d832
-=======
-    "navigationBarBackgroundColor": "#de213a",
-    "navigationBarTitleText": "体育竞技",
-    "navigationBarTextStyle": "white"
->>>>>>> 9bb2a593a510b53e6c24aae517ba4caa49dc0880
   },
   "sitemapLocation": "sitemap.json"
 }

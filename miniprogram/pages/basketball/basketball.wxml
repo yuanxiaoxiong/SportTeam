@@ -23,7 +23,6 @@
 
 
 <!-- 约场 -->
-<<<<<<< HEAD
 <view class='page' hidden='{{currentIndex!=1}}'>
   <view class='card'>
     <view class='msg_wx'>
@@ -61,9 +60,6 @@
     <view class='{{disabled==true?"sure_text":"sure_text_active"}}'>发起约场</view>
   </view>
 </view>
-=======
-<view class='shouye' hidden='{{currentIndex!=1}}'>约场</view>
->>>>>>> 9bb2a593a510b53e6c24aae517ba4caa49dc0880
 
 
 <!-- 记录 -->
