@@ -38,7 +38,7 @@
       <view class="msg_wx">
           <text class='msg_text'>起始时间</text>
           <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
-            <text class="selector_ph" >{{str_start}}</text>
+            <text class="selector_ph" hidden='{{strstart}}'>{{str_start}}</text>
             <view class="msg_selector">
              {{multiArray[0][multiIndex[0]]}}{{multiArray[1][multiIndex[1]]}}{{multiArray[2][multiIndex[2]]}}
               {{multiArray[3][multiIndex[3]]}}{{str_time}}{{multiArray[4][multiIndex[4]]}}
@@ -48,7 +48,7 @@
       <view class="msg_duiwu">
             <text class='msg_text'>结束时间</text>
            <picker mode="multiSelector" bindchange="bindMultiPickerChange2" bindcolumnchange="bindMultiPickerColumnChange2" value="{{multiIndex2}}" range="{{multiArray}}">
-             <text class="selector_ph">{{str_end}}</text>
+             <text class="selector_ph" hidden='{{strend}}'>{{str_end}}</text>
              <view class="msg_selector">
                {{multiArray[0][multiIndex2[0]]}}{{multiArray[1][multiIndex2[1]]}}{{multiArray[2][multiIndex2[2]]}}
                {{multiArray[3][multiIndex2[3]]}}{{str_time2}}{{multiArray[4][multiIndex2[4]]}}

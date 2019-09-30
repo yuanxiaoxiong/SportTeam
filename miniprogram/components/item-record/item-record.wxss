@@ -6,7 +6,6 @@
   background: #fff;
   position: relative;
 }
-
 .icon {
   position: absolute;
   height: 25rpx;
@@ -28,8 +27,8 @@
 .line {
   height: 1rpx;
   background: #e5e5e5;
-  left: 55rpx;
-  right: 55rpx;
+  left: 20rpx;
+  right: 20rpx;
   position: absolute;
 }
 
@@ -42,7 +41,7 @@
   line-height: 60rpx;
   position: absolute;
   text-align: center;
-  right: 56rpx;
+  right: 30rpx;
   top: 5rpx;
   color: #576b95;
   font-size: 30rpx;
@@ -64,7 +63,7 @@
   line-height: 60rpx;
   position: absolute;
   text-align: center;
-  right: 56rpx;
+  right: 30rpx;
   top: 5rpx;
   color: #888;
   font-size: 30rpx;
