@@ -1,12 +1,12 @@
 <!--components/main_card/main_card.wxml-->
-<view class='card'>
+<view class='page'>
   <scroll-view class='main' scroll-y>
     <block wx:for="{{mainContent}}" wx:key="{{index}}">
-      <view class='card_content' data-index='{{index}}' item="{{index}}" bind:tap="click">
+      <button class='card' type='default' hover-class='none' open-type='getUserInfo' data-index='{{index}}' item="{{index}}" bindgetuserinfo='bindgetuserinfo'>
         <image src='{{item.imgUrl}}' class='background_img'></image>
         <image src='{{item.mainIcon}}' class='icon'></image>
         <text class='text'>{{item.mainName}}</text>
-      </view>
+      </button>
     </block>
   </scroll-view>
 </view>
