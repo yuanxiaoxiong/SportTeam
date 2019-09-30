@@ -14,22 +14,28 @@ Page({
     listRecord: 0,
     recordStatus: '3',
     recordText: '待确认',
-    multiArray: [['2019年','2020年','2021年','2022年','2023年','2024年','2025年'], ['1月', '2月', '3月', '4月', '5月','6月','7月','8月','9月','10月','11月','12月'], 
-    ['1日', '2日','3日','4日','5日','6日','7日','8日','9日','10日','11日','12日','13日','14日','15日','16日','17日','18日','19日','20日','21日','22日','23日','24日','25日'
-  ,'26日','27日','28日','29日','30日','31日'],['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22'
-  ,'23'],['00','01','02','03','04','05','06','07','08','09','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24',
-  '25','26','27','28','29','30','31','32','33','34','35','36','37','38','39','40','41','42','43','44','45','46','47','48','49','50',
-  '51','52','53','54','55','56','57','58','59']],
-    str_start:"约场的开始时间",
-    str_end:"约场的结束时间",
-    str_time:"",
-    str_time2:"",
-    wx_name:'',
-    wx_duiwu:'',
-    disabled:true,
-    oldColumn:0,
-    multiIndex:[,,,,],
-    multiIndex2:[,,,,]
+    multiArray: [
+      ['2019年', '2020年', '2021年', '2022年', '2023年', '2024年', '2025年'],
+      ['1月', '2月', '3月', '4月', '5月', '6月', '7月', '8月', '9月', '10月', '11月', '12月'],
+      ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日', '12日', '13日', '14日', '15日', '16日', '17日', '18日', '19日', '20日', '21日', '22日', '23日', '24日', '25日', '26日', '27日', '28日', '29日', '30日', '31日'],
+      ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23'],
+      ['00', '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14', '15', '16', '17', '18', '19', '20', '21', '22', '23', '24',
+        '25', '26', '27', '28', '29', '30', '31', '32', '33', '34', '35', '36', '37', '38', '39', '40', '41', '42', '43', '44', '45', '46', '47', '48', '49', '50',
+        '51', '52', '53', '54', '55', '56', '57', '58', '59'
+      ]
+    ],
+    str_start: "约场的开始时间",
+    str_end: "约场的结束时间",
+    str_time: "",
+    str_time2: "",
+    wx_name: '',
+    wx_duiwu: '',
+    disabled: true,
+    oldColumn: 0,
+    multiIndex: [, , , , ],
+    multiIndex2: [, , , , ],
+    strstart: false,
+    strend: false
   },
 
   /**
@@ -149,15 +155,14 @@ Page({
     })
   },
   //点击进行中的item
- 
   sureClick() {
     console.log('----点击了确认')
     wx.showToast({
       title: '发起成功',
-      duration:2000,
-      mask:true,
-      icon:'success'
-   })
+      duration: 2000,
+      mask: true,
+      icon: 'success'
+    })
   },
   /* 输入微信号 */
   wx_input(event) {
@@ -176,95 +181,119 @@ Page({
       })
     }
   },
-  bindMultiPickerChange: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
+  bindMultiPickerChange: function(e) {
+    //console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       multiIndex: e.detail.value,
-      str_start: "",
-      str_time:":"
+      // str_start: "",
+      str_time: ":"
     })
   },
- 
-  bindMultiPickerChange2: function (e) {
-    console.log('picker发送选择改变，携带值为', e.detail.value)
+
+  bindMultiPickerChange2: function(e) {
+    //console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       multiIndex2: e.detail.value,
-      str_end: "",
-      str_time2:":"
+      // str_end: "",
+      str_time2: ":"
     })
   },
-  bindMultiPickerColumnChange: function (e) {
-    console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+  bindMultiPickerColumnChange: function(e) {
+    this.setData({
+      strstart: true,
+      str_time: ":"
+    })
+    //console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
     var data = {
       multiArray: this.data.multiArray,
       multiIndex: this.data.multiIndex
     };
     data.multiIndex[e.detail.column] = e.detail.value;
     switch (e.detail.column) {
-      case 0:case 1:
+      case 0:
+      case 1:
         switch (data.multiIndex[0]) {
-          case 1:case 5:
-            switch (data.multiIndex[1]){
-              case 0:case 2:case 4:case 6:case 7:case 9:case 11:
-                  data.multiArray[2] = ['1日', '2日','3日','4日','5日','6日','7日','8日','9日','10日','11日','12日','13日','14日','15日','16日','17日','18日','19日','20日','21日','22日','23日','24日','25日'
-                  ,'26日','27日','28日','29日','30日','31日'];
-                  break;
+          case 1:
+          case 5:
+            switch (data.multiIndex[1]) {
+              case 0:
+              case 2:
+              case 4:
+              case 6:
+              case 7:
+              case 9:
+              case 11:
+                data.multiArray[2] = ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日', '12日', '13日', '14日', '15日', '16日', '17日', '18日', '19日', '20日', '21日', '22日', '23日', '24日', '25日', '26日', '27日', '28日', '29日', '30日', '31日'];
+                break;
               case 1:
-                  data.multiArray[2] = ['1日', '2日','3日','4日','5日','6日','7日','8日','9日','10日','11日','12日','13日','14日','15日','16日','17日','18日','19日','20日','21日','22日','23日','24日','25日'
-                  ,'26日','27日','28日','29日'];
-                  break;
-              case 3:case 5:case 8:case 10:
-                  data.multiArray[2] = ['1日', '2日','3日','4日','5日','6日','7日','8日','9日','10日','11日','12日','13日','14日','15日','16日','17日','18日','19日','20日','21日','22日','23日','24日','25日'
-                  ,'26日','27日','28日','29日','30日'];
-                  break;
+                data.multiArray[2] = ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日', '12日', '13日', '14日', '15日', '16日', '17日', '18日', '19日', '20日', '21日', '22日', '23日', '24日', '25日', '26日', '27日', '28日', '29日'];
+                break;
+              case 3:
+              case 5:
+              case 8:
+              case 10:
+                data.multiArray[2] = ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日', '12日', '13日', '14日', '15日', '16日', '17日', '18日', '19日', '20日', '21日', '22日', '23日', '24日', '25日', '26日', '27日', '28日', '29日', '30日'];
+                break;
             }
             break;
           default:
-              switch (data.multiIndex[1]){
-                case 0:case 2:case 4:case 6:case 7:case 9:case 11:
-                    data.multiArray[2] = ['1日', '2日','3日','4日','5日','6日','7日','8日','9日','10日','11日','12日','13日','14日','15日','16日','17日','18日','19日','20日','21日','22日','23日','24日','25日'
-                    ,'26日','27日','28日','29日','30日','31日'];
-                    break;
-                case 1:
-                    data.multiArray[2] = ['1日', '2日','3日','4日','5日','6日','7日','8日','9日','10日','11日','12日','13日','14日','15日','16日','17日','18日','19日','20日','21日','22日','23日','24日','25日'
-                    ,'26日','27日','28日'];
-                    break;
-                case 3:case 5:case 8:case 10:
-                    data.multiArray[2] = ['1日', '2日','3日','4日','5日','6日','7日','8日','9日','10日','11日','12日','13日','14日','15日','16日','17日','18日','19日','20日','21日','22日','23日','24日','25日'
-                    ,'26日','27日','28日','29日','30日'];
-                    break;
-              }
-              break;
+            switch (data.multiIndex[1]) {
+              case 0:
+              case 2:
+              case 4:
+              case 6:
+              case 7:
+              case 9:
+              case 11:
+                data.multiArray[2] = ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日', '12日', '13日', '14日', '15日', '16日', '17日', '18日', '19日', '20日', '21日', '22日', '23日', '24日', '25日', '26日', '27日', '28日', '29日', '30日', '31日'];
+                break;
+              case 1:
+                data.multiArray[2] = ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日', '12日', '13日', '14日', '15日', '16日', '17日', '18日', '19日', '20日', '21日', '22日', '23日', '24日', '25日', '26日', '27日', '28日'];
+                break;
+              case 3:
+              case 5:
+              case 8:
+              case 10:
+                data.multiArray[2] = ['1日', '2日', '3日', '4日', '5日', '6日', '7日', '8日', '9日', '10日', '11日', '12日', '13日', '14日', '15日', '16日', '17日', '18日', '19日', '20日', '21日', '22日', '23日', '24日', '25日', '26日', '27日', '28日', '29日', '30日'];
+                break;
+            }
+            break;
         }
         data.multiIndex[2] = 0;
 
     }
-    console.log(data.multiIndex);
+    //console.log(data.multiIndex);
     this.setData(data);
   },
-  bindMultiPickerColumnChange2: function (e) {
-    console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+  bindMultiPickerColumnChange2: function(e) {
+    this.setData({
+      strend: true,
+      str_time2: ":"
+    })
+    //console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
     var data = {
       multiArray: this.data.multiArray,
       multiIndex2: this.data.multiIndex2
     };
     data.multiIndex2[e.detail.column] = e.detail.value;
-    this.oldColumn =data.multiIndex2[e.detail.column];
+    this.oldColumn = data.multiIndex2[e.detail.column];
     switch (e.detail.column) {
-      case 0:case 1:case 2:
+      case 0:
+      case 1:
+      case 2:
         wx.showToast({
-          title:"约场的起始时间和结束时间须在同一天内",
-          mask:true,
-          duration:1000,
-          icon :"none"
+          title: "约场的起始时间和结束时间须在同一天内",
+          mask: true,
+          duration: 1000,
+          icon: "none"
         });
-        data.multiIndex2[e.detail.column] =this.oldColumn;
+        data.multiIndex2[e.detail.column] = this.oldColumn;
         break;
       case 4:
       case 5:
 
     }
-    console.log(data.multiIndex2);
+    //console.log(data.multiIndex2);
     this.setData(data);
   },
   /* 输入班级/队伍名 */
