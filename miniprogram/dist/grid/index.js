@@ -1,50 +1,61 @@
-Component({
-    externalClasses: ['i-class'],
-
-    relations: {
-        '../grid-item/index': {
-            type: 'child',
-            linked () {
-                this.setGridItemWidth();
-            },
-            linkChanged () {
-                this.setGridItemWidth();
-            },
-            unlinked () {
-                this.setGridItemWidth();
-            }
+import { VantComponent } from '../common/component';
+VantComponent({
+    relation: {
+        name: 'grid-item',
+        type: 'descendant',
+        linked(child) {
+            this.children.push(child);
+        },
+        unlinked(child) {
+            this.children = this.children.filter((item) => item !== child);
         }
     },
-
-    methods: {
-        setGridItemWidth () {
-            const nodes = this.getRelationNodes('../grid-item/index');
-
-            // const len = nodes.length;
-            // if (len < 3) {
-            //     nodes.forEach(item => {
-            //         item.setData({
-            //             'width': '33.33%'
-            //         });
-            //     });
-            // } else {
-            //     const width = 100 / nodes.length;
-            //     nodes.forEach(item => {
-            //         item.setData({
-            //             'width': width + '%'
-            //         });
-            //     });
-            // }
-            const width = 100 / nodes.length;
-            nodes.forEach(item => {
-                item.setData({
-                    'width': width + '%'
-                });
+    props: {
+        square: {
+            type: Boolean,
+            observer: 'updateChildren'
+        },
+        gutter: {
+            type: [Number, String],
+            value: 0,
+            observer: 'updateChildren'
+        },
+        clickable: {
+            type: Boolean,
+            observer: 'updateChildren'
+        },
+        columnNum: {
+            type: Number,
+            value: 4,
+            observer: 'updateChildren'
+        },
+        center: {
+            type: Boolean,
+            value: true,
+            observer: 'updateChildren'
+        },
+        border: {
+            type: Boolean,
+            value: true,
+            observer: 'updateChildren'
+        }
+    },
+    beforeCreate() {
+        this.children = [];
+    },
+    created() {
+        const { gutter } = this.data;
+        if (gutter) {
+            this.setData({
+                style: `padding-left: ${gutter}px`
             });
         }
     },
-
-    ready () {
-        this.setGridItemWidth();
+    methods: {
+        updateChildren() {
+            this.children.forEach((child) => {
+                child.updateStyle();
+            });
+        }
     }
 });

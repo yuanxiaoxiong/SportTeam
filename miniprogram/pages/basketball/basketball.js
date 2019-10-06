@@ -7,9 +7,9 @@ Page({
   data: {
     currentIndex: 0,
     nullMessage: '这里空空如也~',
-    list: 0,
-    acceptStatus: 1,
-    acceptText: '已邀请',
+    list: [],
+    acceptStatus: 0,
+    acceptText: '邀请',
     indexTab: 0,
     listRecord: 0,
     recordStatus: '3',
@@ -35,14 +35,53 @@ Page({
     multiIndex: [, , , , ],
     multiIndex2: [, , , , ],
     strstart: false,
-    strend: false
+    strend: false,
+    orderList: [],
+    myOrderList: [],
+    index_: 0,
+    index_tab: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    wx.login({
+      success(res) {
+        console.log(res)
+      }
+    })
+    //console.log(wx.getStorageSync("token"), "----------")
+    //请求对方发起接口
+    wx.cloud.callFunction({ //调用云函数
+      name: 'showOrder', //云函数名为showOrder
+      data: {
+        openId: wx.getStorageSync("openId")
+      }
+    }).then(res => { //Promise
 
+      console.log(res.result)
+      this.setData({
+        orderList: res.result.data,
+        list: res.result.data
+      })
+    }).catch(err => {
+      console.log(err)
+    })
+    //请求我的发起接口
+    wx.cloud.callFunction({ //调用云函数
+      name: 'showMyOrder', //云函数名为showOrder
+      data: {
+        openId: wx.getStorageSync("openId")
+      }
+    }).then(res => { //Promise
+      console.log(res.result)
+      this.setData({
+        myOrderList: res.result.data
+      })
+    }).catch(err => {
+      console.log(err)
+    })
   },
   /* 首页 */
   shouye_click(event) {
@@ -74,21 +113,25 @@ Page({
   },
   /* 首页tab */
   onClick(event) {
-    console.log("---", event.detail.index)
-    switch (event.detail.index) {
+    console.log("---", event.detail.name)
+    switch (event.detail.name) {
       /* 对方发起 */
       case 0:
         this.setData({
-          list: 10,
+          list: this.data.orderList,
           acceptStatus: 0,
+          index_: 0,
+          index_tab:0,
           acceptText: '邀请'
         })
         break
         /* 我的发起 */
       case 1:
         this.setData({
-          list: 2,
+          list: this.data.myOrderList,
           acceptStatus: 2,
+          index_: 1,
+          index_tab:1,
           acceptText: '撤销'
           // nullMessage: '你还没发起约场呢~'
         })
@@ -164,6 +207,56 @@ Page({
       icon: 'success'
     })
   },
+  //发起约场
+  luanchClick(ev) {
+    wx.showLoading({
+      title: '正在发起...',
+    })
+    var that = this
+    //请求对方发起接口
+    wx.cloud.callFunction({ //调用云函数
+      name: 'addOrder', //云函数名为addOrder
+      data: {
+        openId: wx.getStorageSync("openId"),
+        wxId: encodeURIComponent(this.data.wx_name),
+        myTeamName: encodeURIComponent(this.data.wx_duiwu),
+        time: encodeURIComponent("2019年10月6日 21：00-22：00") //待完成
+      }
+    }).then(res => { //Promise
+      console.log(res.result)
+      if (res.result.code = 200) {
+        wx.hideLoading()
+        //请求我的发起接口
+        wx.cloud.callFunction({ //调用云函数
+          name: 'showMyOrder', //云函数名为showOrder
+          data: {
+            openId: wx.getStorageSync("openId")
+          }
+        }).then(res => { //Promise
+          console.log(res.result)
+          that.setData({
+            currentIndex: 0,
+            myOrderList: res.result.data
+          })
+          if (that.data.index_ == 1) {
+            that.setData({
+              list: res.result.data
+            })
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+    }).catch(err => {
+      console.log(err)
+      wx.hideLoading()
+      wx.showToast({
+        title: String(err),
+        icon: 'none'
+      })
+    })
+  },
+
   /* 输入微信号 */
   wx_input(event) {
     //console.log(event)

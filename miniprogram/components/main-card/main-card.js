@@ -20,18 +20,10 @@ Component({
    * 组件的方法列表
    */
   methods: {
-    // click(event) {
-    //   const index = event.currentTarget.dataset.index
-    //   // console.log("----", index)
-    //   //通知页面内部的点击事件
-    //   this.triggerEvent('itemClick', {
-    //     index
-    //   }, {})
-    // },
     bindgetuserinfo(event) {
       const index = event.currentTarget.dataset.index
       //console.log("------------", index)
-      console.log("-----用户信息-------", event.detail)
+      //console.log("-----用户信息-------", event.detail)
       // console.log("----", index)
       //通知页面内部的点击事件
       this.triggerEvent('itemClick', {

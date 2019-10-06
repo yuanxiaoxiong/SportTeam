@@ -5,6 +5,10 @@ Component({
    */
   properties: {
     list: {
+      type: Array,
+      value: []
+    },
+    index_tab: {
       type: Number,
       value: 0
     },
