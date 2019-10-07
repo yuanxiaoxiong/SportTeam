@@ -161,13 +161,15 @@ Page({
     console.log('------', event.detail.index)
     const index = event.detail.index
     const orderId = event.detail.orderId
-    console.log(orderId, "--------------")
+    const openId = event.detail.openId
+    // console.log(orderId, "--------------")
+    // console.log(openId, "--------------")
     var that = this
     switch (this.data.acceptStatus) {
       /* 邀请 */
       case 0:
         wx.navigateTo({
-          url: '/pages/invite/invite?orderId=' + orderId,
+          url: '/pages/invite/invite?orderId=' + orderId + '&openId=' + openId,
         })
         break
         /* 撤销 */

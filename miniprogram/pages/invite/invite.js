@@ -8,7 +8,9 @@ Page({
     disabled: true,
     wx_name: '',
     wx_duiwu: '',
-    orderId: 0
+    orderId: 0,
+    openId: '',
+    formId: ''
   },
 
   /**
@@ -16,11 +18,16 @@ Page({
    */
   onLoad: function(options) {
     this.setData({
-      orderId: options.orderId
+      orderId: options.orderId,
+      openId: options.openId
     })
   },
-  onHide(e) {
-    console.log('隐藏了')
+  //formId，用于发送模板
+  formSubmit(ev) {
+    //console.log(ev.detail.formId)
+    this.setData({
+      formId: ev.detail.formId
+    })
   },
   /* 确认按钮 */
   sureClick() {
@@ -42,6 +49,18 @@ Page({
     }).then(res => { //Promise
       console.log(res.result)
       if (res.result.message == "SUCCESS") {
+        //模板消息推送
+        wx.cloud.callFunction({ //调用云函数
+          name: 'send', //云函数名为push
+          data: {
+            formId: this.data.formId,
+            openId: this.data.openId
+          }
+        }).then(res => { //Promise
+          console.log(res)
+        }).catch(err => {
+          console.log(err)
+        })
         wx.hideLoading()
         wx.redirectTo({
           url: '/pages/invitesuccess/invitesuccess',

@@ -10,7 +10,7 @@
         <image src='/images/icon_time@2x.png' class='down_img' />
         <view class='time'>{{item.time}}</view>
       </view>
-      <view class='right' bind:tap='{{acceptStatus!=1?"onClick":""}}' data-index='{{index}}' item="{{index}}" data-orderId="{{item.orderId}}">
+      <view class='right' bind:tap='{{acceptStatus!=1?"onClick":""}}' data-index='{{index}}' item="{{index}}" data-orderId="{{item.orderId}}" data-openId="{{item.openId}}">
         <view class='{{acceptStatus==0?"yaoqing":""||acceptStatus==1?"yiyaoqing":""||acceptStatus==2?"chexiao":""}}'>{{acceptText}}</view>
       </view>
     </view>
