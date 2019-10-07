@@ -4,17 +4,17 @@
   <view class='shouye'>
     <!-- tab -->
     <van-tabs swipeable border='{{false}}' bind:click='onClick' active='{{index}}' line-width="{{45}}" color='#e94f4f' nav-class="tabs">
-      <van-tab title="对方发起" />
+      <van-tab title="篮球圈" />
       <van-tab title="我的发起" />
     </van-tabs>
     <!-- item数据 -->
-    <view class='content' hidden='{{list==0}}'>
+    <view class='content' hidden='{{list.length==0}}'>
       <scroll-view class='scroll' scroll-y>
-        <item-data list='{{list}}' bind:inviteItemClick='inviteItemClick' acceptStatus='{{acceptStatus}}' acceptText='{{acceptText}}' />
+        <item-data list='{{list}}' index_tab="{{index_tab}}" bind:inviteItemClick='inviteItemClick' acceptStatus='{{acceptStatus}}' acceptText='{{acceptText}}'/>
       </scroll-view>
     </view>
     <!-- 空数据页null -->
-    <view class='empty' hidden='{{list!=0}}'>
+    <view class='empty' hidden='{{list.length!=0}}'>
       <image src='/images/icon_null@2x.png' class='empty_img'></image>
       <view class='message'>{{nullMessage}}</view>
     </view>
@@ -31,32 +31,30 @@
     </view>
     <view class='msg_duiwu'>
       <text class='msg_text'>队伍/班级名</text>
-      <input type='text' placeholder='请输入队伍/班级名' class='input_wx' maxlength='{{30}}'  bindinput='duiwu_input'></input>
+      <input type='text' placeholder='请输入队伍/班级名' class='input_wx' maxlength='{{30}}' bindinput='duiwu_input'></input>
     </view>
   </view>
   <view class="card">
-      <view class="msg_wx">
-          <text class='msg_text'>起始时间</text>
-          <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
-            <text class="selector_ph" hidden='{{strstart}}'>{{str_start}}</text>
-            <view class="msg_selector">
-             {{multiArray[0][multiIndex[0]]}}{{multiArray[1][multiIndex[1]]}}{{multiArray[2][multiIndex[2]]}}
-              {{multiArray[3][multiIndex[3]]}}{{str_time}}{{multiArray[4][multiIndex[4]]}}
-            </view>
-        </picker>
-      </view>
-      <view class="msg_duiwu">
-            <text class='msg_text'>结束时间</text>
-           <picker mode="multiSelector" bindchange="bindMultiPickerChange2" bindcolumnchange="bindMultiPickerColumnChange2" value="{{multiIndex2}}" range="{{multiArray}}">
-             <text class="selector_ph" hidden='{{strend}}'>{{str_end}}</text>
-             <view class="msg_selector">
-               {{multiArray[0][multiIndex2[0]]}}{{multiArray[1][multiIndex2[1]]}}{{multiArray[2][multiIndex2[2]]}}
-               {{multiArray[3][multiIndex2[3]]}}{{str_time2}}{{multiArray[4][multiIndex2[4]]}}
-             </view>
-        </picker>
-      </view>
+    <view class="msg_wx">
+      <text class='msg_text'>起始时间</text>
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange" bindcolumnchange="bindMultiPickerColumnChange" value="{{multiIndex}}" range="{{multiArray}}">
+        <text class="selector_ph" hidden='{{strstart}}'>{{str_start}}</text>
+        <view class="msg_selector">
+          {{multiArray[0][multiIndex[0]]}}{{multiArray[1][multiIndex[1]]}}{{multiArray[2][multiIndex[2]]}} {{multiArray[3][multiIndex[3]]}}{{str_time}}{{multiArray[4][multiIndex[4]]}}
+        </view>
+      </picker>
+    </view>
+    <view class="msg_duiwu">
+      <text class='msg_text'>结束时间</text>
+      <picker mode="multiSelector" bindchange="bindMultiPickerChange2" bindcolumnchange="bindMultiPickerColumnChange2" value="{{multiIndex2}}" range="{{multiArray}}">
+        <text class="selector_ph" hidden='{{strend}}'>{{str_end}}</text>
+        <view class="msg_selector">
+          {{multiArray[0][multiIndex2[0]]}}{{multiArray[1][multiIndex2[1]]}}{{multiArray[2][multiIndex2[2]]}} {{multiArray[3][multiIndex2[3]]}}{{str_time2}}{{multiArray[4][multiIndex2[4]]}}
+        </view>
+      </picker>
+    </view>
   </view>
-  <view class='{{disabled==true?"sure_btn":"sure_btn_active"}}' bindtap='{{disabled==true?"":"sureClick"}}'>
+  <view class='{{disabled==true?"sure_btn":"sure_btn_active"}}' bindtap='{{disabled==true?"":"luanchClick"}}'>
     <view class='{{disabled==true?"sure_text":"sure_text_active"}}'>发起约场</view>
   </view>
 </view>
@@ -67,14 +65,14 @@
   <!-- tab -->
   <record-tab index="{{indexTab}}" bind:daiqueren_click='daiqueren_click' bind:jinxingzhong_click='jinxingzhong_click' bind:yishixiao_click='yishixiao_click' />
   <!-- item数据 -->
-  <view class='content' hidden='{{listRecord==0}}'>
+  <view class='content' hidden='{{listRecord.length==0}}'>
     <scroll-view class='scroll' scroll-y>
       <view class='top_record'></view>
-      <item-record list='{{listRecord}}' bind:onClickToRunning='onClickToRunning' recordStatus='{{recordStatus}}' recordText='{{recordText}}' />
+      <item-record list='{{listRecord}}' bind:onClickToRunning='onClickToRunning' recordStatus='{{recordStatus}}' recordText='{{recordText}}' token = "{{token}}" />
     </scroll-view>
   </view>
   <!-- 空数据页null -->
-  <view class='empty' hidden='{{listRecord!=0}}'>
+  <view class='empty' hidden='{{listRecord.length!=0}}'>
     <image src='/images/icon_null@2x.png' class='empty_img'></image>
     <view class='message'>{{nullMessage}}</view>
   </view>
@@ -88,5 +86,5 @@
 
 <!-- 底部导航栏 -->
 <view class='footer'>
-  <footer-tab cIndex="{{currentIndex}}" bind:shouye_click="shouye_click" bind:yuechang_click="yuechang_click" bind:jilu_click="jilu_click" bind:jifenban_click="jifenban_click" />
+  <footer-tab currentIndex="{{currentIndex}}" bind:shouye_click="shouye_click" bind:yuechang_click="yuechang_click" bind:jilu_click="jilu_click" bind:jifenban_click="jifenban_click" />
 </view>

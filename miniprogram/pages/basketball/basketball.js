@@ -7,11 +7,11 @@ Page({
   data: {
     currentIndex: 0,
     nullMessage: '这里空空如也~',
-    list: 0,
-    acceptStatus: 1,
-    acceptText: '已邀请',
+    list: [],
+    acceptStatus: 0,
+    acceptText: '邀请',
     indexTab: 0,
-    listRecord: 0,
+    listRecord: [],
     recordStatus: '3',
     recordText: '待确认',
     multiArray: [
@@ -35,7 +35,13 @@ Page({
     multiIndex: [, , , , ],
     multiIndex2: [, , , , ],
     strstart: false,
-    strend: false
+    strend: false,
+    orderList: [],
+    myOrderList: [],
+    index_: 0,
+    index_tab: 0,
+    str_FullTime: "",
+    token: ''
   },
 
   /**
@@ -43,6 +49,39 @@ Page({
    */
   onLoad: function(options) {
 
+    this.setData({
+      token: wx.getStorageSync("token")
+    })
+    //请求对方发起接口
+    wx.cloud.callFunction({ //调用云函数
+      name: 'showOrder', //云函数名为showOrder
+      data: {
+        openId: wx.getStorageSync("openId")
+      }
+    }).then(res => { //Promise
+
+      console.log(res.result)
+      this.setData({
+        orderList: res.result.data,
+        list: res.result.data
+      })
+    }).catch(err => {
+      console.log(err)
+    })
+    //请求我的发起接口
+    wx.cloud.callFunction({ //调用云函数
+      name: 'showMyOrder', //云函数名为showOrder
+      data: {
+        openId: wx.getStorageSync("openId")
+      }
+    }).then(res => { //Promise
+      console.log(res.result)
+      this.setData({
+        myOrderList: res.result.data
+      })
+    }).catch(err => {
+      console.log(err)
+    })
   },
   /* 首页 */
   shouye_click(event) {
@@ -64,6 +103,24 @@ Page({
     this.setData({
       currentIndex: event.detail.index
     })
+    const list = []
+    for (var i = 0; i < this.data.myOrderList.length; i++) {
+      if (this.data.myOrderList[i].orderState == 3) {
+        list.push(this.data.myOrderList[i])
+      }
+    }
+    for (var i = 0; i < this.data.orderList.length; i++) {
+      if (this.data.orderList[i].token == this.data.token &&
+        this.data.orderList[i].orderState == 3) {
+        list.push(this.data.orderList[i])
+      }
+    }
+    this.setData({
+      indexTab: 0,
+      listRecord: list,
+      recordStatus: '3',
+      recordText: '待确认'
+    })
   },
   /* 计分器 */
   jifenban_click(event) {
@@ -74,21 +131,25 @@ Page({
   },
   /* 首页tab */
   onClick(event) {
-    console.log("---", event.detail.index)
-    switch (event.detail.index) {
+    console.log("---", event.detail.name)
+    switch (event.detail.name) {
       /* 对方发起 */
       case 0:
         this.setData({
-          list: 10,
+          list: this.data.orderList,
           acceptStatus: 0,
+          index_: 0,
+          index_tab: 0,
           acceptText: '邀请'
         })
         break
         /* 我的发起 */
       case 1:
         this.setData({
-          list: 2,
+          list: this.data.myOrderList,
           acceptStatus: 2,
+          index_: 1,
+          index_tab: 1,
           acceptText: '撤销'
           // nullMessage: '你还没发起约场呢~'
         })
@@ -98,11 +159,15 @@ Page({
   /* 首页邀请、撤销 */
   inviteItemClick(event) {
     console.log('------', event.detail.index)
+    const index = event.detail.index
+    const orderId = event.detail.orderId
+    console.log(orderId, "--------------")
+    var that = this
     switch (this.data.acceptStatus) {
       /* 邀请 */
       case 0:
         wx.navigateTo({
-          url: '/pages/invite/invite',
+          url: '/pages/invite/invite?orderId=' + orderId,
         })
         break
         /* 撤销 */
@@ -115,6 +180,44 @@ Page({
           success(res) {
             if (res.confirm) {
               console.log('确认')
+              //撤销接口
+              wx.cloud.callFunction({ //调用云函数
+                name: 'delOrder', //云函数名为delOrder
+                data: {
+                  orderId: that.data.myOrderList[index].orderId
+                }
+              }).then(res => { //Promise
+                console.log(res.result, "---------")
+                if (res.result.message == "SUCCESS") {
+                  wx.showToast({
+                    title: '撤销成功',
+                    icon: 'none'
+                  })
+                  //请求我的发起接口
+                  wx.cloud.callFunction({ //调用云函数
+                    name: 'showMyOrder', //云函数名为showOrder
+                    data: {
+                      openId: wx.getStorageSync("openId")
+                    }
+                  }).then(res => { //Promise
+                    console.log(res.result)
+                    that.setData({
+                      myOrderList: res.result.data,
+                      list: res.result.data
+                    })
+                  }).catch(err => {
+                    console.log(err)
+                  })
+                } else {
+                  wx.showToast({
+                    title: '撤销失败',
+                    icon: 'none',
+                    time: 1500
+                  })
+                }
+              }).catch(err => {
+                console.log(err)
+              })
             } else if (res.cancel) {
               console.log('取消')
             }
@@ -127,19 +230,44 @@ Page({
   //待确认
   daiqueren_click(e) {
     console.log("+++", e.detail.index)
+    const list = []
+    for (var i = 0; i < this.data.myOrderList.length; i++) {
+      if (this.data.myOrderList[i].orderState == 3) {
+        list.push(this.data.myOrderList[i])
+      }
+    }
+    for (var i = 0; i < this.data.orderList.length; i++) {
+      if (this.data.orderList[i].token == this.data.token &&
+        this.data.orderList[i].orderState == 3) {
+        list.push(this.data.orderList[i])
+      }
+    }
     this.setData({
       indexTab: e.detail.index,
-      listRecord: 10,
+      listRecord: list,
       recordStatus: '3',
       recordText: '待确认'
     })
+
   },
   //进行中
   jinxingzhong_click(e) {
     console.log("+++", e.detail.index)
+    const list = []
+    for (var i = 0; i < this.data.myOrderList.length; i++) {
+      if (this.data.myOrderList[i].orderState == 4) {
+        list.push(this.data.myOrderList[i])
+      }
+    }
+    for (var i = 0; i < this.data.orderList.length; i++) {
+      if (this.data.orderList[i].token == this.data.token &&
+        this.data.orderList[i].orderState == 4) {
+        list.push(this.data.orderList[i])
+      }
+    }
     this.setData({
       indexTab: e.detail.index,
-      listRecord: 5,
+      listRecord: list,
       recordStatus: '4',
       recordText: '进行中'
     })
@@ -147,9 +275,21 @@ Page({
   //已失效
   yishixiao_click(e) {
     console.log("+++", e.detail.index)
+    const list = []
+    for (var i = 0; i < this.data.myOrderList.length; i++) {
+      if (this.data.myOrderList[i].orderState == 5) {
+        list.push(this.data.myOrderList[i])
+      }
+    }
+    for (var i = 0; i < this.data.orderList.length; i++) {
+      if (this.data.orderList[i].token == this.data.token &&
+        this.data.orderList[i].orderState == 5) {
+        list.push(this.data.orderList[i])
+      }
+    }
     this.setData({
       indexTab: e.detail.index,
-      listRecord: 2,
+      listRecord: list,
       recordStatus: '5',
       recordText: '已失效'
     })
@@ -164,6 +304,77 @@ Page({
       icon: 'success'
     })
   },
+  //点击进行中的item，跳转到添加好友页面
+  onClickToRunning(ev) {
+    var list = ev.detail.item
+    console.log(list)
+    var info = 0
+    if (list.openId == wx.getStorageSync("openId")) {
+      info = 1
+    }
+    wx.navigateTo({
+      url: '/pages/addfriend/addfriend?myTeamName=' + list.myTeamName + '&teamName=' + list.teamName +
+        '&time=' + list.time + '&token=' + list.token + '&weiXin2Id=' + list.weiXin2Id + '&weiXinId=' + list.weiXinId + '&info=' + info,
+    })
+  },
+  //发起约场
+  luanchClick(ev) {
+    wx.showLoading({
+      title: '正在发起...',
+    })
+    var that = this
+    //请求对方发起接口
+    wx.cloud.callFunction({ //调用云函数
+      name: 'addOrder', //云函数名为addOrder
+      data: {
+        openId: wx.getStorageSync("openId"),
+        wxId: encodeURIComponent(this.data.wx_name),
+        myTeamName: encodeURIComponent(this.data.wx_duiwu),
+        time: encodeURIComponent(this.data.str_FullTime)
+      }
+    }).then(res => { //Promise
+      console.log(res.result)
+      if (res.result.code = 200) {
+        wx.hideLoading()
+        //请求我的发起接口
+        wx.cloud.callFunction({ //调用云函数
+          name: 'showMyOrder', //云函数名为showOrder
+          data: {
+            openId: wx.getStorageSync("openId")
+          }
+        }).then(res => { //Promise
+          console.log(res.result)
+          var mylist = res.result.data
+          that.setData({
+            currentIndex: 0,
+            myOrderList: mylist
+          })
+          if (that.data.index_ == 1) {
+            const list = res.result.data
+            that.setData({
+              list: list
+            })
+            wx.showToast({
+              title: '发起成功',
+              duration: 2000,
+              mask: true,
+              icon: 'success'
+            })
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+    }).catch(err => {
+      console.log(err)
+      wx.hideLoading()
+      wx.showToast({
+        title: String(err),
+        icon: 'none'
+      })
+    })
+  },
+
   /* 输入微信号 */
   wx_input(event) {
     //console.log(event)
@@ -199,10 +410,6 @@ Page({
     })
   },
   bindMultiPickerColumnChange: function(e) {
-    this.setData({
-      strstart: true,
-      str_time: ":"
-    })
     //console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
     var data = {
       multiArray: this.data.multiArray,
@@ -264,37 +471,56 @@ Page({
     }
     //console.log(data.multiIndex);
     this.setData(data);
+    this.setData({
+      strstart: true,
+      str_time: ":",
+      str_FullTime: this.data.multiArray[0][this.data.multiIndex[0]] + this.data.multiArray[1][this.data.multiIndex[1]] + this.data.multiArray[2][this.data.multiIndex[2]] + this.data.multiArray[3][this.data.multiIndex[3]] + ":" + this.data.multiArray[4][this.data.multiIndex[4]] + "-" + this.data.multiArray[3][this.data.multiIndex2[3]] + ":" + this.data.multiArray[4][this.data.multiIndex2[4]]
+    })
+    console.log(this.data.str_FullTime)
   },
   bindMultiPickerColumnChange2: function(e) {
-    this.setData({
-      strend: true,
-      str_time2: ":"
-    })
-    //console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
-    var data = {
-      multiArray: this.data.multiArray,
-      multiIndex2: this.data.multiIndex2
-    };
-    data.multiIndex2[e.detail.column] = e.detail.value;
-    this.oldColumn = data.multiIndex2[e.detail.column];
-    switch (e.detail.column) {
-      case 0:
-      case 1:
-      case 2:
-        wx.showToast({
-          title: "约场的起始时间和结束时间须在同一天内",
-          mask: true,
-          duration: 1000,
-          icon: "none"
-        });
-        data.multiIndex2[e.detail.column] = this.oldColumn;
-        break;
-      case 4:
-      case 5:
 
+    //console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+    var  data  =   {      
+      multiArray:  this.data.multiArray,
+      multiIndex2:  this.data.multiIndex2    
+    };    
+    data.multiIndex2[e.detail.column]  =  e.detail.value;    
+    switch  (e.detail.column)  {      
+      case  0:
+              
+      case  1:
+              
+      case  2:
+         wx.showToast({          
+          title:   "约场的起始时间和结束时间须在同一天内",
+          mask:  true,
+          duration:  1000,
+          icon:   "none"
+        });        
+        data.multiIndex2[0] = this.data.multiIndex[0];        
+        data.multiIndex2[1] = this.data.multiIndex[1];        
+        data.multiIndex2[2] = this.data.multiIndex[2];        
+        break;      
+      case  3:
+        if (data.multiIndex2[e.detail.column] < this.data.multiIndex[e.detail.column]) {          
+          data.multiIndex2[e.detail.column] = this.data.multiIndex[e.detail.column]
+        }      
+      case  4:
+        if (data.multiIndex2[3] == this.data.multiIndex[3]) {
+          if (data.multiIndex2[e.detail.column] < this.data.multiIndex[e.detail.column]) {
+            data.multiIndex2[e.detail.column] = this.data.multiIndex[e.detail.column]
+          }
+        }
     }
     //console.log(data.multiIndex2);
     this.setData(data);
+    this.setData({
+      strend: true,
+      str_time2: ":",
+      str_FullTime: this.data.multiArray[0][this.data.multiIndex[0]] + this.data.multiArray[1][this.data.multiIndex[1]] + this.data.multiArray[2][this.data.multiIndex[2]] + this.data.multiArray[3][this.data.multiIndex[3]] + ":" + this.data.multiArray[4][this.data.multiIndex[4]] + "-" + this.data.multiArray[3][this.data.multiIndex2[3]] + ":" + this.data.multiArray[4][this.data.multiIndex2[4]]
+    })
+    console.log(this.data.str_FullTime)
   },
   /* 输入班级/队伍名 */
   duiwu_input(event) {
@@ -312,6 +538,39 @@ Page({
         disabled: true
       })
     }
-  }
+  },
+  //下拉刷新
+  onPullDownRefresh() {
+    //请求对方发起接口
+    wx.cloud.callFunction({ //调用云函数
+      name: 'showOrder', //云函数名为showOrder
+      data: {
+        openId: wx.getStorageSync("openId")
+      }
+    }).then(res => { //Promise
 
+      console.log(res.result)
+      this.setData({
+        orderList: res.result.data,
+        list: res.result.data
+      })
+    }).catch(err => {
+      console.log(err)
+    })
+    //请求我的发起接口
+    wx.cloud.callFunction({ //调用云函数
+      name: 'showMyOrder', //云函数名为showOrder
+      data: {
+        openId: wx.getStorageSync("openId")
+      }
+    }).then(res => { //Promise
+      console.log(res.result)
+      this.setData({
+        myOrderList: res.result.data
+      })
+      wx.stopPullDownRefresh()
+    }).catch(err => {
+      console.log(err)
+    })
+  }
 })
