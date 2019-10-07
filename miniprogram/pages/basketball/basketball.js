@@ -131,7 +131,7 @@ Page({
   },
   /* 首页tab */
   onClick(event) {
-    console.log("---", event.detail.name)
+    console.log("+++", event.detail.name)
     switch (event.detail.name) {
       /* 对方发起 */
       case 0:
@@ -382,7 +382,7 @@ Page({
     this.setData({
       wx_name: name.replace(/\s+/g, '')
     })
-    if (this.data.wx_name != '' && this.data.wx_duiwu != '') {
+    if (this.data.wx_name != '' && this.data.wx_duiwu != '' &&  this.data.str_time  != ''  && this.data.str_time2  != '') {
       this.setData({
         disabled: false
       })
@@ -416,6 +416,9 @@ Page({
       multiIndex: this.data.multiIndex
     };
     data.multiIndex[e.detail.column] = e.detail.value;
+    for (this.data.x = 0; this.data.x < 5; this.data.x += 1) {
+      if (this.data.multiIndex[this.data.x] == null) this.data.multiIndex[this.data.x] = 0
+    }
     switch (e.detail.column) {
       case 0:
       case 1:
@@ -476,6 +479,15 @@ Page({
       str_time: ":",
       str_FullTime: this.data.multiArray[0][this.data.multiIndex[0]] + this.data.multiArray[1][this.data.multiIndex[1]] + this.data.multiArray[2][this.data.multiIndex[2]] + this.data.multiArray[3][this.data.multiIndex[3]] + ":" + this.data.multiArray[4][this.data.multiIndex[4]] + "-" + this.data.multiArray[3][this.data.multiIndex2[3]] + ":" + this.data.multiArray[4][this.data.multiIndex2[4]]
     })
+    if (this.data.wx_name != '' && this.data.wx_duiwu != '' && this.data.str_time != '' && this.data.str_time2 != '') {
+      this.setData({
+        disabled: false
+      })
+    } else {
+      this.setData({
+        disabled: true
+      })
+    }
     console.log(this.data.str_FullTime)
   },
   bindMultiPickerColumnChange2: function(e) {
@@ -485,7 +497,10 @@ Page({
       multiArray:  this.data.multiArray,
       multiIndex2:  this.data.multiIndex2    
     };    
-    data.multiIndex2[e.detail.column]  =  e.detail.value;    
+    data.multiIndex2[e.detail.column]  =  e.detail.value; 
+    for (this.data.x = 0; this.data.x < 5; this.data.x += 1) {
+      if (this.data.multiIndex2[this.data.x] == null) this.data.multiIndex2[this.data.x] = 0
+    }   
     switch  (e.detail.column)  {      
       case  0:
               
@@ -520,6 +535,15 @@ Page({
       str_time2: ":",
       str_FullTime: this.data.multiArray[0][this.data.multiIndex[0]] + this.data.multiArray[1][this.data.multiIndex[1]] + this.data.multiArray[2][this.data.multiIndex[2]] + this.data.multiArray[3][this.data.multiIndex[3]] + ":" + this.data.multiArray[4][this.data.multiIndex[4]] + "-" + this.data.multiArray[3][this.data.multiIndex2[3]] + ":" + this.data.multiArray[4][this.data.multiIndex2[4]]
     })
+    if (this.data.wx_name != '' && this.data.wx_duiwu != '' && this.data.str_time != '' && this.data.str_time2 != '') {
+      this.setData({
+        disabled: false
+      })
+    } else {
+      this.setData({
+        disabled: true
+      })
+    }
     console.log(this.data.str_FullTime)
   },
   /* 输入班级/队伍名 */
@@ -529,7 +553,7 @@ Page({
     this.setData({
       wx_duiwu: wx_duiwu.replace(/\s+/g, '')
     })
-    if (this.data.wx_name != '' && this.data.wx_duiwu != '') {
+    if (this.data.wx_name != '' && this.data.wx_duiwu != '' &&  this.data.str_time != '' && this.data.str_time2 != '') {
       this.setData({
         disabled: false
       })
@@ -551,9 +575,11 @@ Page({
 
       console.log(res.result)
       this.setData({
-        orderList: res.result.data,
-        list: res.result.data
+        orderList: res.result.data
       })
+      if (this.data.index_tab == 0) {
+        list: res.result.data
+      }
     }).catch(err => {
       console.log(err)
     })
@@ -568,6 +594,9 @@ Page({
       this.setData({
         myOrderList: res.result.data
       })
+      if (this.data.index_tab == 1) {
+        list: res.result.data
+      }
       wx.stopPullDownRefresh()
     }).catch(err => {
       console.log(err)
