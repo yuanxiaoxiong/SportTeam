@@ -6,7 +6,7 @@ cloud.init()
 
 // 云函数入口函数
 exports.main = async(event, context) => {
-  let url = 'https://www.huaguangstore.com.cn/order/addOrder?openId=' + event.openId + '&weixinId=' + event.wxId + '&orderState=3' + '&myTeamName=' + event.myTeamName + '&time=' + event.time;
+  let url = 'https://www.huaguangstore.com.cn/order/addOrder?openId=' + event.openId + '&weixinId=' + event.wxId + '&orderState=0' + '&myTeamName=' + event.myTeamName + '&time=' + event.time;
   var options = {
     method: 'POST',
     uri: url,

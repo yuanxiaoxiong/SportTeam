@@ -39,7 +39,8 @@ Page({
     orderList: [],
     myOrderList: [],
     index_: 0,
-    index_tab: 0
+    index_tab: 0,
+    str_FullTime: ""
   },
 
   /**
@@ -121,7 +122,7 @@ Page({
           list: this.data.orderList,
           acceptStatus: 0,
           index_: 0,
-          index_tab:0,
+          index_tab: 0,
           acceptText: '邀请'
         })
         break
@@ -131,7 +132,7 @@ Page({
           list: this.data.myOrderList,
           acceptStatus: 2,
           index_: 1,
-          index_tab:1,
+          index_tab: 1,
           acceptText: '撤销'
           // nullMessage: '你还没发起约场呢~'
         })
@@ -141,11 +142,15 @@ Page({
   /* 首页邀请、撤销 */
   inviteItemClick(event) {
     console.log('------', event.detail.index)
+    const index = event.detail.index
+    const orderId = event.detail.orderId
+    console.log(orderId, "--------------")
+    var that = this
     switch (this.data.acceptStatus) {
       /* 邀请 */
       case 0:
         wx.navigateTo({
-          url: '/pages/invite/invite',
+          url: '/pages/invite/invite?orderId=' + orderId,
         })
         break
         /* 撤销 */
@@ -158,6 +163,43 @@ Page({
           success(res) {
             if (res.confirm) {
               console.log('确认')
+              //撤销接口
+              wx.cloud.callFunction({ //调用云函数
+                name: 'delOrder', //云函数名为delOrder
+                data: {
+                  orderId: that.data.myOrderList[index].orderId
+                }
+              }).then(res => { //Promise
+                console.log(res.result)
+                if (res.result.message = 'SUCCESS') {
+                  wx.showToast({
+                    title: '撤销成功',
+                    icon: 'none'
+                  })
+                  //请求我的发起接口
+                  wx.cloud.callFunction({ //调用云函数
+                    name: 'showMyOrder', //云函数名为showOrder
+                    data: {
+                      openId: wx.getStorageSync("openId")
+                    }
+                  }).then(res => { //Promise
+                    console.log(res.result)
+                    that.setData({
+                      myOrderList: res.result.data,
+                      list: res.result.data
+                    })
+                  }).catch(err => {
+                    console.log(err)
+                  })
+                } else {
+                  wx.showToast({
+                    title: '撤销失败',
+                    icon: 'none'
+                  })
+                }
+              }).catch(err => {
+                console.log(err)
+              })
             } else if (res.cancel) {
               console.log('取消')
             }
@@ -220,7 +262,7 @@ Page({
         openId: wx.getStorageSync("openId"),
         wxId: encodeURIComponent(this.data.wx_name),
         myTeamName: encodeURIComponent(this.data.wx_duiwu),
-        time: encodeURIComponent("2019年10月6日 21：00-22：00") //待完成
+        time: encodeURIComponent(this.data.str_FullTime) //已完成
       }
     }).then(res => { //Promise
       console.log(res.result)
@@ -234,13 +276,15 @@ Page({
           }
         }).then(res => { //Promise
           console.log(res.result)
+          var mylist = res.result.data
           that.setData({
             currentIndex: 0,
-            myOrderList: res.result.data
+            myOrderList: mylist
           })
           if (that.data.index_ == 1) {
+            const list = res.result.data
             that.setData({
-              list: res.result.data
+              list: list
             })
           }
         }).catch(err => {
@@ -292,10 +336,6 @@ Page({
     })
   },
   bindMultiPickerColumnChange: function(e) {
-    this.setData({
-      strstart: true,
-      str_time: ":"
-    })
     //console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
     var data = {
       multiArray: this.data.multiArray,
@@ -357,37 +397,56 @@ Page({
     }
     //console.log(data.multiIndex);
     this.setData(data);
+    this.setData({
+      strstart: true,
+      str_time: ":",
+      str_FullTime: this.data.multiArray[0][this.data.multiIndex[0]] + this.data.multiArray[1][this.data.multiIndex[1]] + this.data.multiArray[2][this.data.multiIndex[2]] + this.data.multiArray[3][this.data.multiIndex[3]] + ":" + this.data.multiArray[4][this.data.multiIndex[4]] + "-" + this.data.multiArray[3][this.data.multiIndex2[3]] + ":" + this.data.multiArray[4][this.data.multiIndex2[4]]
+    })
+    console.log(this.data.str_FullTime)
   },
   bindMultiPickerColumnChange2: function(e) {
-    this.setData({
-      strend: true,
-      str_time2: ":"
-    })
-    //console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
-    var data = {
-      multiArray: this.data.multiArray,
-      multiIndex2: this.data.multiIndex2
-    };
-    data.multiIndex2[e.detail.column] = e.detail.value;
-    this.oldColumn = data.multiIndex2[e.detail.column];
-    switch (e.detail.column) {
-      case 0:
-      case 1:
-      case 2:
-        wx.showToast({
-          title: "约场的起始时间和结束时间须在同一天内",
-          mask: true,
-          duration: 1000,
-          icon: "none"
-        });
-        data.multiIndex2[e.detail.column] = this.oldColumn;
-        break;
-      case 4:
-      case 5:
 
+    //console.log('修改的列为', e.detail.column, '，值为', e.detail.value);
+    var  data  =   {      
+      multiArray:  this.data.multiArray,
+      multiIndex2:  this.data.multiIndex2    
+    };    
+    data.multiIndex2[e.detail.column]  =  e.detail.value;    
+    switch  (e.detail.column)  {      
+      case  0:
+              
+      case  1:
+              
+      case  2:
+         wx.showToast({          
+          title:   "约场的起始时间和结束时间须在同一天内",
+          mask:  true,
+          duration:  1000,
+          icon:   "none"
+        });        
+        data.multiIndex2[0] = this.data.multiIndex[0];        
+        data.multiIndex2[1] = this.data.multiIndex[1];        
+        data.multiIndex2[2] = this.data.multiIndex[2];        
+        break;      
+      case  3:
+        if (data.multiIndex2[e.detail.column] < this.data.multiIndex[e.detail.column]) {          
+          data.multiIndex2[e.detail.column] = this.data.multiIndex[e.detail.column]
+        }      
+      case  4:
+        if (data.multiIndex2[3] == this.data.multiIndex[3]) {
+          if (data.multiIndex2[e.detail.column] < this.data.multiIndex[e.detail.column]) {
+            data.multiIndex2[e.detail.column] = this.data.multiIndex[e.detail.column]
+          }
+        }
     }
     //console.log(data.multiIndex2);
     this.setData(data);
+    this.setData({
+      strend: true,
+      str_time2: ":",
+      str_FullTime: this.data.multiArray[0][this.data.multiIndex[0]] + this.data.multiArray[1][this.data.multiIndex[1]] + this.data.multiArray[2][this.data.multiIndex[2]] + this.data.multiArray[3][this.data.multiIndex[3]] + ":" + this.data.multiArray[4][this.data.multiIndex[4]] + "-" + this.data.multiArray[3][this.data.multiIndex2[3]] + ":" + this.data.multiArray[4][this.data.multiIndex2[4]]
+    })
+    console.log(this.data.str_FullTime)
   },
   /* 输入班级/队伍名 */
   duiwu_input(event) {

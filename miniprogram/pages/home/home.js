@@ -67,7 +67,7 @@ Page({
               }).catch(err => {
                 wx.hideLoading()
                 wx.showToast({
-                  title: err+"",
+                  title: err + "",
                 })
               })
             }
@@ -75,5 +75,13 @@ Page({
         }
         break
     }
+  },
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function() {
+    wx.showShareMenu({
+      withShareTicket: true
+    })
   }
 })

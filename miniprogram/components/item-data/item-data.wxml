@@ -6,11 +6,11 @@
     <view class='con'>
       <view class='left'>
         <image class='up_img' src='/images/icon_team@2x.png' />
-        <view class='duiwu'>{{index_tab==0?item.teamName:item.myTeamName}}</view>
+        <view class='duiwu'>{{item.myTeamName}}</view>
         <image src='/images/icon_time@2x.png' class='down_img' />
         <view class='time'>{{item.time}}</view>
       </view>
-      <view class='right' bind:tap='{{acceptStatus!=1?"onClick":""}}' data-index='{{index}}' item="{{index}}">
+      <view class='right' bind:tap='{{acceptStatus!=1?"onClick":""}}' data-index='{{index}}' item="{{index}}" data-orderId="{{item.orderId}}">
         <view class='{{acceptStatus==0?"yaoqing":""||acceptStatus==1?"yiyaoqing":""||acceptStatus==2?"chexiao":""}}'>{{acceptText}}</view>
       </view>
     </view>

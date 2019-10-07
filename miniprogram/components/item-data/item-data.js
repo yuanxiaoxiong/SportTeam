@@ -36,11 +36,12 @@ Component({
    */
   methods: {
     onClick(event) {
-      //console.log(event.currentTarget.dataset.index)
+      //console.log(event.currentTarget.dataset)
       const index = event.currentTarget.dataset.index
+      const orderId = event.currentTarget.dataset.orderid
       //通知页面内部的点击事件
       this.triggerEvent('inviteItemClick', {
-        index
+        index, orderId
       }, {})
     }
   }
