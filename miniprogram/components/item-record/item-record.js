@@ -5,8 +5,8 @@ Component({
    */
   properties: {
     list: {
-      type: Number,
-      value: 0
+      type: Array,
+      value: []
     },
     /* 需要整理成list列表 */
     recordText: {
@@ -17,6 +17,10 @@ Component({
     recordStatus: {
       type: Number,
       value: 3
+    },
+    token: {
+      type: String,
+      value: ''
     }
   },
 
@@ -32,11 +36,11 @@ Component({
    */
   methods: {
     onClickToRunning(e) {
-      console.log('----',e.currentTarget.dataset.index)
-      const index = e.currentTarget.dataset.index
+      //console.log('----',e)
+      const item = e.currentTarget.dataset.item
       //通知页面内部的点击事件
       this.triggerEvent('onClickToRunning', {
-        index
+        item
       }, {})
     }
   }

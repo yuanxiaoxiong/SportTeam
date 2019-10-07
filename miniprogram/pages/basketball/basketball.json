@@ -8,5 +8,6 @@
     "item-record": "/components/item-record/item-record"
   },
   "navigationBarTitleText": "篮球约场",
-  "enablePullDownRefresh": false
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#ebebeb"
 }

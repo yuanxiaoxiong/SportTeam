@@ -5,64 +5,47 @@ Page({
    * 页面的初始数据
    */
   data: {
-    info_wxh: 'R648187916',
-    info_class: '17级软件工程2班',
-    info_time:'2019年9月9日 15:00-17:00'
+    this_token: '',
+    list: [],
+    myTeamName: '',
+    teamName: '',
+    time: '',
+    token: '',
+    weiXin2Id: '',
+    weiXinId: '',
+    info: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
-  onLoad: function (options) {
-
+  onLoad: function(options) {
+    //console.log(options)
+    this.setData({
+      this_token: wx.getStorageSync("token"),
+      myTeamName: options.myTeamName,
+      teamName: options.teamName,
+      time: options.time,
+      token: options.token,
+      weiXin2Id: options.weiXin2Id,
+      weiXinId: options.weiXinId,
+      info: options.info
+    })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  //添加好友
+  addClick(ev) {
+    if (this.data.this_token == this.data.token) {
+      wx.setClipboardData({
+        data: this.data.weiXin2Id
+      })
+    } else if (this.data.info == 1) {
+      wx.setClipboardData({
+        data: this.data.weiXin2Id
+      })
+    } else {
+      wx.setClipboardData({
+        data: this.data.weiXinId
+      })
+    }
   }
 })

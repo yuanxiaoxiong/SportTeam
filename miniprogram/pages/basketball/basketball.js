@@ -11,7 +11,7 @@ Page({
     acceptStatus: 0,
     acceptText: '邀请',
     indexTab: 0,
-    listRecord: 0,
+    listRecord: [],
     recordStatus: '3',
     recordText: '待确认',
     multiArray: [
@@ -40,19 +40,18 @@ Page({
     myOrderList: [],
     index_: 0,
     index_tab: 0,
-    str_FullTime: ""
+    str_FullTime: "",
+    token: ''
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    wx.login({
-      success(res) {
-        console.log(res)
-      }
+
+    this.setData({
+      token: wx.getStorageSync("token")
     })
-    //console.log(wx.getStorageSync("token"), "----------")
     //请求对方发起接口
     wx.cloud.callFunction({ //调用云函数
       name: 'showOrder', //云函数名为showOrder
@@ -103,6 +102,24 @@ Page({
     console.log("---", event.detail.index)
     this.setData({
       currentIndex: event.detail.index
+    })
+    const list = []
+    for (var i = 0; i < this.data.myOrderList.length; i++) {
+      if (this.data.myOrderList[i].orderState == 3) {
+        list.push(this.data.myOrderList[i])
+      }
+    }
+    for (var i = 0; i < this.data.orderList.length; i++) {
+      if (this.data.orderList[i].token == this.data.token &&
+        this.data.orderList[i].orderState == 3) {
+        list.push(this.data.orderList[i])
+      }
+    }
+    this.setData({
+      indexTab: 0,
+      listRecord: list,
+      recordStatus: '3',
+      recordText: '待确认'
     })
   },
   /* 计分器 */
@@ -170,8 +187,8 @@ Page({
                   orderId: that.data.myOrderList[index].orderId
                 }
               }).then(res => { //Promise
-                console.log(res.result)
-                if (res.result.message = 'SUCCESS') {
+                console.log(res.result, "---------")
+                if (res.result.message == "SUCCESS") {
                   wx.showToast({
                     title: '撤销成功',
                     icon: 'none'
@@ -194,7 +211,8 @@ Page({
                 } else {
                   wx.showToast({
                     title: '撤销失败',
-                    icon: 'none'
+                    icon: 'none',
+                    time: 1500
                   })
                 }
               }).catch(err => {
@@ -212,19 +230,44 @@ Page({
   //待确认
   daiqueren_click(e) {
     console.log("+++", e.detail.index)
+    const list = []
+    for (var i = 0; i < this.data.myOrderList.length; i++) {
+      if (this.data.myOrderList[i].orderState == 3) {
+        list.push(this.data.myOrderList[i])
+      }
+    }
+    for (var i = 0; i < this.data.orderList.length; i++) {
+      if (this.data.orderList[i].token == this.data.token &&
+        this.data.orderList[i].orderState == 3) {
+        list.push(this.data.orderList[i])
+      }
+    }
     this.setData({
       indexTab: e.detail.index,
-      listRecord: 10,
+      listRecord: list,
       recordStatus: '3',
       recordText: '待确认'
     })
+
   },
   //进行中
   jinxingzhong_click(e) {
     console.log("+++", e.detail.index)
+    const list = []
+    for (var i = 0; i < this.data.myOrderList.length; i++) {
+      if (this.data.myOrderList[i].orderState == 4) {
+        list.push(this.data.myOrderList[i])
+      }
+    }
+    for (var i = 0; i < this.data.orderList.length; i++) {
+      if (this.data.orderList[i].token == this.data.token &&
+        this.data.orderList[i].orderState == 4) {
+        list.push(this.data.orderList[i])
+      }
+    }
     this.setData({
       indexTab: e.detail.index,
-      listRecord: 5,
+      listRecord: list,
       recordStatus: '4',
       recordText: '进行中'
     })
@@ -232,9 +275,21 @@ Page({
   //已失效
   yishixiao_click(e) {
     console.log("+++", e.detail.index)
+    const list = []
+    for (var i = 0; i < this.data.myOrderList.length; i++) {
+      if (this.data.myOrderList[i].orderState == 5) {
+        list.push(this.data.myOrderList[i])
+      }
+    }
+    for (var i = 0; i < this.data.orderList.length; i++) {
+      if (this.data.orderList[i].token == this.data.token &&
+        this.data.orderList[i].orderState == 5) {
+        list.push(this.data.orderList[i])
+      }
+    }
     this.setData({
       indexTab: e.detail.index,
-      listRecord: 2,
+      listRecord: list,
       recordStatus: '5',
       recordText: '已失效'
     })
@@ -247,6 +302,19 @@ Page({
       duration: 2000,
       mask: true,
       icon: 'success'
+    })
+  },
+  //点击进行中的item，跳转到添加好友页面
+  onClickToRunning(ev) {
+    var list = ev.detail.item
+    console.log(list)
+    var info = 0
+    if (list.openId == wx.getStorageSync("openId")) {
+      info = 1
+    }
+    wx.navigateTo({
+      url: '/pages/addfriend/addfriend?myTeamName=' + list.myTeamName + '&teamName=' + list.teamName +
+        '&time=' + list.time + '&token=' + list.token + '&weiXin2Id=' + list.weiXin2Id + '&weiXinId=' + list.weiXinId + '&info=' + info,
     })
   },
   //发起约场
@@ -262,7 +330,7 @@ Page({
         openId: wx.getStorageSync("openId"),
         wxId: encodeURIComponent(this.data.wx_name),
         myTeamName: encodeURIComponent(this.data.wx_duiwu),
-        time: encodeURIComponent(this.data.str_FullTime) //已完成
+        time: encodeURIComponent(this.data.str_FullTime)
       }
     }).then(res => { //Promise
       console.log(res.result)
@@ -285,6 +353,12 @@ Page({
             const list = res.result.data
             that.setData({
               list: list
+            })
+            wx.showToast({
+              title: '发起成功',
+              duration: 2000,
+              mask: true,
+              icon: 'success'
             })
           }
         }).catch(err => {
@@ -464,6 +538,39 @@ Page({
         disabled: true
       })
     }
-  }
+  },
+  //下拉刷新
+  onPullDownRefresh() {
+    //请求对方发起接口
+    wx.cloud.callFunction({ //调用云函数
+      name: 'showOrder', //云函数名为showOrder
+      data: {
+        openId: wx.getStorageSync("openId")
+      }
+    }).then(res => { //Promise
 
+      console.log(res.result)
+      this.setData({
+        orderList: res.result.data,
+        list: res.result.data
+      })
+    }).catch(err => {
+      console.log(err)
+    })
+    //请求我的发起接口
+    wx.cloud.callFunction({ //调用云函数
+      name: 'showMyOrder', //云函数名为showOrder
+      data: {
+        openId: wx.getStorageSync("openId")
+      }
+    }).then(res => { //Promise
+      console.log(res.result)
+      this.setData({
+        myOrderList: res.result.data
+      })
+      wx.stopPullDownRefresh()
+    }).catch(err => {
+      console.log(err)
+    })
+  }
 })

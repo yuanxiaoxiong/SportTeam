@@ -36,7 +36,8 @@ Page({
         orderId: this.data.orderId,
         wx_id: encodeURIComponent(this.data.wx_name),
         teamName: encodeURIComponent(this.data.wx_duiwu),
-        state: 3
+        state: 3,
+        token: wx.getStorageSync("token")
       }
     }).then(res => { //Promise
       console.log(res.result)

@@ -4,7 +4,7 @@
   <view class='shouye'>
     <!-- tab -->
     <van-tabs swipeable border='{{false}}' bind:click='onClick' active='{{index}}' line-width="{{45}}" color='#e94f4f' nav-class="tabs">
-      <van-tab title="对方发起" />
+      <van-tab title="篮球圈" />
       <van-tab title="我的发起" />
     </van-tabs>
     <!-- item数据 -->
@@ -65,14 +65,14 @@
   <!-- tab -->
   <record-tab index="{{indexTab}}" bind:daiqueren_click='daiqueren_click' bind:jinxingzhong_click='jinxingzhong_click' bind:yishixiao_click='yishixiao_click' />
   <!-- item数据 -->
-  <view class='content' hidden='{{listRecord==0}}'>
+  <view class='content' hidden='{{listRecord.length==0}}'>
     <scroll-view class='scroll' scroll-y>
       <view class='top_record'></view>
-      <item-record list='{{listRecord}}' bind:onClickToRunning='onClickToRunning' recordStatus='{{recordStatus}}' recordText='{{recordText}}' />
+      <item-record list='{{listRecord}}' bind:onClickToRunning='onClickToRunning' recordStatus='{{recordStatus}}' recordText='{{recordText}}' token = "{{token}}" />
     </scroll-view>
   </view>
   <!-- 空数据页null -->
-  <view class='empty' hidden='{{listRecord!=0}}'>
+  <view class='empty' hidden='{{listRecord.length!=0}}'>
     <image src='/images/icon_null@2x.png' class='empty_img'></image>
     <view class='message'>{{nullMessage}}</view>
   </view>

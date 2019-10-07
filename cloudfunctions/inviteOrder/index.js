@@ -5,8 +5,8 @@ var rp = require('request-promise');
 cloud.init()
 
 // 云函数入口函数
-exports.main = async (event, context) => {
-  let url = 'https://www.huaguangstore.com.cn/order/invite?id=' + event.orderId + '&weixin2Id=' + event.wx_id + '&teamName=' + event.teamName +'&orderState='+event.state;
+exports.main = async(event, context) => {
+  let url = 'https://www.huaguangstore.com.cn/order/invite?id=' + event.orderId + '&weixin2Id=' + event.wx_id + '&teamName=' + event.teamName + '&orderState=' + event.state + '&token=' + event.token;
   var options = {
     method: 'POST',
     uri: url,
@@ -17,10 +17,10 @@ exports.main = async (event, context) => {
   };
 
   return await rp(options)
-    .then(function (res) {
+    .then(function(res) {
       return res
     })
-    .catch(function (err) {
+    .catch(function(err) {
       return err
     });
 }
