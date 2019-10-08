@@ -3,11 +3,11 @@ cloud.init()
 exports.main = async(event, context) => {
   try {
     const result = await cloud.openapi.templateMessage.send({
-      touser: 'o7geA4jzuPiEWlj2DGOMpXjaH8V8', //要推送到的openId
-      page: 'pages/acceptinvite/acceptinvite',
+      touser: event.openId, //要推送到的openId
+      page: 'pages/acceptinvite/acceptinvite?orderId=' + event.orderId,
       data: {
         keyword1: {
-          value: '2019100800023123'
+          value: event.orderId
         },
         keyword2: {
           value: '66.66元'
@@ -28,8 +28,8 @@ exports.main = async(event, context) => {
           value: '待支付'
         }
       },
-      templateId: 'cUC0JflqzrR70sUkYEQjn1DgA7qcYxFlJhkMYcLo5C8', //模板id
-      formId: event.formId,
+      templateId: 'cUC0JflqzrR70sUkYEQjn-kF8oZjlT6TN1zkpAo8mqI', //模板id
+      formId: event.formId, //要推送到的formId
       emphasisKeyword: 'keyword4.DATA' //keyword1.DATA  放大效果
     })
     console.log(result)

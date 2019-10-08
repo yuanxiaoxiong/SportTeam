@@ -7,7 +7,11 @@
     <view class='sure_text_accept'>同意</view>
   </view>
 
-  <view class='sure_btn_refuse' bindtap='refuseClick'>
-    <view class='sure_text_refuse'>拒绝</view>
+  <view class='sure_btn_refuse'>
+    <view class='sure_text_refuse'>
+      <form bindsubmit="refuseClick" report-submit>
+        <button formType="submit" style="color:#ee3c3c;background:none ;height:88rpx;line-height:88rpx;">拒绝</button>
+      </form>
+    </view>
   </view>
 </view>
