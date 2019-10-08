@@ -21,17 +21,11 @@ Page({
       orderId: options.orderId,
       openId: options.openId
     })
+    console.log(this.data.openId, "----------")
   },
-  //formId，用于发送模板
+  //formId，用于发送模板(确认按钮)
   formSubmit(ev) {
-    //console.log(ev.detail.formId)
-    this.setData({
-      formId: ev.detail.formId
-    })
-  },
-  /* 确认按钮 */
-  sureClick() {
-    console.log('----点击了确认')
+    console.log(ev)
     //加载中...
     wx.showLoading({
       title: '加载中',
@@ -50,11 +44,12 @@ Page({
       console.log(res.result)
       if (res.result.message == "SUCCESS") {
         //模板消息推送
+        console.log(ev.detail.formId,"================")
         wx.cloud.callFunction({ //调用云函数
           name: 'send', //云函数名为push
           data: {
-            formId: this.data.formId,
-            openId: this.data.openId
+            openId: this.data.openId,
+            formId: ev.detail.formId
           }
         }).then(res => { //Promise
           console.log(res)
@@ -79,6 +74,9 @@ Page({
         title: String(err),
       })
     })
+  },
+  /* 确认按钮 */
+  sureClick() {
 
   },
   /* 输入微信号 */
