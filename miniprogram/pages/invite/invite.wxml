@@ -12,11 +12,12 @@
     </view>
   </view>
   <!-- 确认按钮 -->
-  <view class='{{disabled==true?"sure_btn":"sure_btn_active"}}' bindtap='{{disabled==true?"":"sureClick"}}'>
-    <view class='{{disabled==true?"sure_text":"sure_text_active"}}'>
-      <form bindsubmit="formSubmit" report-submit>
-        <button formType="submit" style="color:#fff;">确认</button>
-      </form>
+ 
+    <view class='{{disabled==true?"sure_btn":"sure_btn_active"}}' bindtap='{{disabled==true?"":"sureClick"}}'>
+      <view class='{{disabled==true?"sure_text":"sure_text_active"}}'>
+       <form bindsubmit="formSubmit" report-submit>
+        <button formType="submit" style="color:#fff;background:none ;height:88rpx;line-height:88rpx;">确认</button>
+          </form>
+      </view>
     </view>
-  </view>
 </view>
