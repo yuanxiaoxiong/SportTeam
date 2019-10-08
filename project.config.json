@@ -30,7 +30,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 4,
+			"current": 5,
 			"list": [
 				{
 					"id": 0,
@@ -64,6 +64,13 @@
 					"id": -1,
 					"name": "邀请",
 					"pathName": "pages/invite/invite",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "确认邀请",
+					"pathName": "pages/acceptinvite/acceptinvite",
 					"scene": null
 				}
 			]

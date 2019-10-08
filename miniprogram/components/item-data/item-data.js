@@ -40,11 +40,13 @@ Component({
       const index = event.currentTarget.dataset.index
       const orderId = event.currentTarget.dataset.orderid
       const openId = event.currentTarget.dataset.openid
+      const formId = event.currentTarget.dataset.formid
       //通知页面内部的点击事件
       this.triggerEvent('inviteItemClick', {
         index,
         orderId,
-        openId
+        openId,
+        formId
       }, {})
     }
   }

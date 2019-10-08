@@ -10,7 +10,7 @@
     <!-- item数据 -->
     <view class='content' hidden='{{list.length==0}}'>
       <scroll-view class='scroll' scroll-y>
-        <item-data list='{{list}}' index_tab="{{index_tab}}" bind:inviteItemClick='inviteItemClick' acceptStatus='{{acceptStatus}}' acceptText='{{acceptText}}'/>
+        <item-data list='{{list}}' index_tab="{{index_tab}}" bind:inviteItemClick='inviteItemClick' acceptStatus='{{acceptStatus}}' acceptText='{{acceptText}}' />
       </scroll-view>
     </view>
     <!-- 空数据页null -->
@@ -55,7 +55,11 @@
     </view>
   </view>
   <view class='{{disabled==true?"sure_btn":"sure_btn_active"}}' bindtap='{{disabled==true?"":"luanchClick"}}'>
-    <view class='{{disabled==true?"sure_text":"sure_text_active"}}'>发起约场</view>
+    <view class='{{disabled==true?"sure_text":"sure_text_active"}}'>
+      <form bindsubmit="formSubmit" report-submit>
+        <button formType="submit" style="color:#fff;background:none ;height:88rpx;line-height:88rpx;">发起约场</button>
+      </form>
+    </view>
   </view>
 </view>
 
@@ -68,7 +72,7 @@
   <view class='content' hidden='{{listRecord.length==0}}'>
     <scroll-view class='scroll' scroll-y>
       <view class='top_record'></view>
-      <item-record list='{{listRecord}}' bind:onClickToRunning='onClickToRunning' recordStatus='{{recordStatus}}' recordText='{{recordText}}' token = "{{token}}" />
+      <item-record list='{{listRecord}}' bind:onClickToRunning='onClickToRunning' recordStatus='{{recordStatus}}' recordText='{{recordText}}' token="{{token}}" />
     </scroll-view>
   </view>
   <!-- 空数据页null -->

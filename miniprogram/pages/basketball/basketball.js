@@ -156,12 +156,75 @@ Page({
         break
     }
   },
+  //formId，用于发送模板(发起约场按钮)
+  formSubmit(ev) {
+    const formId = ev.detail.formId
+    console.log(formId, "------------")
+    wx.showLoading({
+      title: '正在发起...',
+    })
+    var that = this
+    //请求对方发起接口
+    wx.cloud.callFunction({ //调用云函数
+      name: 'addOrder', //云函数名为addOrder
+      data: {
+        openId: wx.getStorageSync("openId"),
+        wxId: encodeURIComponent(this.data.wx_name),
+        myTeamName: encodeURIComponent(this.data.wx_duiwu),
+        time: encodeURIComponent(this.data.str_FullTime),
+        formId: formId
+      }
+    }).then(res => { //Promise
+      console.log(res.result)
+      if (res.result.code = 200) {
+        wx.hideLoading()
+        //请求我的发起接口
+        wx.cloud.callFunction({ //调用云函数
+          name: 'showMyOrder', //云函数名为showOrder
+          data: {
+            openId: wx.getStorageSync("openId")
+          }
+        }).then(res => { //Promise
+          console.log(res.result)
+          var mylist = res.result.data
+          that.setData({
+            currentIndex: 0,
+            myOrderList: mylist
+          })
+          if (that.data.index_ == 1) {
+            const list = res.result.data
+            that.setData({
+              list: list
+            })
+          }
+          if (res.result.message == "SUCCESS") {
+            wx.showToast({
+              title: '发起成功',
+              duration: 2000,
+              mask: true,
+              icon: 'success'
+            })
+          }
+        }).catch(err => {
+          console.log(err)
+        })
+      }
+    }).catch(err => {
+      console.log(err)
+      wx.hideLoading()
+      wx.showToast({
+        title: String(err),
+        icon: 'none'
+      })
+    })
+  },
   /* 首页邀请、撤销 */
   inviteItemClick(event) {
     console.log('------', event.detail.index)
     const index = event.detail.index
     const orderId = event.detail.orderId
     const openId = event.detail.openId
+    const formId = event.detail.formId
     // console.log(orderId, "--------------")
     // console.log(openId, "--------------")
     var that = this
@@ -169,7 +232,7 @@ Page({
       /* 邀请 */
       case 0:
         wx.navigateTo({
-          url: '/pages/invite/invite?orderId=' + orderId + '&openId=' + openId,
+          url: '/pages/invite/invite?orderId=' + orderId + '&openId=' + openId + '&formId=' + formId,
         })
         break
         /* 撤销 */
@@ -321,60 +384,7 @@ Page({
   },
   //发起约场
   luanchClick(ev) {
-    wx.showLoading({
-      title: '正在发起...',
-    })
-    var that = this
-    //请求对方发起接口
-    wx.cloud.callFunction({ //调用云函数
-      name: 'addOrder', //云函数名为addOrder
-      data: {
-        openId: wx.getStorageSync("openId"),
-        wxId: encodeURIComponent(this.data.wx_name),
-        myTeamName: encodeURIComponent(this.data.wx_duiwu),
-        time: encodeURIComponent(this.data.str_FullTime)
-      }
-    }).then(res => { //Promise
-      console.log(res.result)
-      if (res.result.code = 200) {
-        wx.hideLoading()
-        //请求我的发起接口
-        wx.cloud.callFunction({ //调用云函数
-          name: 'showMyOrder', //云函数名为showOrder
-          data: {
-            openId: wx.getStorageSync("openId")
-          }
-        }).then(res => { //Promise
-          console.log(res.result)
-          var mylist = res.result.data
-          that.setData({
-            currentIndex: 0,
-            myOrderList: mylist
-          })
-          if (that.data.index_ == 1) {
-            const list = res.result.data
-            that.setData({
-              list: list
-            })
-            wx.showToast({
-              title: '发起成功',
-              duration: 2000,
-              mask: true,
-              icon: 'success'
-            })
-          }
-        }).catch(err => {
-          console.log(err)
-        })
-      }
-    }).catch(err => {
-      console.log(err)
-      wx.hideLoading()
-      wx.showToast({
-        title: String(err),
-        icon: 'none'
-      })
-    })
+
   },
 
   /* 输入微信号 */
