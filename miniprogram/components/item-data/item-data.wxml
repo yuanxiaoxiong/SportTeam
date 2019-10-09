@@ -1,6 +1,6 @@
 <!--components/item-data/item-data.wxml-->
 <block wx:for='{{list}}' wx:key='{{index}}'>
-  <view class='card'>
+  <view class='card' hidden="{{item.orderState==4}}">
     <view class='title'>篮球全场</view>
     <view class='line' />
     <view class='con'>
@@ -10,8 +10,12 @@
         <image src='/images/icon_time@2x.png' class='down_img' />
         <view class='time'>{{item.time}}</view>
       </view>
-      <view class='right' bind:tap='{{acceptStatus!=1?"onClick":""}}' data-index='{{index}}' item="{{index}}" data-orderId="{{item.orderId}}" data-openId="{{item.openId}}" data-formId="{{item.formId}}">
-        <view class='{{acceptStatus==0?"yaoqing":""||acceptStatus==1?"yiyaoqing":""||acceptStatus==2?"chexiao":""}}'>{{acceptText}}</view>
+      <view class='right' bind:tap='{{item.orderState!=3?"onClick":""}}' data-index='{{index}}' item="{{index}}" data-orderId="{{item.orderId}}" data-openId="{{item.openId}}" data-formId="{{item.formId}}">
+        <view class='{{item.orderState==0&&acceptStatus==0?"yaoqing":""||item.orderState==3?"yiyaoqing":""||item.orderState==0&&acceptStatus==2?"chexiao":""}}'>
+        {{item.orderState==0&&acceptStatus==0?'邀请':''}}
+        {{item.orderState==3&&acceptStatus==0?'已被邀请':''}}
+        {{item.orderState==0&&acceptStatus==2?'撤销':''}}
+        </view>
       </view>
     </view>
   </view>
