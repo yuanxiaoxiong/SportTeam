@@ -36,15 +36,36 @@ Page({
   addClick(ev) {
     if (this.data.this_token == this.data.token) {
       wx.setClipboardData({
-        data: this.data.weiXin2Id
+        data: this.data.weiXin2Id,
+        success: function() {
+          wx.showToast({
+            title: '微信号已复制，请添加对方微信进行联系',
+            icon: 'none',
+            duration: 3000
+          })
+        }
       })
     } else if (this.data.info == 1) {
       wx.setClipboardData({
-        data: this.data.weiXin2Id
+        data: this.data.weiXin2Id,
+        success: function() {
+          wx.showToast({
+            title: '微信号已复制，请添加对方微信进行联系',
+            icon: 'none',
+            duration: 3000
+          })
+        }
       })
     } else {
       wx.setClipboardData({
-        data: this.data.weiXinId
+        data: this.data.weiXinId,
+        success: function() {
+          wx.showToast({
+            title: '微信号已复制，请添加对方微信进行联系',
+            icon: 'none',
+            duration: 3000
+          })
+        }
       })
     }
   }
