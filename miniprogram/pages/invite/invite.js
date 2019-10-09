@@ -10,7 +10,8 @@ Page({
     wx_duiwu: '',
     orderId: 0,
     openId: '',
-    formId: ''
+    formId: '',
+    time: ''
   },
 
   /**
@@ -20,7 +21,8 @@ Page({
     this.setData({
       orderId: options.orderId,
       openId: options.openId,
-      formId: options.formId
+      formId: options.formId,
+      time: options.time
     })
     console.log(this.data.openId, "----------")
   },
@@ -49,7 +51,11 @@ Page({
           data: {
             openId: this.data.openId,
             orderId: this.data.orderId,
-            formId: this.data.formId
+            formId: this.data.formId,
+            wx_id: encodeURIComponent(this.data.wx_name),
+            wx_team: encodeURIComponent(this.data.wx_duiwu),
+            time: encodeURIComponent(this.data.time)
+
           }
         }).then(res => { //Promise
           console.log(res)

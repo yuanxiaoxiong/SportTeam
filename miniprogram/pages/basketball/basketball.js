@@ -225,6 +225,7 @@ Page({
     const orderId = event.detail.orderId
     const openId = event.detail.openId
     const formId = event.detail.formId
+    const time = event.detail.time
     // console.log(orderId, "--------------")
     // console.log(openId, "--------------")
     var that = this
@@ -232,7 +233,7 @@ Page({
       /* 邀请 */
       case 0:
         wx.navigateTo({
-          url: '/pages/invite/invite?orderId=' + orderId + '&openId=' + openId + '&formId=' + formId,
+          url: '/pages/invite/invite?orderId=' + orderId + '&openId=' + openId + '&formId=' + formId + '&time=' + time,
         })
         break
         /* 撤销 */
@@ -590,7 +591,9 @@ Page({
         orderList: res.result.data
       })
       if (this.data.index_tab == 0) {
-        list: res.result.data
+        this.setData({
+          list: res.result.data
+        })
       }
     }).catch(err => {
       console.log(err)
@@ -607,7 +610,9 @@ Page({
         myOrderList: res.result.data
       })
       if (this.data.index_tab == 1) {
-        list: res.result.data
+        this.setData({
+          list: res.result.data
+        })
       }
       wx.stopPullDownRefresh()
     }).catch(err => {

@@ -10,27 +10,21 @@ exports.main = async(event, context) => {
           value: event.orderId
         },
         keyword2: {
-          value: '66.66元'
+          value: decodeURIComponent(event.wx_id)
         },
         keyword3: {
-          value: '2019-10-08 02:28'
+          value: decodeURIComponent(event.wx_team)
         },
         keyword4: {
-          value: '战神之斧'
+          value: decodeURIComponent(event.time)
         },
         keyword5: {
-          value: '66.66元'
-        },
-        keyword6: {
-          value: '快点啦'
-        },
-        keyword7: {
-          value: '待支付'
+          value: '请您前往该小程序，确认此邀请信息'
         }
       },
-      templateId: 'cUC0JflqzrR70sUkYEQjn-kF8oZjlT6TN1zkpAo8mqI', //模板id
+      templateId: '8X-ybERf60b-iVuFQJVWW9PsU7zA8tB6kB11yfPXrmw', //模板id
       formId: event.formId, //要推送到的formId
-      emphasisKeyword: 'keyword4.DATA' //keyword1.DATA  放大效果
+      emphasisKeyword: '' //keyword3.DATA  放大效果
     })
     console.log(result)
     return result
