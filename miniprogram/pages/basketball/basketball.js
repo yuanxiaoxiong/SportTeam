@@ -41,6 +41,7 @@ Page({
     index_: 0,
     index_tab: 0,
     str_FullTime: "",
+    x: 0,
     token: ''
   },
 
@@ -61,9 +62,15 @@ Page({
     }).then(res => { //Promise
 
       console.log(res.result)
+      var list = []
+      for (var i = 0; i < res.result.data.length; i++) {
+        if (res.result.data[i].orderState != 4) {
+          list.push(res.result.data[i])
+        }
+      }
       this.setData({
         orderList: res.result.data,
-        list: res.result.data
+        list: list
       })
     }).catch(err => {
       console.log(err)
@@ -135,8 +142,14 @@ Page({
     switch (event.detail.name) {
       /* 对方发起 */
       case 0:
+        var list = []
+        for (var i = 0; i < this.data.orderList.length; i++) {
+          if (this.data.orderList[i].orderState != 4) {
+            list.push(this.data.orderList[i])
+          }
+        }
         this.setData({
-          list: this.data.orderList,
+          list: list,
           acceptStatus: 0,
           index_: 0,
           index_tab: 0,
@@ -145,8 +158,17 @@ Page({
         break
         /* 我的发起 */
       case 1:
+        var list = []
+        //过滤状态值为3、4的数据
+        for (var i = 0; i < this.data.myOrderList.length; i++) {
+          if (this.data.myOrderList[i].orderState != 4 &&
+            this.data.myOrderList[i].orderState != 3
+          ) {
+            list.push(this.data.myOrderList[i])
+          }
+        }
         this.setData({
-          list: this.data.myOrderList,
+          list: list,
           acceptStatus: 2,
           index_: 1,
           index_tab: 1,
@@ -158,65 +180,72 @@ Page({
   },
   //formId，用于发送模板(发起约场按钮)
   formSubmit(ev) {
-    const formId = ev.detail.formId
-    console.log(formId, "------------")
-    wx.showLoading({
-      title: '正在发起...',
-    })
-    var that = this
-    //请求对方发起接口
-    wx.cloud.callFunction({ //调用云函数
-      name: 'addOrder', //云函数名为addOrder
-      data: {
-        openId: wx.getStorageSync("openId"),
-        wxId: encodeURIComponent(this.data.wx_name),
-        myTeamName: encodeURIComponent(this.data.wx_duiwu),
-        time: encodeURIComponent(this.data.str_FullTime),
-        formId: formId
-      }
-    }).then(res => { //Promise
-      console.log(res.result)
-      if (res.result.code = 200) {
-        wx.hideLoading()
-        //请求我的发起接口
-        wx.cloud.callFunction({ //调用云函数
-          name: 'showMyOrder', //云函数名为showOrder
-          data: {
-            openId: wx.getStorageSync("openId")
-          }
-        }).then(res => { //Promise
-          console.log(res.result)
-          var mylist = res.result.data
-          that.setData({
-            currentIndex: 0,
-            myOrderList: mylist
-          })
-          if (that.data.index_ == 1) {
-            const list = res.result.data
+    if (this.data.str_FullTime != '') {
+      const formId = ev.detail.formId
+      console.log(formId, "------------")
+      wx.showLoading({
+        title: '正在发起...',
+      })
+      var that = this
+      //请求对方发起接口
+      wx.cloud.callFunction({ //调用云函数
+        name: 'addOrder', //云函数名为addOrder
+        data: {
+          openId: wx.getStorageSync("openId"),
+          wxId: encodeURIComponent(this.data.wx_name),
+          myTeamName: encodeURIComponent(this.data.wx_duiwu),
+          time: encodeURIComponent(this.data.str_FullTime),
+          formId: formId
+        }
+      }).then(res => { //Promise
+        console.log(res.result)
+        if (res.result.code = 200) {
+          wx.hideLoading()
+          //请求我的发起接口
+          wx.cloud.callFunction({ //调用云函数
+            name: 'showMyOrder', //云函数名为showOrder
+            data: {
+              openId: wx.getStorageSync("openId")
+            }
+          }).then(res => { //Promise
+            console.log(res.result)
+            var mylist = res.result.data
             that.setData({
-              list: list
+              currentIndex: 0,
+              myOrderList: mylist
             })
-          }
-          if (res.result.message == "SUCCESS") {
-            wx.showToast({
-              title: '发起成功',
-              duration: 2000,
-              mask: true,
-              icon: 'success'
-            })
-          }
-        }).catch(err => {
-          console.log(err)
+            if (that.data.index_ == 1) {
+              const list = res.result.data
+              that.setData({
+                list: list
+              })
+            }
+            if (res.result.message == "SUCCESS") {
+              wx.showToast({
+                title: '发起成功',
+                duration: 2000,
+                mask: true,
+                icon: 'success'
+              })
+            }
+          }).catch(err => {
+            console.log(err)
+          })
+        }
+      }).catch(err => {
+        console.log(err)
+        wx.hideLoading()
+        wx.showToast({
+          title: String(err),
+          icon: 'none'
         })
-      }
-    }).catch(err => {
-      console.log(err)
-      wx.hideLoading()
+      })
+    } else {
       wx.showToast({
-        title: String(err),
+        title: '起始时间与结束时间还没选择哦~',
         icon: 'none'
       })
-    })
+    }
   },
   /* 首页邀请、撤销 */
   inviteItemClick(event) {
@@ -409,7 +438,7 @@ Page({
     //console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       multiIndex: e.detail.value,
-      // str_start: "",
+      str_start: '',
       str_time: ":"
     })
   },
@@ -418,7 +447,7 @@ Page({
     //console.log('picker发送选择改变，携带值为', e.detail.value)
     this.setData({
       multiIndex2: e.detail.value,
-      // str_end: "",
+      str_end: '',
       str_time2: ":"
     })
   },
@@ -591,8 +620,14 @@ Page({
         orderList: res.result.data
       })
       if (this.data.index_tab == 0) {
+        var list = []
+        for (var i = 0; i < res.result.data.length; i++) {
+          if (res.result.data[i].orderState != 4) {
+            list.push(res.result.data[i])
+          }
+        }
         this.setData({
-          list: res.result.data
+          list: list
         })
       }
     }).catch(err => {
@@ -610,8 +645,15 @@ Page({
         myOrderList: res.result.data
       })
       if (this.data.index_tab == 1) {
+        var list = []
+        for (var i = 0; i < res.result.data.length; i++) {
+          if (res.result.data[i].orderState != 3 &&
+            res.result.data[i].orderState != 4) {
+            list.push(res.result.data[i])
+          }
+        }
         this.setData({
-          list: res.result.data
+          list: list
         })
       }
       wx.stopPullDownRefresh()

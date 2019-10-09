@@ -56,7 +56,7 @@
   </view>
   <view class='{{disabled==true?"sure_btn":"sure_btn_active"}}' bindtap='{{disabled==true?"":"luanchClick"}}'>
     <view class='{{disabled==true?"sure_text":"sure_text_active"}}'>
-      <form bindsubmit="formSubmit" report-submit>
+      <form bindsubmit='{{disabled==true?"":"formSubmit"}}' report-submit>
         <button formType="submit" style="color:#fff;background:none ;height:88rpx;line-height:88rpx;">发起约场</button>
       </form>
     </view>
