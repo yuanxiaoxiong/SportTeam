@@ -53,7 +53,7 @@ Page({
     this.setData({
       token: wx.getStorageSync("token")
     })
-    //请求对方发起接口
+    //请求体育圈接口
     wx.cloud.callFunction({ //调用云函数
       name: 'showOrder', //云函数名为showOrder
       data: {
@@ -64,7 +64,8 @@ Page({
       console.log(res.result)
       var list = []
       for (var i = 0; i < res.result.data.length; i++) {
-        if (res.result.data[i].orderState != 4) {
+        if (res.result.data[i].orderState != 4 &&
+          res.result.data[i].orderState != 5) {
           list.push(res.result.data[i])
         }
       }
@@ -144,7 +145,8 @@ Page({
       case 0:
         var list = []
         for (var i = 0; i < this.data.orderList.length; i++) {
-          if (this.data.orderList[i].orderState != 4) {
+          if (this.data.orderList[i].orderState != 4 &&
+            this.data.orderList[i].orderState != 5) {
             list.push(this.data.orderList[i])
           }
         }
@@ -161,7 +163,8 @@ Page({
         var list = []
         //过滤状态值为3、4的数据
         for (var i = 0; i < this.data.myOrderList.length; i++) {
-          if (this.data.myOrderList[i].orderState != 4 &&
+          if (this.data.myOrderList[i].orderState != 5 &&
+            this.data.myOrderList[i].orderState != 4 &&
             this.data.myOrderList[i].orderState != 3
           ) {
             list.push(this.data.myOrderList[i])
@@ -187,7 +190,7 @@ Page({
         title: '正在发起...',
       })
       var that = this
-      //请求对方发起接口
+      //发起约场接口
       wx.cloud.callFunction({ //调用云函数
         name: 'addOrder', //云函数名为addOrder
         data: {
@@ -198,8 +201,8 @@ Page({
           formId: formId
         }
       }).then(res => { //Promise
-        console.log(res.result)
-        if (res.result.code = 200) {
+        console.log(res.result, "---------")
+        if (res.result.message == "SUCCESS") {
           wx.hideLoading()
           //请求我的发起接口
           wx.cloud.callFunction({ //调用云函数
@@ -210,14 +213,26 @@ Page({
           }).then(res => { //Promise
             console.log(res.result)
             var mylist = res.result.data
+            var list = []
+            for (var i = 0; i < mylist.length; i++) {
+              if (mylist[i].orderState == 0 || mylist[i].orderState == 3) {
+                list.push(mylist[i])
+              }
+            }
             that.setData({
               currentIndex: 0,
-              myOrderList: mylist
+              myOrderList: list
             })
             if (that.data.index_ == 1) {
               const list = res.result.data
+              var list_ = []
+              for (var i = 0; i < list.length; i++) {
+                if (list[i].orderState == 0) {
+                  list_.push(list[i])
+                }
+              }
               that.setData({
-                list: list
+                list: list_
               })
             }
             if (res.result.message == "SUCCESS") {
@@ -230,6 +245,11 @@ Page({
             }
           }).catch(err => {
             console.log(err)
+          })
+        } else {
+          wx.showToast({
+            title: res.result.message,
+            icon: 'none'
           })
         }
       }).catch(err => {
@@ -622,7 +642,8 @@ Page({
       if (this.data.index_tab == 0) {
         var list = []
         for (var i = 0; i < res.result.data.length; i++) {
-          if (res.result.data[i].orderState != 4) {
+          if (res.result.data[i].orderState != 4 &&
+            res.result.data[i].orderState != 5) {
             list.push(res.result.data[i])
           }
         }
@@ -648,7 +669,8 @@ Page({
         var list = []
         for (var i = 0; i < res.result.data.length; i++) {
           if (res.result.data[i].orderState != 3 &&
-            res.result.data[i].orderState != 4) {
+            res.result.data[i].orderState != 4 &&
+            res.result.data[i].orderState != 5) {
             list.push(res.result.data[i])
           }
         }

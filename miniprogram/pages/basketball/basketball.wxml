@@ -4,7 +4,7 @@
   <view class='shouye'>
     <!-- tab -->
     <van-tabs swipeable border='{{false}}' bind:click='onClick' active='{{index}}' line-width="{{45}}" color='#e94f4f' nav-class="tabs">
-      <van-tab title="篮球圈" />
+      <van-tab title="体育圈" />
       <van-tab title="我的发起" />
     </van-tabs>
     <!-- item数据 -->

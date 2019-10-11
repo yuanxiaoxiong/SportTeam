@@ -67,15 +67,17 @@ Page({
           }
         })
       } else {
+        wx.hideLoading()
         wx.showToast({
           title: '邀请已确认',
           icon: 'none',
-          time: 2000
+          duration: 3000,
+          success: function() {
+            wx.redirectTo({
+              url: '/pages/basketball/basketball',
+            })
+          }
         })
-        wx.redirectTo({
-          url: '/pages/basketball/basketball',
-        })
-        wx.hideLoading()
       }
     }).catch(err => {
 
@@ -97,13 +99,28 @@ Page({
     }).then(res => { //Promise
       console.log(res.result)
       if (res.result.message == "SUCCESS") {
-        wx.hideLoading()
-        wx.showToast({
-          title: '已同意',
-          icon: 'none'
-        })
-        wx.redirectTo({
-          url: '/pages/basketball/basketball',
+        //同意邀请
+        wx.cloud.callFunction({ //调用云函数
+          name: 'send_result', //云函数名为send_result
+          data: { // 传给云函数的参数
+            sure_openId: 'sure_openId',
+            orderId: this.data.orderId,
+            wx_team: encodeURIComponent('班级名称'),
+            time: encodeURIComponent('邀请时间'),
+            result: encodeURIComponent('已同意'),
+            message: encodeURIComponent('请您前往该小程序页面【记录】-【进行中】-【添加好友】'),
+            sure_formId: 'sure_formId'
+          }
+        }).then(res => { //Promise
+          console.log(res, "result------------")
+          wx.hideLoading()
+          wx.showToast({
+            title: '已同意',
+            icon: 'none'
+          })
+          wx.redirectTo({
+            url: '/pages/basketball/basketball',
+          })
         })
       }
     }).catch(err => {
@@ -129,13 +146,28 @@ Page({
     }).then(res => { //Promise
       console.log(res.result)
       if (res.result.message == "SUCCESS") {
-        wx.hideLoading()
-        wx.showToast({
-          title: '已拒绝',
-          icon: 'none'
-        })
-        wx.redirectTo({
-          url: '/pages/basketball/basketball',
+        //拒绝邀请
+        wx.cloud.callFunction({ //调用云函数
+          name: 'send_result', //云函数名为send_result
+          data: { // 传给云函数的参数
+            sure_openId: 'sure_openId',
+            orderId: this.data.orderId,
+            wx_team: encodeURIComponent('班级名称'),
+            time: encodeURIComponent('邀请时间'),
+            result: encodeURIComponent('已拒绝'),
+            message: encodeURIComponent('下次有缘再相约'),
+            sure_formId: 'sure_formId'
+          }
+        }).then(res => { //Promise
+          console.log(res, "result------------")
+          wx.hideLoading()
+          wx.showToast({
+            title: '已拒绝',
+            icon: 'none'
+          })
+          wx.redirectTo({
+            url: '/pages/basketball/basketball',
+          })
         })
       }
     }).catch(err => {
