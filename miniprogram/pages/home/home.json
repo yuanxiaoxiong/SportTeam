@@ -1,5 +1,7 @@
 {
   "usingComponents": {
-    "main-card":"/components/main-card/main-card"
-  }
+    "main-card": "/components/main-card/main-card"
+  },
+  "navigationBarBackgroundColor": "#de213a",
+  "navigationBarTextStyle": "white"
 }

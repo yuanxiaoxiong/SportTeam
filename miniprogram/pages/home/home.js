@@ -37,11 +37,11 @@ Page({
       case 0:
 
         break
-        /* 篮球约场 */
+        /* 体育约场 */
       case 1:
         if (detail.errMsg == "getUserInfo:ok") {
           wx.showLoading({
-            title: '正在载入...',
+            title: '正在加载模块...',
           })
           //微信授权
           wx.login({

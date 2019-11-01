@@ -1,0 +1,32 @@
+<!--pages/login/login.wxml-->
+<view class="page">
+  <!-- 上部图标内容 -->
+  <view class="top">
+    <image src="/images/login_background@2x.png" class="bg"></image>
+    <image src="/images/login_icon@2x.png" class="icon"></image>
+  </view>
+  <!-- 账号按钮 -->
+  <view class="button_no">
+    <image src="/images/login_input_icon_user@2x.png" class="user_icon"></image>
+    <input placeholder='账号为你的学号' placeholder-style='font-size: 30rpx; color: #888888;' class="input_no" maxlength="12" type='number' bindinput='handleNo'></input>
+  </view>
+  <!-- 快速登录 -->
+  <view class="{{isClick?'login_disable':'login'}}" hover-class="{{isClick?'none':'login_active'}}" hover-stay-time='{{100}}' disabled='{{isClick}}'>
+    <button hover-class="none" class="login_btn" open-type='getUserInfo' bindgetuserinfo="{{isClick?' ':'login'}}">快速登录</button>
+  </view>
+  <!-- 游客入口 -->
+  <view class="youke">
+    <view class="line_left"></view>
+    <view class="center" bindtap="youke">游客访问</view>
+    <view class="line_right"></view>
+  </view>
+  <!-- 底部提示语 -->
+  <view class='footer'>
+    <!--     <view class="tips">若你需要解除或修改微信号与账号之间的绑定，请联系</view>
+    <button open-type="contact" bindcontact="handleContact" class='kefu_btn' hover-class='none'>客服人员</button> -->
+    <text class="tips">若你需要解除或修改微信号与账号之间的绑定，请联系</text>
+    <text class="kefu">客服人员</text>
+    <button open-type="contact" bindcontact="handleContact" class='kefu_btn' hover-class='none'></button>
+  </view>
+
+</view>

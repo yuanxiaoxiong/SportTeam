@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/login/login",
     "pages/home/home",
     "pages/basketball/basketball",
     "pages/invite/invite",
@@ -11,9 +12,8 @@
   "window": {
     "backgroundColor": "#FFFFFF",
     "backgroundTextStyle": "light",
-    "navigationBarBackgroundColor": "#de213a",
-    "navigationBarTitleText": "体育竞技",
-    "navigationBarTextStyle": "white"
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black"
   },
   "sitemapLocation": "sitemap.json"
 }

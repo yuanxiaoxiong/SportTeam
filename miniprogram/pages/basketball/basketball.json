@@ -8,6 +8,8 @@
     "item-record": "/components/item-record/item-record"
   },
   "navigationBarTitleText": "体育约场",
+  "navigationBarBackgroundColor": "#de213a",
+  "navigationBarTextStyle": "white",
   "enablePullDownRefresh": true,
   "backgroundColor": "#ebebeb"
 }
