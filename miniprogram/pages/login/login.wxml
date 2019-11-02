@@ -11,8 +11,8 @@
     <input placeholder='账号为你的学号' placeholder-style='font-size: 30rpx; color: #888888;' class="input_no" maxlength="12" type='number' bindinput='handleNo'></input>
   </view>
   <!-- 快速登录 -->
-  <view class="{{isClick?'login_disable':'login'}}" hover-class="{{isClick?'none':'login_active'}}" hover-stay-time='{{100}}' disabled='{{isClick}}'>
-    <button hover-class="none" class="login_btn" open-type='getUserInfo' bindgetuserinfo="{{isClick?' ':'login'}}">快速登录</button>
+  <view class="{{isClick?'login_disable':'login'}}" hover-class="{{isClick?'none':'login_active'}}" hover-stay-time='{{100}}'>
+    <button hover-class="none" class="{{isClick?'login_btn_dis':'login_btn_active'}}" open-type='getUserInfo' bindgetuserinfo="{{isClick?' ':'login'}}" disabled="{{isClick}}">快速登录</button>{{isClick?'快速登录':''}}
   </view>
   <!-- 游客入口 -->
   <view class="youke">

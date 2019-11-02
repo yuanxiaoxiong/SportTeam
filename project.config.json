@@ -29,6 +29,10 @@
 		"game": {
 			"list": []
 		},
+		"gamePlugin": {
+			"current": -1,
+			"list": []
+		},
 		"miniprogram": {
 			"current": 6,
 			"list": [
@@ -78,6 +82,21 @@
 					"id": -1,
 					"name": "添加好友",
 					"pathName": "pages/addfriend/addfriend",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 7,
+					"name": "主页",
+					"pathName": "pages/home/home",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": 8,
+					"name": "消息通知",
+					"pathName": "pages/message/message",
+					"query": "",
 					"scene": null
 				}
 			]

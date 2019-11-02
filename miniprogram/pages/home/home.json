@@ -2,6 +2,6 @@
   "usingComponents": {
     "main-card": "/components/main-card/main-card"
   },
-  "navigationBarBackgroundColor": "#de213a",
+  "navigationBarBackgroundColor": "#ee3c3c",
   "navigationBarTextStyle": "white"
 }

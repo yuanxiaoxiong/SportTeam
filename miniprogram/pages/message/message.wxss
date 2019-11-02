@@ -1,0 +1,119 @@
+/* pages/message/message.wxss */
+
+.page {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background: #efeff4;
+}
+
+/* 去滚动条 */
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.null {
+  margin-top: 328rpx;
+  text-align: center;
+}
+
+.null_img {
+  width: 220rpx;
+  height: 172rpx;
+}
+
+.text {
+  margin-top: 58rpx;
+  color: #888;
+  font-size: 26rpx;
+}
+
+.scroll {
+  height: 100vh;
+  width: 100%;
+}
+
+.block {
+  margin-top: 5rpx;
+}
+
+.item {
+  position: relative;
+  background: #fff;
+  height: 140rpx;
+  width: 100%;
+  align-items: center;
+  border-bottom: 1rpx #f2f2f2 solid;
+  display: flex;
+  border-radius: 12rpx;
+}
+
+.item.active {
+  left: -140rpx;
+}
+
+.img {
+  flex: 1;
+  height: 140rpx;
+}
+
+.img_icon {
+  width: 100rpx;
+  height: 100rpx;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+}
+
+.text_c {
+  flex: 4;
+  height: 140rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.title {
+  flex: 1;
+  line-height: 70rpx;
+  display: flex;
+}
+
+.tit {
+  font-size: 26rpx;
+  color: #353535;
+  font-weight: 700;
+  flex: 4;
+}
+
+.time {
+  flex: 1;
+  font-size: 20rpx;
+  color: #888;
+  text-align: center;
+}
+
+.content {
+  flex: 1;
+}
+
+.con_txt {
+  color: #888;
+  font-size: 24rpx;
+  line-height: 70rpx;
+}
+
+.item .remove {
+  width: 140rpx;
+  height: 100%;
+  background-color: red;
+  position: absolute;
+  top: 0;
+  right: -140rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 30rpx;
+}

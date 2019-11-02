@@ -7,22 +7,26 @@ Page({
   data: {
     mainContent: [{
         imgUrl: '/images/btn_game@2x.png',
+        imgUrl_down: '/images/btn_game_click@2x.png',
         mainIcon: '/images/icon_game@2x.png',
         mainName: '游戏对战'
       },
       {
         imgUrl: '/images/btn_sport@2x.png',
+        imgUrl_down: '/images/btn_sport_click@2x.png',
         mainIcon: '/images/icon_sport@2x.png',
         mainName: '体育约场'
       }
-    ]
+    ],
+    isMessage: false, //是否有新消息
+    isAviliable: true, //消息图标可见性
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
- 
+
   },
   /**
    * 点击模块入口
@@ -75,6 +79,27 @@ Page({
         }
         break
     }
+  },
+  /* 按下时 */
+  start(ev) {
+    //console.log(ev)
+    this.setData({
+      isAviliable: false
+    })
+  },
+  /* 松开时 */
+  end(ev) {
+    //console.log(ev)
+    this.setData({
+      isAviliable: true
+    })
+  },
+  /* 获取新消息 */
+  getMessage(ev) {
+    //console.log(ev)
+    wx.navigateTo({
+      url: '/pages/message/message',
+    })
   },
   /**
    * 用户点击右上角分享

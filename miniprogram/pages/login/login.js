@@ -30,17 +30,21 @@ Page({
   /* 快速登录 */
   login(ev) {
     console.log(ev.detail.errMsg)
-    if (ev.detail.errMsg == 'getUserInfo:ok') {
-      wx.showLoading({
-        title: '加载中',
-      })
-      wx.redirectTo({
-        url: '/pages/home/home',
-        success(res) {
-          wx.hideLoading()
-        }
-      })
+    console.log(this.data.isClick,"88888")
+    if (!this.data.isClick) {
+      if (ev.detail.errMsg == 'getUserInfo:ok') {
+        wx.showLoading({
+          title: '加载中',
+        })
+        wx.redirectTo({
+          url: '/pages/home/home',
+          success(res) {
+            wx.hideLoading()
+          }
+        })
+      }
     }
+
   },
   /* 游客访问 */
   youke(ev) {

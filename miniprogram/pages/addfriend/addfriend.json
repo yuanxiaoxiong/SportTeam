@@ -1,4 +1,6 @@
 {
   "usingComponents": {},
-  "navigationBarTitleText": "添加好友"
+  "navigationBarTitleText": "添加好友",
+  "navigationBarBackgroundColor": "#ee3c3c",
+  "navigationBarTextStyle": "white"
 }

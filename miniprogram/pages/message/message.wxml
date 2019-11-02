@@ -1,0 +1,32 @@
+<!--pages/message/message.wxml-->
+<view class="page">
+  <!-- 消息列表 -->
+  <scroll-view scroll-y class="scroll">
+    <view class='block'></view>
+    <block wx:for='{{cardTeams}}' wx:key="{{index}}" wx:for-item="cardTeam">
+      <view class="item {{cardTeam.right==140?'active':''}}" bindtouchstart="drawStart" bindtouchmove="drawMove" bindtouchend="drawEnd" id="{{cardTeam.id}}">
+        <view class="img">
+          <image class="img_icon" src="/images/headportrait_lol_nor@2x.png" mode="scaleToFill"></image>
+        </view>
+        <view class="text_c">
+          <view class="title">
+            <text class="tit">队伍名称{{}}</text>
+            <text class="time">上午 08:30{{}}</text>
+          </view>
+          <view class="content">
+            <text class="con_txt">我们想在c7这边打球，有两个球</text>
+          </view>
+        </view>
+        <view class="remove" data-id="{{cardTeam.id}}" bindtap="delItem">
+          <view>删除</view>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+
+  <!-- 空消息列表 -->
+  <view class="null" hidden="{{}}">
+    <image src="/images/icon_null@2x.png" class="null_img"></image>
+    <view class="text">这里空空如也~</view>
+  </view>
+</view>

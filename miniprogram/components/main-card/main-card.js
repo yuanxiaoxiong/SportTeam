@@ -8,7 +8,7 @@ Component({
     mainContent: {
       type: Array,
       value: []
-    }
+    },
   },
 
   /**

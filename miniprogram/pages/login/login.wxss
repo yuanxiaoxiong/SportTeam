@@ -51,7 +51,13 @@ page {
 .login_btn {
   background: none;
   color: white;
+  font-size: 36rpx;
   border-radius: 50rpx;
+}
+
+.login_btn_dis {
+  width: 0;
+  height: 0;
 }
 
 .login {
@@ -62,6 +68,7 @@ page {
   margin-right: 75rpx;
   border-radius: 50rpx;
   color: white;
+  font-size: 36rpx;
   text-align: center;
   line-height: 88rpx;
 }
@@ -75,7 +82,16 @@ page {
   border-radius: 50rpx;
   opacity: 0.6;
   color: white;
+  font-size: 36rpx;
   text-align: center;
+  line-height: 88rpx;
+}
+
+.login_btn_active {
+  color: white;
+  font-size: 36rpx;
+  background: none;
+  height: 88rpx;
   line-height: 88rpx;
 }
 
@@ -87,6 +103,7 @@ page {
   margin-right: 75rpx;
   border-radius: 50rpx;
   color: white;
+  font-size: 36rpx;
   text-align: center;
   line-height: 88rpx;
 }
