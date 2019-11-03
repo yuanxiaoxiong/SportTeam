@@ -1,0 +1,97 @@
+.page {
+  width: 100%;
+  height: 100%;
+  position: fixed;
+  background-color: #efefef;
+}
+
+/* 自己发的 */
+
+.from {
+  height: auto;
+  border-top: 5rpx solid #efefef;
+  border-bottom: 5rpx solid #efefef;
+}
+
+.text_my {
+  height: auto;
+  display: flex;
+  flex-direction: row-reverse;
+  flex-wrap: wrap;
+  margin-right: 88rpx;
+}
+
+.my {
+  width: 88rpx;
+  height: 88rpx;
+  display: inline;
+  float: right;
+  padding-top: 0px;
+  padding-right: 0px;
+  background: white;
+  text-align: center;
+}
+
+.text {
+  width: auto;
+  height: 88rpx;
+  line-height: 88rpx;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+  background: #99e871;
+  border-radius: 8rpx;
+  margin-right: 10rpx;
+}
+
+/* 对方发的 */
+
+.to {
+  height: auto;
+  border-top: 5rpx solid #efefef;
+  border-bottom: 5rpx solid #efefef;
+}
+
+.text_other {
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  margin-left: 88rpx;
+}
+
+.other {
+  width: 88rpx;
+  height: 88rpx;
+  float: left;
+  text-align: center;
+}
+
+.text_ {
+  width: auto;
+  height: 88rpx;
+  line-height: 88rpx;
+  padding-left: 10rpx;
+  padding-right: 10rpx;
+  background: #fff;
+  border-radius: 8rpx;
+  margin-left: 10rpx;
+}
+
+.img {
+  width: 60rpx;
+  height: 60rpx;
+  margin-top: 14rpx;
+}
+
+/* 去滚动条 */
+
+::-webkit-scrollbar {
+  width: 0;
+  height: 0;
+  color: transparent;
+}
+
+.scroll {
+  height: 92vh;
+  width: 100%;
+}

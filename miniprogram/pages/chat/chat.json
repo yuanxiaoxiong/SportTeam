@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "chat-input": "../../components/chat-input/chat-input"
+  },
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#ebebeb"
+}

@@ -1,4 +1,8 @@
 // pages/home/home.js
+import TIM from "../../modules/tim-wx-sdk/tim-wx.js";
+import COS from "../../modules/cos-wx-sdk-v5/demo/app.js";
+
+var app = getApp()
 Page({
 
   /**
@@ -20,13 +24,50 @@ Page({
     ],
     isMessage: false, //是否有新消息
     isAviliable: true, //消息图标可见性
+    isLogin: false, //即时IM是否登录
+    unreadCount: 0, //未读消息个数
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    /* IM登录 */
+    var that = this
+    let promise = app.globalData.tim.login({
+      userID: 'user0',
+      userSig: 'eJyrVgrxCdYrSy1SslIy0jNQ0gHzM1NS80oy0zLBwqXFqUUwieKU7MSCgswUJStDEwMDI3NLS2MDiExqRUFmUSpQ3NTU1MjAACpakpkLFjM3MrcwMzC1gJqSmQ40N7jAI6w0W7soRt8kON-UsSLZoqQyNCvZ0DLPMSQpryTcOcg7zKlYO9m3NEbf01apFgCGejIK'
+    });
+    promise.then(function(imResponse) {
+      console.log(imResponse.data); // 登录成功
+      if (imResponse.data.actionStatus == 'OK') {
+        that.setData({
+          isLogin: true
+        })
+      }
+    }).catch(function(imError) {
+      console.warn('login error:', imError); // 登录失败的相关信息
+    });
+    //监听事件，如：获取会话列表
+    app.globalData.tim.on(TIM.EVENT.SDK_READY, function(event) {
+      // 收到离线消息和会话列表同步完毕通知，接入侧可以调用 sendMessage 等需要鉴权的接口
+      // event.name - TIM.EVENT.SDK_READY
+      /* 拉取会话列表 */
+      let promise2 = app.globalData.tim.getConversationList();
+      promise2.then(function(imResponse) {
+        const conversationList = imResponse.data.conversationList; // 会话列表，用该列表覆盖原有的会话列表
+        console.log('------', conversationList)
+        var count = 0;
+        for (var i = 0; i < conversationList.length; i++) {
+          count += conversationList[i].unreadCount
+        }
+        that.setData({
+          unreadCount: count
+        })
+      }).catch(function(imError) {
+        console.warn('getConversationList error:', imError); // 获取会话列表失败的相关信息
+      });
+    });
   },
   /**
    * 点击模块入口
@@ -94,12 +135,19 @@ Page({
       isAviliable: true
     })
   },
-  /* 获取新消息 */
+  /* 消息通知按钮*/
   getMessage(ev) {
-    //console.log(ev)
-    wx.navigateTo({
-      url: '/pages/message/message',
-    })
+    console.log(ev)
+    if (this.data.isLogin) {
+      wx.navigateTo({
+        url: '/pages/message/message',
+      })
+    } else {
+      wx.showToast({
+        title: '无法获取消息列表，请登录',
+        icon: 'none'
+      })
+    }
   },
   /**
    * 用户点击右上角分享
@@ -108,5 +156,16 @@ Page({
     wx.showShareMenu({
       withShareTicket: true
     })
+  },
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function() {
+    let promise = tim.logout();
+    promise.then(function(imResponse) {
+      console.log(imResponse.data); // 登出成功
+    }).catch(function(imError) {
+      console.warn('logout error:', imError);
+    });
   }
 })

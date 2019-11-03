@@ -4,6 +4,6 @@
     <main-card mainContent="{{mainContent}}" bind:itemClick="onClick" />
   </view>
   <image class='wave' src='/images/image_wave@2x.png'></image>
-  <image src="{{isMessage?'/images/btn_message_new@2x.png':'/images/btn_message_nor@2x.png'}}" class="icon" bindtouchstart="start" bindtouchend="end" bindtap="getMessage"></image>
-  <image src="{{isMessage?'/images/btn_message_new_click@2x.png':'/images/btn_message_click@2x.png'}}" class="icon" hidden="{{isAviliable}}"></image>
+  <image src="{{unreadCount!=0?'/images/btn_message_new@2x.png':'/images/btn_message_nor@2x.png'}}" class="icon" bindtouchstart="start" bindtouchend="end" bindtap="getMessage"></image>
+  <image src="{{unreadCount!=0?'/images/btn_message_new_click@2x.png':'/images/btn_message_click@2x.png'}}" class="icon" hidden="{{isAviliable}}"></image>
 </view>

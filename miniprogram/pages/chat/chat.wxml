@@ -1,0 +1,31 @@
+<view class="page">
+  <!-- 消息列表 -->
+  <scroll-view class="scroll" scroll-y='{{true}}' scroll-top='{{100000}}'bindscroll='bindscroll'>
+    <block wx:for='{{messageList}}' wx:key='{{index}}'>
+      <!-- 我的发送 -->
+      <!-- hidden="{{messageList[index].from!=from_}}" -->
+      <view class="from" hidden="{{messageList[index].from!=from_}}">
+        <view class="my">
+          <image src="/images/luanch.png" class="img"></image>
+        </view>
+        <view class="text_my">
+          <view class='text'>{{messageList[index].payload.text}}</view>
+        </view>
+      </view>
+      <!-- 对方的发送 -->
+      <!-- hidden="{{messageList[index].from!=to}}" -->
+      <view class="to" hidden="{{messageList[index].from!=to}}">
+        <view class="other">
+          <image src="/images/btn_message_click@2x.png" class="img"></image>
+        </view>
+        <view class="text_other">
+          <view class='text_'>{{messageList[index].payload.text}}</view>
+        </view>
+      </view>
+    </block>
+  </scroll-view>
+
+  <!-- 输入列表 -->
+  <chat-input id="chatInput" min-voice-time="{{1}}" max-voice-time="{{60}}" start-time-down="{{54}}" tabBarHeight="{{0}}" format="mp3" extra-array="{{extraArr}}" bind:extraClickEvent="onExtraClickEvent" bind:extraItemClickEvent="onExtraItemClickEvent" bind:voiceRecordEvent="onVoiceRecordEvent"
+    bind:sendMessageEvent="onSendMessageEvent"></chat-input>
+</view>

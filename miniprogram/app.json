@@ -7,8 +7,9 @@
     "pages/invite/invite",
     "pages/invitesuccess/invitesuccess",
     "pages/acceptinvite/acceptinvite",
-    "pages/addfriend/addfriend"
-    
+    "pages/addfriend/addfriend",
+    "pages/chat/chat",
+    "pages/test/test"
   ],
   "window": {
     "backgroundColor": "#FFFFFF",

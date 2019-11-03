@@ -1,4 +1,8 @@
 // pages/message/message.js
+import TIM from "../../modules/tim-wx-sdk/tim-wx.js";
+import COS from "../../modules/cos-wx-sdk-v5/demo/app.js";
+var time = require('../../utils/time.js');
+var app = getApp();
 Page({
 
   /**
@@ -21,13 +25,34 @@ Page({
     key: false,
     startX: 0,
     maxRight: 140,
+    conversationList: [], //会话列表
+    time: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    // 拉取会话列表
+    let that = this
+    let promise = app.globalData.tim.getConversationList();
+    promise.then(function(imResponse) {
+      const conversationList = imResponse.data.conversationList; // 会话列表，用该列表覆盖原有的会话列表
+      console.log('=====', conversationList)
+      var times = []
+      for (var i = 0; i < conversationList.length; i++) {
+        times.push(time.formatTimeTwo(conversationList[i].lastMessage.lastTime, 'h:m'))
+      }
+      console.log(times)
+      that.setData({
+        conversationList: conversationList,
+        time: times
+      })
+      console.log(time.formatTimeTwo(conversationList[0].lastMessage.lastTime, 'Y-M-D h:m:s'));
 
+    }).catch(function(imError) {
+      console.warn('getConversationList error:', imError); // 获取会话列表失败的相关信息
+    });
   },
   /* 按下时 */
   drawStart: function(e) {
@@ -72,7 +97,7 @@ Page({
       var touch = e.touches[0];
       var endX = touch.clientX;
       var endY = touch.clientY;
-      console.log("startX=" + this.data.startX + " endX=" + endX);
+      //console.log("startX=" + this.data.startX + " endX=" + endX);
       if (endX - this.data.startX == 0)
         return;
       var res = cardTeams;
@@ -110,7 +135,7 @@ Page({
   /* 删除item */
   delItem: function(e) {
     var dataId = e.currentTarget.dataset.id;
-    console.log("删除"+dataId);
+    console.log("删除" + dataId);
     var cardTeams = this.data.cardTeams;
     var newCardTeams = [];
     for (var i in cardTeams) {
@@ -123,5 +148,17 @@ Page({
       cardTeams: newCardTeams
     });
   },
-
+  /* 去聊天 */
+  goTochat(ev) {
+    console.log(ev)
+    wx.navigateTo({
+      url: '/pages/chat/chat?id=' + ev.currentTarget.id,
+      success(res) {
+        // 将某会话下所有未读消息已读上报
+        app.globalData.tim.setMessageRead({
+          conversationID: ev.currentTarget.id
+        });
+      }
+    })
+  }
 })

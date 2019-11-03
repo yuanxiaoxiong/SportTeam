@@ -98,6 +98,13 @@
 					"pathName": "pages/message/message",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "即时聊天",
+					"pathName": "pages/chat/chat",
+					"query": "",
+					"scene": null
 				}
 			]
 		}
