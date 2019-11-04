@@ -36,8 +36,8 @@
   width: auto;
   height: 88rpx;
   line-height: 88rpx;
-  padding-left: 10rpx;
-  padding-right: 10rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
   background: #99e871;
   border-radius: 8rpx;
   margin-right: 10rpx;
@@ -70,8 +70,8 @@
   width: auto;
   height: 88rpx;
   line-height: 88rpx;
-  padding-left: 10rpx;
-  padding-right: 10rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
   background: #fff;
   border-radius: 8rpx;
   margin-left: 10rpx;

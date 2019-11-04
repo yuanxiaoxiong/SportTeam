@@ -80,7 +80,7 @@ Page({
     wx.cloud.callFunction({ //调用云函数
       name: 'showMyOrder', //云函数名为showOrder
       data: {
-        openId: wx.getStorageSync("openId")
+        openId: wx.getStorageSync("token")
       }
     }).then(res => { //Promise
       console.log(res.result)
@@ -194,7 +194,7 @@ Page({
       wx.cloud.callFunction({ //调用云函数
         name: 'addOrder', //云函数名为addOrder
         data: {
-          openId: wx.getStorageSync("openId"),
+          openId: wx.getStorageSync("token"),
           wxId: encodeURIComponent(this.data.wx_name),
           myTeamName: encodeURIComponent(this.data.wx_duiwu),
           time: encodeURIComponent(this.data.str_FullTime),
@@ -208,7 +208,7 @@ Page({
           wx.cloud.callFunction({ //调用云函数
             name: 'showMyOrder', //云函数名为showOrder
             data: {
-              openId: wx.getStorageSync("openId")
+              openId: wx.getStorageSync("token")
             }
           }).then(res => { //Promise
             console.log(res.result)
@@ -312,7 +312,7 @@ Page({
                   wx.cloud.callFunction({ //调用云函数
                     name: 'showMyOrder', //云函数名为showOrder
                     data: {
-                      openId: wx.getStorageSync("openId")
+                      openId: wx.getStorageSync("token")
                     }
                   }).then(res => { //Promise
                     console.log(res.result)
@@ -424,12 +424,15 @@ Page({
     var list = ev.detail.item
     console.log(list)
     var info = 0
-    if (list.openId == wx.getStorageSync("openId")) {
+    if (list.openId == wx.getStorageSync("token")) {
       info = 1
+      wx.setStorageSync('token_other', list.token)
+    } else {
+      wx.setStorageSync('token_other', list.openId)
     }
     wx.navigateTo({
       url: '/pages/addfriend/addfriend?myTeamName=' + list.myTeamName + '&teamName=' + list.teamName +
-        '&time=' + list.time + '&token=' + list.token + '&weiXin2Id=' + list.weiXin2Id + '&weiXinId=' + list.weiXinId + '&info=' + info,
+        '&time=' + list.time + '&weiXin2Id=' + list.weiXin2Id + '&token=' + list.token + '&weiXinId=' + list.weiXinId + '&info=' + info,
     })
   },
   //发起约场
@@ -631,7 +634,7 @@ Page({
     wx.cloud.callFunction({ //调用云函数
       name: 'showOrder', //云函数名为showOrder
       data: {
-        openId: wx.getStorageSync("openId")
+        openId: wx.getStorageSync("token")
       }
     }).then(res => { //Promise
 
@@ -658,7 +661,7 @@ Page({
     wx.cloud.callFunction({ //调用云函数
       name: 'showMyOrder', //云函数名为showOrder
       data: {
-        openId: wx.getStorageSync("openId")
+        openId: wx.getStorageSync("token")
       }
     }).then(res => { //Promise
       console.log(res.result)

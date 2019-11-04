@@ -22,7 +22,7 @@ exports.main = async(event, context) => {
           value: '请您前往该小程序，确认此邀请信息'
         }
       },
-      templateId: '8X-ybERf60b-iVuFQJVWW9PsU7zA8tB6kB11yfPXrmw', //模板id
+      templateId: 'g7prWtp_PEi4WAgXbJZMFyhFbluqudGPpyOrQxE4epY', //模板id
       formId: event.formId, //要推送到的formId
       emphasisKeyword: '' //keyword3.DATA  放大效果
     })

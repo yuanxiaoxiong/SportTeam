@@ -22,7 +22,7 @@ exports.main = async(event, context) => {
           value: decodeURIComponent(event.message) //请您前往该小程序页面【记录】-【进行中】-【添加好友】，
         }
       },
-      templateId: 'TkQegG-F0-iR5Bhj9gK-6ra_KmNvp6f1Qgzib42iBjU', //模板id
+      templateId: 'Hw7s5JVtv5j_a_f71IA4OoVW6ZKPTFd9KBu0YViuJYM', //模板id
       formId: event.sure_formId, //要推送到的formId
       emphasisKeyword: '' //keyword3.DATA  放大效果
     })

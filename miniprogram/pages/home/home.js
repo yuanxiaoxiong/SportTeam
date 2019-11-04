@@ -1,7 +1,7 @@
 // pages/home/home.js
 import TIM from "../../modules/tim-wx-sdk/tim-wx.js";
 import COS from "../../modules/cos-wx-sdk-v5/demo/app.js";
-
+var userSig = require("../../utils/GenerateTestUserSig.js")
 var app = getApp()
 Page({
 
@@ -32,11 +32,15 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
+    var my_token = wx.getStorageSync('token')
+    //console.log(my_token, "99999999999999")
+    var user = userSig.genTestUserSig(my_token)
+    console.log(user, "------------")
     /* IM登录 */
     var that = this
     let promise = app.globalData.tim.login({
-      userID: 'user0',
-      userSig: 'eJyrVgrxCdYrSy1SslIy0jNQ0gHzM1NS80oy0zLBwqXFqUUwieKU7MSCgswUJStDEwMDI3NLS2MDiExqRUFmUSpQ3NTU1MjAACpakpkLFjM3MrcwMzC1gJqSmQ40N7jAI6w0W7soRt8kON-UsSLZoqQyNCvZ0DLPMSQpryTcOcg7zKlYO9m3NEbf01apFgCGejIK'
+      userID: my_token,
+      userSig: user.userSig
     });
     promise.then(function(imResponse) {
       console.log(imResponse.data); // 登录成功
@@ -150,14 +154,6 @@ Page({
     }
   },
   /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function() {
-    wx.showShareMenu({
-      withShareTicket: true
-    })
-  },
-  /**
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
@@ -167,5 +163,17 @@ Page({
     }).catch(function(imError) {
       console.warn('logout error:', imError);
     });
+  },
+  onShow: function() {
+    console.log("home show")
+    let that = this
+    let onMessageReceived = function(event) {
+      // event.data - 存储 Message 对象的数组 - [Message]
+      console.log("home新消息", event.data)
+      that.setData({
+        unreadCount: this.data.unreadCount + 1
+      })
+    };
+    app.globalData.tim.on(TIM.EVENT.MESSAGE_RECEIVED, onMessageReceived);
   }
 })

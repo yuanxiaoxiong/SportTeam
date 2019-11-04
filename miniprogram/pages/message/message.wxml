@@ -1,7 +1,7 @@
 <!--pages/message/message.wxml-->
 <view class="page">
   <!-- 消息列表 -->
-  <scroll-view scroll-y class="scroll">
+  <scroll-view scroll-y class="scroll" hidden="{{conversationList.length==0}}">
     <view class='block'></view>
     <block wx:for='{{conversationList}}' wx:key="{{index}}" wx:for-item="cardTeam">
       <view class="item {{cardTeam.right==140?'active':''}}" bindtouchstart="drawStart" bindtouchmove="drawMove" bindtouchend="drawEnd" id="{{cardTeam.conversationID}}" bindtap="goTochat" data-item="{{cardTeam}}">
@@ -25,7 +25,7 @@
   </scroll-view>
 
   <!-- 空消息列表 -->
-  <view class="null" hidden="{{}}">
+  <view class="null" hidden="{{conversationList.length!=0}}">
     <image src="/images/icon_null@2x.png" class="null_img"></image>
     <view class="text">这里空空如也~</view>
   </view>

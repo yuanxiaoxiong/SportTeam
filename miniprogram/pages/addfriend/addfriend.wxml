@@ -5,12 +5,12 @@
     <view class='msg_wx'>
       <image src="/images/icon_wechat@2x.png" class="img_wxh" />
       <text class='msg_wxh' hidden="{{info==0}}">{{weiXin2Id}}</text>
-      <text class='msg_wxh' hidden="{{info==1}}">{{this_token==token?'':weiXinId}}</text>
+      <text class='msg_wxh' hidden="{{info==1}}">{{this_token==token?weiXinId:''}}</text>
     </view>
     <view class='msg_wx'>
       <image src="/images/icon_team@2x.png" class="img_team" />
       <text class='msg_class' hidden="{{info==0}}">{{teamName}}</text>
-      <text class='msg_class' hidden="{{info==1}}">{{this_token==token?'':myTeamName}}</text>
+      <text class='msg_class' hidden="{{info==1}}">{{this_token==token?myTeamName:''}}</text>
     </view>
     <view class='msg_duiwu'>
       <image class="img_time" src="/images/icon_time@2x.png" />
@@ -25,5 +25,8 @@
   </view>
   <view class='sure_btn_active' bindtap='addClick'>
     <view class='sure_text_active'>添加好友</view>
+  </view>
+  <view class='chat_btn_active' bindtap='onChat'>
+    <view class='chat_text_active'>在线聊天</view>
   </view>
 </view>

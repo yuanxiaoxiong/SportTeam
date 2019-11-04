@@ -27,10 +27,11 @@ Page({
     messageList: [], // 消息列表
     nextReqMessageID: '', // 用于续拉，分页续拉时需传入该字段。
     isCompleted: 0, // 表示是否已经拉完所有消息
-    from_: 'user0',
-    to: 'user1',
+    from_: '',
+    to: '',
     connId: '', //会话id
-    scrollTop: 0
+    scrollTop: 0,
+    full: true
   },
 
 
@@ -38,33 +39,51 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad(options) {
-    console.log(options.id)
+    let id = ''
     let that = this
-    // 打开某个会话时，第一次拉取消息列表
-    let promise = app.globalData.tim.getMessageList({
-      conversationID: options.id,
-      count: 20
-    });
-    promise.then(function(imResponse) {
-      const messageList = imResponse.data.messageList; // 消息列表。
-      const nextReqMessageID = imResponse.data.nextReqMessageID; // 用于续拉，分页续拉时需传入该字段。
-      const isCompleted = imResponse.data.isCompleted; // 表示是否已经拉完所有消息。
-      console.log(messageList)
-      console.log(nextReqMessageID)
-      console.log(isCompleted)
+    if (options.flag == 0) {
+      id = 'C2C' + wx.getStorageSync('token_other')
       that.setData({
-        connId: options.id,
-        messageList: messageList,
-        nextReqMessageID: nextReqMessageID,
-        scrollTop: 88 * messageList.length
+        from_: wx.getStorageSync('token'),
+        to: wx.getStorageSync('token_other'),
+        connId: 'C2C' + wx.getStorageSync('token_other'),
+        full: false
       })
-    });
+    } else {
+      id = wx.getStorageSync('id')
+      that.setData({
+        from_: wx.getStorageSync('token'),
+        to: wx.getStorageSync('token_other'),
+        connId: id,
+        full: false
+      })
+      // 打开某个会话时，第一次拉取消息列表
+      let promise = app.globalData.tim.getMessageList({
+        conversationID: id,
+        count: 15
+      });
+      promise.then(function(imResponse) {
+        const messageList = imResponse.data.messageList; // 消息列表。
+        const nextReqMessageID = imResponse.data.nextReqMessageID; // 用于续拉，分页续拉时需传入该字段。
+        const isCompleted = imResponse.data.isCompleted; // 表示是否已经拉完所有消息。
+        console.log(messageList)
+        console.log(nextReqMessageID)
+        console.log(isCompleted)
+        that.setData({
+          connId: id,
+          messageList: messageList,
+          nextReqMessageID: nextReqMessageID,
+          scrollTop: 88 * messageList.length
+        })
+      });
+    }
     wx.setNavigationBarTitle({
       title: '队伍名称'
     });
   },
   onReady() {
     this.chatInput = this.selectComponent('#chatInput');
+    wx.startPullDownRefresh()
   },
   /* 发送消息 */
   onSendMessageEvent(e) {
@@ -80,7 +99,7 @@ Page({
       // 发送文本消息，Web 端与小程序端相同
       // 1. 创建消息实例，接口返回的实例可以上屏
       let message = app.globalData.tim.createTextMessage({
-        to: 'user1',
+        to: that.data.to,
         conversationType: TIM.TYPES.CONV_C2C,
         payload: {
           text: content
@@ -209,30 +228,6 @@ Page({
     this.chatInput.closeExtraView();
   },
   /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function() {
-    //监听即时消息
-    let onMessageReceived = function(event) {
-      // 收到推送的单聊、群聊、群提示、群系统通知的新消息，可通过遍历 event.data 获取消息列表数据并渲染到页面
-      // event.name - TIM.EVENT.MESSAGE_RECEIVED
-      // event.data - 存储 Message 对象的数组 - [Message]
-      console.log(event, "---------------")
-    };
-    app.globalData.tim.on(TIM.EVENT.MESSAGE_RECEIVED, onMessageReceived);
-  },
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function() {
-    let onMessageReceived = function(event) {
-      // 收到推送的单聊、群聊、群提示、群系统通知的新消息，可通过遍历 event.data 获取消息列表数据并渲染到页面
-      // event.name - TIM.EVENT.MESSAGE_RECEIVED
-      // event.data - 存储 Message 对象的数组 - [Message]
-    };
-    app.globalData.tim.off(TIM.EVENT.MESSAGE_RECEIVED, onMessageReceived);
-  },
-  /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function() {
@@ -256,8 +251,16 @@ Page({
         that.setData({
           messageList: messageList_,
           nextReqMessageID: nextReqMessageID,
-          scrollTop: 0,
           isCompleted: isCompleted
+        })
+      }
+      if (that.data.full) {
+        that.setData({
+          scrollTop: 0
+        })
+      } else {
+        that.setData({
+          scrollTop: 88 * messageList.length
         })
       }
       wx.stopPullDownRefresh()
@@ -268,6 +271,9 @@ Page({
     let that = this
     if (that.data.isCompleted == 0) {
       wx.startPullDownRefresh()
+      that.setData({
+        full: true
+      })
     } else {
       wx.showToast({
         title: '没有更多消息了',
@@ -276,5 +282,23 @@ Page({
       })
       wx.stopPullDownRefresh()
     }
-  }
+  },
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function() {
+    console.log("chat show")
+    let that = this
+    let onMessageReceived = function(event) {
+      // event.data - 存储 Message 对象的数组 - [Message]
+      console.log("chat消息", event.data)
+      let messageList = that.data.messageList.concat(event.data)
+      that.setData({
+        messageList: messageList,
+        scrollTop: 88 * messageList.length
+      })
+    };
+    app.globalData.tim.on(TIM.EVENT.MESSAGE_RECEIVED, onMessageReceived);
+  },
+
 });
