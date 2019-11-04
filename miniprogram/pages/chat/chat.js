@@ -29,7 +29,8 @@ Page({
     isCompleted: 0, // 表示是否已经拉完所有消息
     from_: 'user0',
     to: 'user1',
-    connId: '' //会话id
+    connId: '', //会话id
+    scrollTop: 0
   },
 
 
@@ -42,7 +43,7 @@ Page({
     // 打开某个会话时，第一次拉取消息列表
     let promise = app.globalData.tim.getMessageList({
       conversationID: options.id,
-      count: 15
+      count: 20
     });
     promise.then(function(imResponse) {
       const messageList = imResponse.data.messageList; // 消息列表。
@@ -54,7 +55,8 @@ Page({
       that.setData({
         connId: options.id,
         messageList: messageList,
-        nextReqMessageID: nextReqMessageID
+        nextReqMessageID: nextReqMessageID,
+        scrollTop: 88 * messageList.length
       })
     });
     wx.setNavigationBarTitle({
@@ -102,7 +104,10 @@ Page({
           console.log(nextReqMessageID)
           console.log(isCompleted)
           that.setData({
-            messageList: messageList
+            messageList: messageList,
+            nextReqMessageID: nextReqMessageID,
+            scrollTop: 88 * messageList.length,
+            isCompleted: isCompleted
           })
         });
       }).catch(function(imError) {
@@ -242,29 +247,34 @@ Page({
       const messageList = imResponse.data.messageList; // 消息列表。
       const nextReqMessageID = imResponse.data.nextReqMessageID; // 用于续拉，分页续拉时需传入该字段。
       const isCompleted = imResponse.data.isCompleted; // 表示是否已经拉完所有消息。
-      console.log(isCompleted, "=======")
+      console.log(that.data.messageList, "=======")
+      console.log(messageList, "=======")
       if (that.data.isCompleted == 0) {
         var messageList_ = messageList
         messageList_ = messageList_.concat(that.data.messageList)
         console.log(messageList_, "=======")
         that.setData({
           messageList: messageList_,
+          nextReqMessageID: nextReqMessageID,
+          scrollTop: 0,
           isCompleted: isCompleted
-        })
-      } else {
-        wx.showToast({
-          title: '没有更多消息了',
-          icon: 'none'
         })
       }
       wx.stopPullDownRefresh()
     });
   },
-  bindscroll(ev) {
-    //console.log(ev)
-    // if (ev.detail.scrollTop == 0 && this.data.isCompleted == 0) {
-    //   wx.startPullDownRefresh()
-
-    // }
+  /* 滑动到距离顶部50px的操作 */
+  bindscrolltoupper(ev) {
+    let that = this
+    if (that.data.isCompleted == 0) {
+      wx.startPullDownRefresh()
+    } else {
+      wx.showToast({
+        title: '没有更多消息了',
+        icon: 'none',
+        scrollTop: 0
+      })
+      wx.stopPullDownRefresh()
+    }
   }
 });
