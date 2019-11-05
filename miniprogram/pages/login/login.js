@@ -17,7 +17,7 @@ Page({
   },
   /* 输入账号 */
   handleNo(ev) {
-    if (ev.detail.value.length == 3) {
+    if (ev.detail.value.length == 12) {
       this.setData({
         isClick: false,
         no: ev.detail.value

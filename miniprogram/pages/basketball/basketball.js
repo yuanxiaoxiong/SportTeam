@@ -51,7 +51,7 @@ Page({
   onLoad: function(options) {
 
     this.setData({
-      token: wx.getStorageSync("token")
+      token: wx.getStorageSync("openId")
     })
     //请求体育圈接口
     wx.cloud.callFunction({ //调用云函数
@@ -80,7 +80,7 @@ Page({
     wx.cloud.callFunction({ //调用云函数
       name: 'showMyOrder', //云函数名为showOrder
       data: {
-        openId: wx.getStorageSync("token")
+        openId: wx.getStorageSync("openId")
       }
     }).then(res => { //Promise
       console.log(res.result)
@@ -194,7 +194,7 @@ Page({
       wx.cloud.callFunction({ //调用云函数
         name: 'addOrder', //云函数名为addOrder
         data: {
-          openId: wx.getStorageSync("token"),
+          openId: wx.getStorageSync("openId"),
           wxId: encodeURIComponent(this.data.wx_name),
           myTeamName: encodeURIComponent(this.data.wx_duiwu),
           time: encodeURIComponent(this.data.str_FullTime),
@@ -208,7 +208,7 @@ Page({
           wx.cloud.callFunction({ //调用云函数
             name: 'showMyOrder', //云函数名为showOrder
             data: {
-              openId: wx.getStorageSync("token")
+              openId: wx.getStorageSync("openId")
             }
           }).then(res => { //Promise
             console.log(res.result)
@@ -312,7 +312,7 @@ Page({
                   wx.cloud.callFunction({ //调用云函数
                     name: 'showMyOrder', //云函数名为showOrder
                     data: {
-                      openId: wx.getStorageSync("token")
+                      openId: wx.getStorageSync("openId")
                     }
                   }).then(res => { //Promise
                     console.log(res.result)
@@ -424,7 +424,7 @@ Page({
     var list = ev.detail.item
     console.log(list)
     var info = 0
-    if (list.openId == wx.getStorageSync("token")) {
+    if (list.openId == wx.getStorageSync("openId")) {
       info = 1
       wx.setStorageSync('token_other', list.token)
     } else {
@@ -634,7 +634,7 @@ Page({
     wx.cloud.callFunction({ //调用云函数
       name: 'showOrder', //云函数名为showOrder
       data: {
-        openId: wx.getStorageSync("token")
+        openId: wx.getStorageSync("openId")
       }
     }).then(res => { //Promise
 
@@ -661,7 +661,7 @@ Page({
     wx.cloud.callFunction({ //调用云函数
       name: 'showMyOrder', //云函数名为showOrder
       data: {
-        openId: wx.getStorageSync("token")
+        openId: wx.getStorageSync("openId")
       }
     }).then(res => { //Promise
       console.log(res.result)

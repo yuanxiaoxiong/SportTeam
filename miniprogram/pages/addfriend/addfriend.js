@@ -22,11 +22,11 @@ Page({
   onLoad: function(options) {
     //console.log(options)
     this.setData({
-      this_token: wx.getStorageSync("token"),
+      this_token: wx.getStorageSync("openId"),
       myTeamName: options.myTeamName,
       teamName: options.teamName,
       time: options.time,
-      token: options.token + '==',
+      token: options.token,
       weiXin2Id: options.weiXin2Id,
       weiXinId: options.weiXinId,
       info: options.info

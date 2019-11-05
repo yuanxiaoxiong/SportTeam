@@ -31,7 +31,7 @@ Page({
     to: '',
     connId: '', //会话id
     scrollTop: 0,
-    full: true
+    full: false
   },
 
 
@@ -44,22 +44,19 @@ Page({
     if (options.flag == 0) {
       id = 'C2C' + wx.getStorageSync('token_other')
       that.setData({
-        from_: wx.getStorageSync('token'),
+        from_: wx.getStorageSync('openId'),
         to: wx.getStorageSync('token_other'),
         connId: 'C2C' + wx.getStorageSync('token_other'),
-        full: false
       })
     } else {
-      id = wx.getStorageSync('id')
       that.setData({
-        from_: wx.getStorageSync('token'),
-        to: wx.getStorageSync('token_other'),
-        connId: id,
-        full: false
+        from_: wx.getStorageSync('openId'),
+        to: options.to,
+        connId: options.id,
       })
       // 打开某个会话时，第一次拉取消息列表
       let promise = app.globalData.tim.getMessageList({
-        conversationID: id,
+        conversationID: options.id,
         count: 15
       });
       promise.then(function(imResponse) {
@@ -70,7 +67,6 @@ Page({
         console.log(nextReqMessageID)
         console.log(isCompleted)
         that.setData({
-          connId: id,
           messageList: messageList,
           nextReqMessageID: nextReqMessageID,
           scrollTop: 88 * messageList.length
@@ -300,5 +296,4 @@ Page({
     };
     app.globalData.tim.on(TIM.EVENT.MESSAGE_RECEIVED, onMessageReceived);
   },
-
 });

@@ -6,7 +6,7 @@
     <block wx:for='{{conversationList}}' wx:key="{{index}}" wx:for-item="cardTeam">
       <view class="item {{cardTeam.right==140?'active':''}}" bindtouchstart="drawStart" bindtouchmove="drawMove" bindtouchend="drawEnd" id="{{cardTeam.conversationID}}" bindtap="goTochat" data-item="{{cardTeam}}">
         <view class="img">
-          <image class="img_icon" src="/images/headportrait_lol_nor@2x.png" mode="scaleToFill"></image>
+          <image class="img_icon" src="{{cardTeam.unreadCount!=0?'/images/headportrait_lol_new.png':'/images/headportrait_lol_nor@2x.png'}}" mode="scaleToFill"></image>
         </view>
         <view class="text_c">
           <view class="title">
@@ -14,7 +14,7 @@
             <text class="time">{{time[index]}}</text>
           </view>
           <view class="content">
-            <text class="con_txt">我们想在c7这边打球，有两个球</text>
+            <text class="con_txt">{{cardTeam.lastMessage.payload.text}}</text>
           </view>
         </view>
         <view class="remove" data-id="{{cardTeam.id}}" catchtap="delItem">

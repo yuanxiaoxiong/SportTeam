@@ -3,6 +3,13 @@ import TIM from "../../modules/tim-wx-sdk/tim-wx.js";
 import COS from "../../modules/cos-wx-sdk-v5/demo/app.js";
 var userSig = require("../../utils/GenerateTestUserSig.js")
 var app = getApp()
+let onMessageReceived = function(event) {
+  // event.data - 存储 Message 对象的数组 - [Message]
+  console.log("home新消息", event.data)
+  this.setData({
+    unreadCount: this.data.unreadCount + 1
+  })
+};
 Page({
 
   /**
@@ -26,13 +33,14 @@ Page({
     isAviliable: true, //消息图标可见性
     isLogin: false, //即时IM是否登录
     unreadCount: 0, //未读消息个数
+    flag: 0
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var my_token = wx.getStorageSync('token')
+    var my_token = wx.getStorageSync('openId')
     //console.log(my_token, "99999999999999")
     var user = userSig.genTestUserSig(my_token)
     console.log(user, "------------")
@@ -143,6 +151,9 @@ Page({
   getMessage(ev) {
     console.log(ev)
     if (this.data.isLogin) {
+      this.setData({
+        flag: 1
+      })
       wx.navigateTo({
         url: '/pages/message/message',
       })
@@ -166,14 +177,13 @@ Page({
   },
   onShow: function() {
     console.log("home show")
-    let that = this
-    let onMessageReceived = function(event) {
-      // event.data - 存储 Message 对象的数组 - [Message]
-      console.log("home新消息", event.data)
-      that.setData({
-        unreadCount: this.data.unreadCount + 1
-      })
-    };
     app.globalData.tim.on(TIM.EVENT.MESSAGE_RECEIVED, onMessageReceived);
-  }
+  },
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function() {
+    console.log("home hide")
+    app.globalData.tim.off(TIM.EVENT.MESSAGE_RECEIVED, onMessageReceived);
+  },
 })

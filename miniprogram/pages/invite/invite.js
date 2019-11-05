@@ -40,7 +40,7 @@ Page({
         wx_id: encodeURIComponent(this.data.wx_name),
         teamName: encodeURIComponent(this.data.wx_duiwu),
         state: 3,
-        token: wx.getStorageSync("token")
+        token: wx.getStorageSync("openId")
       }
     }).then(res => { //Promise
       console.log(res.result)
