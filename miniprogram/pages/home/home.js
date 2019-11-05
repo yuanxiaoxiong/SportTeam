@@ -168,9 +168,9 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function() {
-    let promise = tim.logout();
+    let promise = app.globalData.tim.logout();
     promise.then(function(imResponse) {
-      console.log(imResponse.data); // 登出成功
+      console.log(imResponse.data, "登出成功"); // 登出成功
     }).catch(function(imError) {
       console.warn('logout error:', imError);
     });

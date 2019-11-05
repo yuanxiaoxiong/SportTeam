@@ -55,6 +55,11 @@
   left: -140rpx;
 }
 
+.active_down {
+  background: #ededed;
+  border-radius: 12rpx;
+}
+
 .img {
   flex: 1;
   height: 140rpx;
@@ -101,7 +106,7 @@
 .con_txt {
   color: #888;
   font-size: 24rpx;
-  line-height: 70rpx;
+  line-height: 50rpx;
 }
 
 .item .remove {
