@@ -8,7 +8,7 @@
       <template is="voice" data="{{voiceObj:voiceObj}}" />
     </block>
     <input wx:elif="{{inputStatus==='text'}}" class="chat-input-style" style="margin-left:{{showVoicePart?0:16}}rpx;" maxlength="500" confirm-type="send" confirm-hold hold-keyboard value="{{textMessage}}" bindconfirm="_chatInput$send$text$message" bindfocus="_chatInput$bind$focus$event"
-      bindblur="_chatInput$bind$blur$event" bindinput="_chatInput$getValue$event" />
+      bindblur="_chatInput$bind$blur$event" bindinput="_chatInput$getValue$event" maxlength='{{300}}'/>
     <view hover-class="press-style-opacity">
       <view wx:if="{{inputType==='text'|true}}" class="chat-input-send-button-style" catchtap="_chatInput$send$text$message02">发送</view>
       <image wx:else class="extra-btn-style" src="../../images/chat/extra.png" catchtap="_chatInput$extra$click$event" hidden/>

@@ -105,6 +105,12 @@
 					"pathName": "pages/chat/chat",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "在线聊天",
+					"pathName": "pages/chat/chat",
+					"scene": null
 				}
 			]
 		}

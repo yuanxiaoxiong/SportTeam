@@ -5,10 +5,7 @@ var userSig = require("../../utils/GenerateTestUserSig.js")
 var app = getApp()
 let onMessageReceived = function(event) {
   // event.data - 存储 Message 对象的数组 - [Message]
-  console.log("home新消息", event.data)
-  this.setData({
-    unreadCount: this.data.unreadCount + 1
-  })
+
 };
 Page({
 
@@ -177,7 +174,32 @@ Page({
   },
   onShow: function() {
     console.log("home show")
+    let that = this
+    onMessageReceived = function(event) {
+      // event.data - 存储 Message 对象的数组 - [Message]
+      console.log("home新消息", event.data)
+      that.setData({
+        unreadCount: that.data.unreadCount + 1
+      })
+    };
     app.globalData.tim.on(TIM.EVENT.MESSAGE_RECEIVED, onMessageReceived);
+    if (that.data.flag == 1) {
+      /* 消息通知页面返回时再次拉取会话列表 */
+      let promise2 = app.globalData.tim.getConversationList();
+      promise2.then(function(imResponse) {
+        const conversationList = imResponse.data.conversationList; // 会话列表，用该列表覆盖原有的会话列表
+        console.log('------', conversationList)
+        var count = 0;
+        for (var i = 0; i < conversationList.length; i++) {
+          count += conversationList[i].unreadCount
+        }
+        that.setData({
+          unreadCount: count
+        })
+      }).catch(function(imError) {
+        console.warn('getConversationList error:', imError); // 获取会话列表失败的相关信息
+      });
+    }
   },
   /**
    * 生命周期函数--监听页面隐藏

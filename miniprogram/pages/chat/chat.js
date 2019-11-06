@@ -69,7 +69,7 @@ Page({
         that.setData({
           messageList: messageList,
           nextReqMessageID: nextReqMessageID,
-          scrollTop: 88 * messageList.length
+          scrollTop: 80 * 20 * messageList.length
         })
       });
     }
@@ -121,7 +121,7 @@ Page({
           that.setData({
             messageList: messageList,
             nextReqMessageID: nextReqMessageID,
-            scrollTop: 88 * messageList.length,
+            scrollTop: 80 * 20 * messageList.length,
             isCompleted: isCompleted
           })
         });
@@ -256,7 +256,7 @@ Page({
         })
       } else {
         that.setData({
-          scrollTop: 88 * messageList.length
+          scrollTop: 80 * 20 * messageList.length
         })
       }
       wx.stopPullDownRefresh()
@@ -291,7 +291,7 @@ Page({
       let messageList = that.data.messageList.concat(event.data)
       that.setData({
         messageList: messageList,
-        scrollTop: 88 * messageList.length
+        scrollTop: 80 * 20 * messageList.length
       })
     };
     app.globalData.tim.on(TIM.EVENT.MESSAGE_RECEIVED, onMessageReceived);

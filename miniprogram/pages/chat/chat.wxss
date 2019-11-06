@@ -19,11 +19,11 @@
   flex-direction: row-reverse;
   flex-wrap: wrap;
   margin-right: 88rpx;
+  margin-left: 122rpx;
 }
 
 .my {
   width: 88rpx;
-  height: 88rpx;
   display: inline;
   float: right;
   padding-top: 0px;
@@ -34,13 +34,19 @@
 
 .text {
   width: auto;
-  height: 88rpx;
-  line-height: 88rpx;
   padding-left: 20rpx;
   padding-right: 20rpx;
   background: #99e871;
-  border-radius: 8rpx;
+  line-height: 80rpx;
+  border-radius: 10rpx;
   margin-right: 10rpx;
+  font-size: 28rpx;
+  display: -webkit-box;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 20; /* 20*15=300最多输入300字 */
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 /* 对方发的 */
@@ -57,24 +63,30 @@
   flex-direction: row;
   flex-wrap: wrap;
   margin-left: 88rpx;
+  margin-right: 120rpx;
 }
 
 .other {
   width: 88rpx;
-  height: 88rpx;
   float: left;
   text-align: center;
 }
 
 .text_ {
   width: auto;
-  height: 88rpx;
-  line-height: 88rpx;
+  line-height: 80rpx;
   padding-left: 20rpx;
   padding-right: 20rpx;
   background: #fff;
-  border-radius: 8rpx;
+  border-radius: 10rpx;
   margin-left: 10rpx;
+  font-size: 28rpx;
+  display: -webkit-box;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 20;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .img {

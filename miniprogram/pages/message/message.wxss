@@ -101,12 +101,19 @@
 
 .content {
   flex: 1;
+  margin-right: 74rpx;
 }
 
 .con_txt {
   color: #888;
   font-size: 24rpx;
-  line-height: 50rpx;
+  display: -webkit-box;
+  line-height: 40rpx;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .item .remove {
