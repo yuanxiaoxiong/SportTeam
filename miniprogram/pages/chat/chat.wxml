@@ -1,6 +1,7 @@
 <view class="page">
   <!-- 消息列表 -->
   <scroll-view class="scroll" scroll-y='{{true}}' scroll-top='{{scrollTop}}' bindscrolltoupper='bindscrolltoupper' upper-threshold='50'>
+  <view class="line"></view>
     <block wx:for='{{messageList}}' wx:key='{{index}}'>
       <!-- 我的发送 -->
       <!-- hidden="{{messageList[index].from!=from_}}" -->
