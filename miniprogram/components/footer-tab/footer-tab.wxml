@@ -7,13 +7,13 @@
   </view>
   <view class='yuechang {{currentIndex == 1?"active":""}}' bind:tap="yuechang_click">
     <image class='yuechang_img' src='{{currentIndex == 1?"/images/btn_yuechang_selected@2x.png":"/images/btn_yuechang_normal@2x.png"}}'></image>
-    <view class='text'>约场</view>
+    <view class='text'>{{type=='game'?'对战':'约场'}}</view>
   </view>
   <view class='jilu {{currentIndex == 2?"active":""}}' bind:tap="jilu_click">
     <image class='jilu_img' src='{{currentIndex == 2?"/images/btn_record_selected@2x.png":"/images/btn_record_normal@2x.png"}}'></image>
     <view class='text'>记录</view>
   </view>
-  <view class='jifenban {{currentIndex == 3?"active":""}}' bind:tap="jifenban_click">
+  <view class='jifenban {{currentIndex == 3?"active":""}}' bind:tap="jifenban_click" hidden="{{type =='game'}}">
     <image class='jifenban_img' src='{{currentIndex == 3?"/images/btn_counter_selected@2x.png":"/images/btn_counter_normal@2x.png"}}'></image>
     <view class='text'>计分板</view>
   </view>

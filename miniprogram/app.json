@@ -9,6 +9,7 @@
     "pages/acceptinvite/acceptinvite",
     "pages/addfriend/addfriend",
     "pages/chat/chat",
+    "pages/games/games",
     "pages/test/test"
   ],
   "window": {

@@ -89,7 +89,40 @@ Page({
     switch (index) {
       /* 游戏对战 */
       case 0:
-
+        if (detail.errMsg == "getUserInfo:ok") {
+          wx.showLoading({
+            title: '正在加载模块...',
+          })
+          //微信授权
+          wx.login({
+            success(res) {
+              //发起请求，转云函数私有网络
+              console.log(res.code)
+              wx.cloud.callFunction({ //调用云函数
+                name: 'login', //云函数名为login
+                data: { // 传给云函数的参数
+                  code: res.code
+                }
+              }).then(res => { //Promise
+                console.log(res.result)
+                //本地存储openid、token
+                wx.setStorageSync("openId", res.result.data.openId)
+                wx.setStorageSync("token", res.result.data.token)
+                if (res.result.message == "SUCCESS") {
+                  wx.hideLoading()
+                  wx.navigateTo({
+                    url: '/pages/games/games'
+                  })
+                }
+              }).catch(err => {
+                wx.hideLoading()
+                wx.showToast({
+                  title: err + "",
+                })
+              })
+            }
+          })
+        }
         break
         /* 体育约场 */
       case 1:

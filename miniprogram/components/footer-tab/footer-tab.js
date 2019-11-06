@@ -7,6 +7,10 @@ Component({
     currentIndex: {
       type: Number,
       value: 0
+    },
+    type: {
+      type: String,
+      value: 'basketball'
     }
   },
 
