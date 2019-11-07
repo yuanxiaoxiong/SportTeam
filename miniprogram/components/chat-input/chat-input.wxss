@@ -44,12 +44,12 @@ input {
 .list-divide-line {
   width: 100%;
   height: 1rpx;
-  background-color: #ddd;
+  background-color: #efefef;
 }
 
 .chat-input-style {
   border-radius: 10rpx;
-  border: 1rpx solid gainsboro;
+  border: 1rpx solid #efefef;
   margin-top: 14rpx;
   margin-bottom: 13rpx;
   padding: 10rpx;

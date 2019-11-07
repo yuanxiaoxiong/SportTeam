@@ -1,26 +1,28 @@
 <view class="page">
   <!-- 消息列表 -->
   <scroll-view class="scroll" scroll-y='{{true}}' scroll-top='{{scrollTop}}' bindscrolltoupper='bindscrolltoupper' upper-threshold='50'>
-  <view class="line"></view>
+    <view class="line"></view>
     <block wx:for='{{messageList}}' wx:key='{{index}}'>
       <!-- 我的发送 -->
       <!-- hidden="{{messageList[index].from!=from_}}" -->
       <view class="from" hidden="{{messageList[index].from!=from_}}">
         <view class="my">
-          <image src="/images/luanch.png" class="img"></image>
+          <image src="/images/right.jpg" class="img"></image>
         </view>
         <view class="text_my">
           <view class='text'>{{messageList[index].payload.text}}</view>
+          <view class="triangle-right"></view>
         </view>
       </view>
       <!-- 对方的发送 -->
       <!-- hidden="{{messageList[index].from!=to}}" -->
       <view class="to" hidden="{{messageList[index].from!=to}}">
         <view class="other">
-          <image src="/images/btn_message_click@2x.png" class="img"></image>
+          <image src="/images/left.jpg" class="img"></image>
         </view>
         <view class="text_other">
           <view class='text_'>{{messageList[index].payload.text}}</view>
+          <view class="triangle-left"></view>
         </view>
       </view>
     </block>
