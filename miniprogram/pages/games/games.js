@@ -54,6 +54,9 @@ Page({
     this.setData({
       token: wx.getStorageSync("openId")
     })
+    wx.setNavigationBarTitle({
+      title: '游戏对战',
+    })
     //请求体育圈接口
     wx.cloud.callFunction({ //调用云函数
       name: 'showOrder', //云函数名为showOrder
@@ -95,6 +98,9 @@ Page({
   /* 首页 */
   shouye_click(event) {
     console.log("---", event.detail.index)
+    wx.setNavigationBarTitle({
+      title: '游戏对战',
+    })
     this.setData({
       currentIndex: event.detail.index
     })
@@ -102,12 +108,18 @@ Page({
   /* 约场 */
   yuechang_click(event) {
     console.log("---", event.detail.index)
+    wx.setNavigationBarTitle({
+      title: '发起对战',
+    })
     this.setData({
       currentIndex: event.detail.index
     })
   },
   /* 记录 */
   jilu_click(event) {
+    wx.setNavigationBarTitle({
+      title: '记录',
+    })
     console.log("---", event.detail.index)
     this.setData({
       currentIndex: event.detail.index
@@ -142,7 +154,7 @@ Page({
   onClick(event) {
     console.log("+++", event.detail.name)
     switch (event.detail.name) {
-      /* 对方发起 */
+      /* 游戏圈 */
       case 0:
         var list = []
         for (var i = 0; i < this.data.orderList.length; i++) {
@@ -182,7 +194,7 @@ Page({
         break
     }
   },
-  //formId，用于发送模板(发起约场按钮)
+  //formId，用于发送模板(发起对战按钮)
   formSubmit(ev) {
     if (this.data.str_FullTime != '') {
       const formId = ev.detail.formId
@@ -191,7 +203,7 @@ Page({
         title: '正在发起...',
       })
       var that = this
-      //发起约场接口
+      //发起对战接口
       wx.cloud.callFunction({ //调用云函数
         name: 'addOrder', //云函数名为addOrder
         data: {
@@ -205,7 +217,7 @@ Page({
         console.log(res.result, "---------")
         if (res.result.message == "SUCCESS") {
           wx.hideLoading()
-          //请求我的发起接口
+          //请求我的队伍接口
           wx.cloud.callFunction({ //调用云函数
             name: 'showMyOrder', //云函数名为showOrder
             data: {
@@ -292,7 +304,7 @@ Page({
           title: '',
           cancelColor: '#353535',
           confirmColor: '#de213a',
-          content: '是否撤销你发起的约场？',
+          content: '是否撤销你发起的对战？',
           success(res) {
             if (res.confirm) {
               console.log('确认')
@@ -309,7 +321,7 @@ Page({
                     title: '撤销成功',
                     icon: 'none'
                   })
-                  //请求我的发起接口
+                  //请求我的队伍接口
                   wx.cloud.callFunction({ //调用云函数
                     name: 'showMyOrder', //云函数名为showOrder
                     data: {
@@ -410,16 +422,6 @@ Page({
       recordText: '已失效'
     })
   },
-  //点击进行中的item
-  sureClick() {
-    console.log('----点击了确认')
-    wx.showToast({
-      title: '发起成功',
-      duration: 2000,
-      mask: true,
-      icon: 'success'
-    })
-  },
   //点击进行中的item，跳转到添加好友页面
   onClickToRunning(ev) {
     var list = ev.detail.item
@@ -436,11 +438,16 @@ Page({
         '&time=' + list.time + '&weiXin2Id=' + list.weiXin2Id + '&token=' + list.token + '&weiXinId=' + list.weiXinId + '&info=' + info,
     })
   },
-  //发起约场
-  luanchClick(ev) {
-
+/*  点击待确认的item,跳转到确认邀请页面，注意是，我的发起才可以*/
+  onClickTosure(ev){
+    console.log(ev.detail.item)
+    wx.navigateTo({
+      url: '/pages/acceptinvite/acceptinvite',
+      success: function(res) {},
+      fail: function(res) {},
+      complete: function(res) {},
+    })
   },
-
   /* 输入微信号 */
   wx_input(event) {
     //console.log(event)

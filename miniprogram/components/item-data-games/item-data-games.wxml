@@ -1,0 +1,25 @@
+<!--components/item-data-games/item-data-games.wxml-->
+<!-- list -->
+<block wx:for='{{list}}' wx:key='{{index}}'>
+  <view class='card' hidden="{{item.orderState==4||(item.orderState==3&&acceptStatus==2)}}">
+    <view class='title'>
+      <image src="{{type!=0?'/images/home_bg_lol@2x.png':'/images/home_bg_wangzhe@2x.png'}}" class="img_type"></image>
+      <view class="text">{{type!=0?'英雄联盟':'王者荣耀'}}</view>
+      <view class="vs">{{number==0?'5v5':'3v3'}}</view>
+    </view>
+    <!-- <view class='line' /> -->
+    <view class='con'>
+      <view class='left'>
+        <image class='up_img' src='/images/icon_team@2x.png' />
+        <view class='duiwu'>{{item.myTeamName}}</view>
+        <image src='/images/icon_time@2x.png' class='down_img' />
+        <view class='time'>{{item.time}}</view>
+      </view>
+      <view class='right' bind:tap='{{item.orderState!=3?"onClick":""}}' data-index='{{index}}' item="{{index}}" data-orderId="{{item.orderId}}" data-openId="{{item.openId}}" data-formId="{{item.formId}}" data-time="{{item.time}}">
+        <view class='{{item.orderState==0&&acceptStatus==0?"yaoqing":""||item.orderState==3?"yiyaoqing":""||item.orderState==0&&acceptStatus==2?"chexiao":""}}'>
+          {{item.orderState==0&&acceptStatus==0?'邀请':''}} {{item.orderState==3&&acceptStatus==0?'已被邀请':''}} {{item.orderState==0&&acceptStatus==2?'撤销':''}}
+        </view>
+      </view>
+    </view>
+  </view>
+</block>

@@ -1,0 +1,29 @@
+<!--components/item-record-games/item-record-games.wxml-->
+<block wx:for='{{list}}' wx:key='{{index}}'>
+
+  <view class='card' bindtouchstart='{{recordStatus==3&&item.token!=token?"onClickTosure":""}}' bind:tap='{{recordStatus==4?"onClickToRunning":""}}' data-item='{{item}}'>
+    <image class='icon' src='/images/btn_arrow@2x.png' hidden='{{recordStatus!=4}}'></image>
+    <view class='title'>{{type==0?'英雄联盟':'王者荣耀'}}</view>
+    <view class='right' data-index='{{index}}' item="{{index}}">
+      <view class='{{recordStatus==3?"daiqueren":""||recordStatus==4?"jinxingzhong":""||recordStatus==5?"yishixiao":""}}' hidden="{{item.token!=token}}">{{recordText}}</view>
+      <view class='{{recordStatus==3?"daiqueren_come":""||recordStatus==4?"jinxingzhong":""||recordStatus==5?"yishixiao":""}}' hidden="{{item.token==token}}">{{recordText}}</view>
+      <image src="{{item.token!=token?'/images/btn_arrow@2x.png':''}}" class="btn_come"></image>
+    </view>
+    <view class='line' />
+    <view class='content'>
+      <view class='duiwu'>
+        <text>队伍人数：</text>{{item.token==token?'5v5':'3v3'}}
+      </view>
+      <view class='duiwu'>
+        <text>我的队伍：</text>{{item.token==token?item.teamName:item.myTeamName}}
+      </view>
+      <view class='duifang'>
+        <text>对方队伍：</text> {{item.token==token?item.myTeamName:item.teamName}}
+      </view>
+      <view class='gametime'>
+        <text>游戏时间：</text>{{item.time}}
+      </view>
+      <image src="{{item.token==token?'':'/images/sport_record_bg_faqi@2x.png'}}" class="img_mine"></image>
+    </view>
+  </view>
+</block>

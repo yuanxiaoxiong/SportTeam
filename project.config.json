@@ -34,7 +34,7 @@
 			"list": []
 		},
 		"miniprogram": {
-			"current": 6,
+			"current": -1,
 			"list": [
 				{
 					"id": 0,
@@ -110,6 +110,14 @@
 					"id": -1,
 					"name": "在线聊天",
 					"pathName": "pages/chat/chat",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "游戏对战",
+					"pathName": "pages/games/games",
+					"query": "",
 					"scene": null
 				}
 			]

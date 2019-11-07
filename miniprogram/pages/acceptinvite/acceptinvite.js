@@ -58,10 +58,10 @@ Page({
               })
             } else {
               wx.showLoading({
-                title: '用户授权失败，请重新授权',
+                title: '用户已失效，请重新登录',
               })
               wx.redirectTo({
-                url: '/pages/home/home',
+                url: '/pages/login/login',
               })
             }
           }
@@ -74,7 +74,7 @@ Page({
           duration: 3000,
           success: function() {
             wx.redirectTo({
-              url: '/pages/basketball/basketball',
+              url: '/pages/addfriend/addfriend',
             })
           }
         })
@@ -119,7 +119,7 @@ Page({
             icon: 'none'
           })
           wx.redirectTo({
-            url: '/pages/basketball/basketball',
+            url: '/pages/addfriend/addfriend',
           })
         })
       }

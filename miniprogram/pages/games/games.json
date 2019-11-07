@@ -3,9 +3,9 @@
     "footer-tab": "/components/footer-tab/footer-tab",
     "van-tab": "../../dist/tab/index",
     "van-tabs": "../../dist/tabs/index",
-    "item-data": "/components/item-data/item-data",
+    "item-data-games": "/components/item-data-games/item-data-games",
     "record-tab": "/components/record-tab/record-tab",
-    "item-record": "/components/item-record/item-record"
+    "item-record-games": "/components/item-record-games/item-record-games"
   },
   "navigationBarTitleText": "...",
   "navigationBarBackgroundColor": "#ee3c3c",
