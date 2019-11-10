@@ -1,7 +1,8 @@
 <!--components/item-record-games/item-record-games.wxml-->
 <block wx:for='{{list}}' wx:key='{{index}}'>
 
-  <view class='card' bindtouchstart='{{recordStatus==3&&item.token!=token?"onClickTosure":""}}' bind:tap='{{recordStatus==4?"onClickToRunning":""}}' data-item='{{item}}'>
+  <view class="card {{space[index].right==160&&recordStatus==5?'active_':''}}" bindtouchstart='{{recordStatus==3&&item.token!=token?"onClickTosure":""}}' bind:tap='{{recordStatus==4?"onClickToRunning":""}}' bindtouchstart="drawStart" bindtouchmove="drawMove"
+    bindtouchend="drawEnd" data-item='{{item}}' data-id="{{item.orderId}}">
     <image class='icon' src='/images/btn_arrow@2x.png' hidden='{{recordStatus!=4}}'></image>
     <view class='title'>{{type==0?'英雄联盟':'王者荣耀'}}</view>
     <view class='right' data-index='{{index}}' item="{{index}}">
@@ -24,6 +25,9 @@
         <text>游戏时间：</text>{{item.time}}
       </view>
       <image src="{{item.token==token?'':'/images/sport_record_bg_faqi@2x.png'}}" class="img_mine"></image>
+    </view>
+    <view class="del" hidden="{{recordStatus!=5}}" data-id="{{item.orderId}}" catchtap="delItem">
+      <view class="text">删除</view>
     </view>
   </view>
 </block>

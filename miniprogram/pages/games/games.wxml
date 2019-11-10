@@ -72,7 +72,7 @@
   <view class='content' hidden='{{listRecord.length==0}}'>
     <scroll-view class='scroll' scroll-y>
       <view class='top_record'></view>
-      <item-record-games list='{{listRecord}}' bind:onClickToRunning='onClickToRunning' bind:onClickTosure='onClickTosure' recordStatus='{{recordStatus}}' recordText='{{recordText}}' token="{{token}}" />
+      <item-record-games list='{{listRecord}}' bind:onClickToRunning='onClickToRunning' space='{{space}}' bind:onClickTosure='onClickTosure' recordStatus='{{recordStatus}}' recordText='{{recordText}}' token="{{token}}" bind:delItem='delItem' />
     </scroll-view>
   </view>
   <!-- 空数据页null -->
@@ -81,11 +81,6 @@
     <view class='message'>{{nullMessage}}</view>
   </view>
 </view>
-
-
-<!-- 计分板 -->
-<view class='shouye' hidden='{{true}}'>计分板</view>
-
 
 
 <!-- 底部导航栏 -->

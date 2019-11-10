@@ -2,9 +2,14 @@
 
 .card {
   height: auto;
+  width: 100%;
+  position: relative;
   margin-top: 8rpx;
   background: #fff;
-  position: relative;
+}
+
+.active_ {
+  left: -160rpx;
 }
 
 .icon {
@@ -47,7 +52,8 @@
   color: #576b95;
   font-size: 30rpx;
 }
-.daiqueren_come{
+
+.daiqueren_come {
   width: 120rpx;
   line-height: 60rpx;
   position: absolute;
@@ -57,6 +63,7 @@
   color: #576b95;
   font-size: 30rpx;
 }
+
 .jinxingzhong {
   width: 120rpx;
   line-height: 60rpx;
@@ -115,17 +122,37 @@ text {
   color: #b2b2b2;
   margin-left: 30rpx;
 }
-.img_mine{
+
+.img_mine {
   width: 136rpx;
   height: 150rpx;
   position: absolute;
   right: 0;
   bottom: 0;
 }
-.btn_come{
+
+.btn_come {
   width: 16rpx;
   height: 25rpx;
   position: absolute;
   right: 30rpx;
   top: 22rpx;
+}
+
+.del {
+  width: 160rpx;
+  height: 300rpx;
+  background: #e64340;
+  position: absolute;
+  top: 0;
+  right: -160rpx;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.del .text {
+  color: #fff;
+  font-size: 36rpx;
+  text-align: center;
 }

@@ -44,7 +44,8 @@ Page({
     str_FullTime: "",
     x: 0,
     token: '',
-    open: []
+    open: [],
+    space: []
   },
 
   /**
@@ -417,11 +418,19 @@ Page({
         list.push(this.data.orderList[i])
       }
     }
+    var space = []
+    for (var i = 0; i < list.length; i++) {
+      space.push({
+        right: 0,
+        startRight: 0
+      })
+    }
     this.setData({
       indexTab: e.detail.index,
       listRecord: list,
       recordStatus: '5',
-      recordText: '已失效'
+      recordText: '已失效',
+      space: space
     })
   },
   //点击进行中的item，跳转到添加好友页面
@@ -711,5 +720,13 @@ Page({
         open: open
       })
     }
+  },
+  /* 删除已失效的item */
+  delItem(ev) {
+    console.log("删除", ev.detail.id)
+    wx.showToast({
+      title: '成功删除' + ev.detail.id,
+      icon: 'none'
+    })
   }
 })
