@@ -43,7 +43,8 @@ Page({
     index_tab: 0,
     str_FullTime: "",
     x: 0,
-    token: ''
+    token: '',
+    open: []
   },
 
   /**
@@ -73,10 +74,16 @@ Page({
           list.push(res.result.data[i])
         }
       }
+      var open = []
+      for (var i = 0; i < list.length; i++) {
+        open.push(false)
+      }
       this.setData({
         orderList: res.result.data,
-        list: list
+        list: list,
+        open: open
       })
+
     }).catch(err => {
       console.log(err)
     })
@@ -163,12 +170,17 @@ Page({
             list.push(this.data.orderList[i])
           }
         }
+        var open = []
+        for (var i = 0; i < list.length; i++) {
+          open.push(false)
+        }
         this.setData({
           list: list,
           acceptStatus: 0,
           index_: 0,
           index_tab: 0,
-          acceptText: '邀请'
+          acceptText: '邀请',
+          open: open
         })
         break
         /* 我的发起 */
@@ -183,13 +195,18 @@ Page({
             list.push(this.data.myOrderList[i])
           }
         }
+        var open = []
+        for (var i = 0; i < list.length; i++) {
+          open.push(false)
+        }
         this.setData({
           list: list,
           acceptStatus: 2,
           index_: 1,
           index_tab: 1,
-          acceptText: '撤销'
+          acceptText: '撤销',
           // nullMessage: '你还没发起约场呢~'
+          open: open
         })
         break
     }
@@ -244,8 +261,13 @@ Page({
                   list_.push(list[i])
                 }
               }
+              var open = []
+              for (var i = 0; i < list_.length; i++) {
+                open.push(false)
+              }
               that.setData({
-                list: list_
+                list: list_,
+                open: open
               })
             }
             if (res.result.message == "SUCCESS") {
@@ -329,9 +351,14 @@ Page({
                     }
                   }).then(res => { //Promise
                     console.log(res.result)
+                    var open = []
+                    for (var i = 0; i < res.result.data.length; i++) {
+                      open.push(false)
+                    }
                     that.setData({
                       myOrderList: res.result.data,
-                      list: res.result.data
+                      list: res.result.data,
+                      open: open
                     })
                   }).catch(err => {
                     console.log(err)
@@ -696,14 +723,17 @@ Page({
   },
   /* 展开备注列表 */
   openClick(ev) {
-    //console.log(ev)
-    if (this.data.open) {
+    var index = ev.detail.index
+    var open = this.data.open
+    if (this.data.open[index]) {
+      open[index] = false
       this.setData({
-        open: false
+        open: open
       })
     } else {
+      open[index] = true
       this.setData({
-        open: true
+        open: open
       })
     }
   }

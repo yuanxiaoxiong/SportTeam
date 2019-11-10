@@ -23,8 +23,8 @@ Component({
       value: 0
     },
     open: {
-      type: Boolean,
-      value: false
+      type: Array,
+      value: []
     }
   },
 
