@@ -1,7 +1,7 @@
 /* components/item-record-games/item-record-games.wxss */
 
 .card {
-  height: 300rpx;
+  height: auto;
   margin-top: 8rpx;
   background: #fff;
   position: relative;

@@ -7,7 +7,6 @@
       <view class="text">{{type!=0?'英雄联盟':'王者荣耀'}}</view>
       <view class="vs">{{number==0?'5v5':'3v3'}}</view>
     </view>
-    <!-- <view class='line' /> -->
     <view class='con'>
       <view class='left'>
         <image class='up_img' src='/images/icon_team@2x.png' />
@@ -20,6 +19,14 @@
           {{item.orderState==0&&acceptStatus==0?'邀请':''}} {{item.orderState==3&&acceptStatus==0?'已被邀请':''}} {{item.orderState==0&&acceptStatus==2?'撤销':''}}
         </view>
       </view>
+    </view>
+    <view class='line' />
+    <view class="beizhu" bind:tap="openClick" data-index="{{index}}">
+      <view class="bz">
+        <image src="/images/icon_wechat@2x.png" class="img_bz"></image>
+      </view>
+      <view class="cont" style="-webkit-line-clamp: {{open?10:1}};">{{'非诚勿扰，有意者一起来玩哈。非诚勿扰，有意者一起来玩哈。非诚勿扰，有意者一起来玩哈。非诚勿扰，有意者一起来玩哈。非诚勿扰，有意者一起来玩哈。'}}</view>
+      <image src="{{open?'/images/btn_arrow_selected@2x.png':'/images/btn_arrow_nor@2x.png'}}" class="down_open"></image>
     </view>
   </view>
 </block>

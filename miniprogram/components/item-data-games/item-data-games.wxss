@@ -1,11 +1,10 @@
 /* components/item-data-games/item-data-games.wxss */
 
 .card {
-  height: 250rpx;
+  height: auto;
   margin-top: 30rpx;
   margin-left: 20rpx;
   margin-right: 20rpx;
-  margin-bottom: 30rpx;
   border-radius: 12rpx;
   background: #fff;
 }
@@ -44,6 +43,7 @@
   background: #e5e5e5;
   left: 55rpx;
   right: 55rpx;
+  margin-top: -20rpx;
   position: absolute;
 }
 
@@ -136,4 +136,43 @@
   border-radius: 32rpx;
   border: solid #576b95 3rpx;
   font-size: 26rpx;
+}
+
+.beizhu {
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 30rpx;
+}
+
+.bz {
+  flex: 1;
+}
+
+.img_bz {
+  width: 35rpx;
+  height: 29rpx;
+  margin-left: 44rpx;
+}
+
+.cont {
+  flex: 6;
+  color: #353535;
+  font-size: 26rpx;
+  margin-right: 82rpx;
+  padding-top: 7rpx;
+  padding-left: 20rpx;
+  padding-right: 20rpx;
+  display: -webkit-box;
+  word-break: break-all;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1; /* 1行*/
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.down_open{
+  width: 25rpx;
+  height: 16rpx;
+  margin-right: 38rpx;
+  margin-top: 8rpx;
 }

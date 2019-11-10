@@ -438,8 +438,8 @@ Page({
         '&time=' + list.time + '&weiXin2Id=' + list.weiXin2Id + '&token=' + list.token + '&weiXinId=' + list.weiXinId + '&info=' + info,
     })
   },
-/*  点击待确认的item,跳转到确认邀请页面，注意是，我的发起才可以*/
-  onClickTosure(ev){
+  /*  点击待确认的item,跳转到确认邀请页面，注意是，我的发起才可以*/
+  onClickTosure(ev) {
     console.log(ev.detail.item)
     wx.navigateTo({
       url: '/pages/acceptinvite/acceptinvite',
@@ -693,5 +693,18 @@ Page({
     }).catch(err => {
       console.log(err)
     })
+  },
+  /* 展开备注列表 */
+  openClick(ev) {
+    //console.log(ev)
+    if (this.data.open) {
+      this.setData({
+        open: false
+      })
+    } else {
+      this.setData({
+        open: true
+      })
+    }
   }
 })

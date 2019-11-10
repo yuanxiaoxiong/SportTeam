@@ -21,6 +21,10 @@ Component({
     acceptStatus: {
       type: Number,
       value: 0
+    },
+    open: {
+      type: Boolean,
+      value: false
     }
   },
 
@@ -49,6 +53,14 @@ Component({
         openId,
         formId,
         time
+      }, {})
+    },
+    openClick(ev) {
+      const index = ev.currentTarget.dataset.index
+      //console.log(index)
+      //通知页面内部的点击事件
+      this.triggerEvent('openItemClick', {
+        index
       }, {})
     }
   }
