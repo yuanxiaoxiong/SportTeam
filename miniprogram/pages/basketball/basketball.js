@@ -42,14 +42,17 @@ Page({
     index_tab: 0,
     str_FullTime: "",
     x: 0,
-    token: ''
+    token: '',
+    open: []
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
+    wx.setNavigationBarTitle({
+      title: '体育约场',
+    })
     this.setData({
       token: wx.getStorageSync("openId")
     })
@@ -94,12 +97,18 @@ Page({
   /* 首页 */
   shouye_click(event) {
     console.log("---", event.detail.index)
+    wx.setNavigationBarTitle({
+      title: '体育约场',
+    })
     this.setData({
       currentIndex: event.detail.index
     })
   },
   /* 约场 */
   yuechang_click(event) {
+    wx.setNavigationBarTitle({
+      title: '发起约场',
+    })
     console.log("---", event.detail.index)
     this.setData({
       currentIndex: event.detail.index
@@ -107,6 +116,9 @@ Page({
   },
   /* 记录 */
   jilu_click(event) {
+    wx.setNavigationBarTitle({
+      title: '记录',
+    })
     console.log("---", event.detail.index)
     this.setData({
       currentIndex: event.detail.index
@@ -132,6 +144,9 @@ Page({
   },
   /* 计分器 */
   jifenban_click(event) {
+    wx.setNavigationBarTitle({
+      title: '计分板',
+    })
     console.log("---", event.detail.index)
     this.setData({
       currentIndex: event.detail.index
@@ -685,5 +700,21 @@ Page({
     }).catch(err => {
       console.log(err)
     })
+  },
+  /* 信息备注 */
+  openItemClick(ev) {
+    var index = ev.detail.index
+    var open = this.data.open
+    if (this.data.open[index]) {
+      open[index] = false
+      this.setData({
+        open: open
+      })
+    } else {
+      open[index] = true
+      this.setData({
+        open: open
+      })
+    }
   }
 })

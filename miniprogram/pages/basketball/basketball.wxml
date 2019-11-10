@@ -10,7 +10,7 @@
     <!-- item数据 -->
     <view class='content' hidden='{{list.length==0}}'>
       <scroll-view class='scroll' scroll-y>
-        <item-data list='{{list}}' index_tab="{{index_tab}}" bind:inviteItemClick='inviteItemClick' acceptStatus='{{acceptStatus}}' acceptText='{{acceptText}}' />
+        <item-data list='{{list}}' index_tab="{{index_tab}}" bind:inviteItemClick='inviteItemClick' bind:openItemClick='openItemClick' acceptStatus='{{acceptStatus}}' open='{{open}}' acceptText='{{acceptText}}' />
       </scroll-view>
     </view>
     <!-- 空数据页null -->

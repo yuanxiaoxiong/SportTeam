@@ -26,7 +26,7 @@ Page({
     startX: 0,
     maxRight: 140,
     conversationList: [], //会话列表
-    time: [],
+    times: [],
     flag: 0
   },
 
@@ -43,12 +43,16 @@ Page({
       console.log('=====', conversationList)
       var times = []
       for (var i = 0; i < conversationList.length; i++) {
-        times.push(time.formatTimeTwo(conversationList[i].lastMessage.lastTime, 'h:m'))
+        times.push({
+          time: time.formatTimeTwo(conversationList[i].lastMessage.lastTime, 'h:m'),
+          right: 0,
+          startRight: 0
+        })
       }
       console.log(times)
       that.setData({
         conversationList: conversationList,
-        time: times
+        times: times
       })
       console.log(time.formatTimeTwo(conversationList[0].lastMessage.lastTime, 'Y-M-D h:m:s'));
 
@@ -62,9 +66,9 @@ Page({
     var touch = e.touches[0];
     var startX = touch.clientX;
     var startY = touch.clientY;
-    var cardTeams = this.data.cardTeams;
-    for (var i in cardTeams) {
-      var data = cardTeams[i];
+    var times = this.data.times;
+    for (var i in times) {
+      var data = times[i];
       data.startRight = data.right;
     }
     //var key = true;
@@ -76,9 +80,9 @@ Page({
   /* 松开时 */
   drawEnd: function(e) {
     //console.log("drawEnd");
-    var cardTeams = this.data.cardTeams;
-    for (var i in cardTeams) {
-      var data = cardTeams[i];
+    var times = this.data.times;
+    for (var i in times) {
+      var data = times[i];
       if (data.right <= 140 / 2) {
         data.right = 0;
       } else {
@@ -86,7 +90,7 @@ Page({
       }
     }
     this.setData({
-      cardTeams: cardTeams
+      times: times
     });
   },
   /* 滑动时 */
@@ -94,7 +98,8 @@ Page({
     //console.log("drawMove");
     var self = this;
     var dataId = e.currentTarget.id;
-    var cardTeams = this.data.cardTeams;
+    var times = this.data.times;
+    var item = this.data.conversationList
     if (this.data.key) {
       var touch = e.touches[0];
       var endX = touch.clientX;
@@ -102,12 +107,12 @@ Page({
       //console.log("startX=" + this.data.startX + " endX=" + endX);
       if (endX - this.data.startX == 0)
         return;
-      var res = cardTeams;
+      var res = times;
       //从右往左
       if ((endX - this.data.startX) < 0) {
         for (var k in res) {
           var data = res[k];
-          if (res[k].id == dataId) {
+          if (item[k].conversationID == dataId) {
             var startRight = res[k].startRight;
             var change = this.data.startX - endX;
             startRight += change;
@@ -119,7 +124,7 @@ Page({
       } else { //从左往右
         for (var k in res) {
           var data = res[k];
-          if (res[k].id == dataId) {
+          if (item[k].conversationID == dataId) {
             var startRight = res[k].startRight;
             var change = endX - this.data.startX;
             startRight -= change;
@@ -130,24 +135,30 @@ Page({
         }
       }
       self.setData({
-        cardTeams: cardTeams
+        times: times
       });
     }
   },
   /* 删除item */
   delItem: function(e) {
     var dataId = e.currentTarget.dataset.id;
+    let that = this
     console.log("删除" + dataId);
-    var cardTeams = this.data.cardTeams;
-    var newCardTeams = [];
-    for (var i in cardTeams) {
-      var item = cardTeams[i];
-      if (item.id != dataId) {
-        newCardTeams.push(item);
-      }
-    }
-    this.setData({
-      cardTeams: newCardTeams
+    //删除某会话
+    let promise = app.globalData.tim.deleteConversation(dataId);
+    promise.then(function(imResponse) {
+      // 拉取会话列表
+      let promises = app.globalData.tim.getConversationList();
+      promises.then(function(imResponse) {
+        const conversationList = imResponse.data.conversationList; // 会话列表，用该列表覆盖原有的会话列表
+        that.setData({
+          conversationList: conversationList
+        })
+      }).catch(function(imError) {
+        console.warn('getConversationList error:', imError); // 获取会话列表失败的相关信息
+      });
+    }).catch(function(imError) {
+      console.warn('deleteConversation error:', imError); // 删除会话失败的相关信息
     });
   },
   /* 去聊天 */

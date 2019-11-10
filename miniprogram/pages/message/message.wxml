@@ -4,20 +4,20 @@
   <scroll-view scroll-y class="scroll" hidden="{{conversationList.length==0}}">
     <view class='block'></view>
     <block wx:for='{{conversationList}}' wx:key="{{index}}" wx:for-item="cardTeam">
-      <view class="item {{cardTeam.right==140?'active':''}}" bindtouchstart="drawStart" bindtouchmove="drawMove" bindtouchend="drawEnd" id="{{cardTeam.conversationID}}" bindtap="goTochat" data-item="{{cardTeam}}" hover-class="active_down">
+      <view class="item {{times[index].right==140?'active':''}}" bindtouchstart="drawStart" bindtouchmove="drawMove" bindtouchend="drawEnd" id="{{cardTeam.conversationID}}" bindtap="goTochat" data-item="{{cardTeam}}" hover-class="active_down">
         <view class="img">
           <image class="img_icon" src="{{cardTeam.unreadCount!=0?'/images/headportrait_lol_new.png':'/images/headportrait_lol_nor@2x.png'}}" mode="scaleToFill"></image>
         </view>
         <view class="text_c">
           <view class="title">
             <text class="tit">队伍名称{{}}</text>
-            <text class="time">{{time[index]}}</text>
+            <text class="time">{{times[index].time}}</text>
           </view>
           <view class="content">
             <text class="con_txt">{{cardTeam.lastMessage.payload.text}}</text>
           </view>
         </view>
-        <view class="remove" data-id="{{cardTeam.id}}" catchtap="delItem">
+        <view class="remove" data-id="{{cardTeam.conversationID}}" catchtap="delItem">
           <view>删除</view>
         </view>
       </view>

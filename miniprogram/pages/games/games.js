@@ -74,14 +74,9 @@ Page({
           list.push(res.result.data[i])
         }
       }
-      var open = []
-      for (var i = 0; i < list.length; i++) {
-        open.push(false)
-      }
       this.setData({
         orderList: res.result.data,
-        list: list,
-        open: open
+        list: list
       })
 
     }).catch(err => {
@@ -170,17 +165,12 @@ Page({
             list.push(this.data.orderList[i])
           }
         }
-        var open = []
-        for (var i = 0; i < list.length; i++) {
-          open.push(false)
-        }
         this.setData({
           list: list,
           acceptStatus: 0,
           index_: 0,
           index_tab: 0,
-          acceptText: '邀请',
-          open: open
+          acceptText: '邀请'
         })
         break
         /* 我的发起 */
@@ -195,18 +185,13 @@ Page({
             list.push(this.data.myOrderList[i])
           }
         }
-        var open = []
-        for (var i = 0; i < list.length; i++) {
-          open.push(false)
-        }
         this.setData({
           list: list,
           acceptStatus: 2,
           index_: 1,
           index_tab: 1,
-          acceptText: '撤销',
+          acceptText: '撤销'
           // nullMessage: '你还没发起约场呢~'
-          open: open
         })
         break
     }
@@ -261,13 +246,8 @@ Page({
                   list_.push(list[i])
                 }
               }
-              var open = []
-              for (var i = 0; i < list_.length; i++) {
-                open.push(false)
-              }
               that.setData({
-                list: list_,
-                open: open
+                list: list_
               })
             }
             if (res.result.message == "SUCCESS") {
@@ -351,14 +331,9 @@ Page({
                     }
                   }).then(res => { //Promise
                     console.log(res.result)
-                    var open = []
-                    for (var i = 0; i < res.result.data.length; i++) {
-                      open.push(false)
-                    }
                     that.setData({
                       myOrderList: res.result.data,
-                      list: res.result.data,
-                      open: open
+                      list: res.result.data
                     })
                   }).catch(err => {
                     console.log(err)
