@@ -10,6 +10,7 @@
     "pages/addfriend/addfriend",
     "pages/chat/chat",
     "pages/games/games",
+    "pages/notes/notes",
     "pages/test/test"
   ],
   "window": {

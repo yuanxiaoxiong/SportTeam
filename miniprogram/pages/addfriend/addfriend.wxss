@@ -129,17 +129,25 @@
 }
 
 .chat_btn_active {
-  margin-top: 50rpx;
+  margin-top: 45rpx;
   height: 88rpx;
   margin-left: 75rpx;
   margin-right: 75rpx;
-  background: #ee3c3c;
+  background: none;
   border-radius: 44rpx;
+  border: 1rpx solid #ee3c3c;
 }
 
 .chat_text_active {
-  color: #fff;
+  color: #ee3c3c;
   font-size: 36rpx;
   text-align: center;
   line-height: 88rpx;
+}
+.jian_tou{
+  width: 16rpx;
+  height: 25rpx;
+  float: right;
+  margin-top: 32rpx;
+  margin-right: 30rpx;
 }

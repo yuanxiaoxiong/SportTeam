@@ -119,6 +119,13 @@
 					"pathName": "pages/games/games",
 					"query": "",
 					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "流程须知",
+					"pathName": "pages/notes/notes",
+					"query": "",
+					"scene": null
 				}
 			]
 		}

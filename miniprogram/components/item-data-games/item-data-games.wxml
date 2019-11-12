@@ -23,7 +23,7 @@
     <view class='line' />
     <view class="beizhu" bind:tap="openClick" data-index="{{index}}">
       <view class="bz">
-        <image src="/images/icon_wechat@2x.png" class="img_bz"></image>
+        <image src="/images/icon_message@2x.png" class="img_bz"></image>
       </view>
       <view class="cont" style="-webkit-line-clamp: {{open[index]?10:1}};">{{'非诚勿扰，有意者一起来玩哈。非诚勿扰，有意者一起来玩哈。非诚勿扰，有意者一起来玩哈。非诚勿扰，有意者一起来玩哈。非诚勿扰，有意者一起来玩哈。'}}</view>
       <image src="{{open[index]?'/images/btn_arrow_selected@2x.png':'/images/btn_arrow_nor@2x.png'}}" class="down_open"></image>

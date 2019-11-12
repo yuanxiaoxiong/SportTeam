@@ -17,16 +17,17 @@
       <text class='msg_time'>{{time}}</text>
     </view>
   </view>
-  <view class='card1'>
+  <view class='card1' bindtap="goto_notes">
     <view class='msg_duiwu'>
       <image class="img_tips" src="/images/icon_light@2x.png" />
       <text class='msg_tips'>流程须知</text>
+      <image class="jian_tou" src="/images/btn_arrow@2x.png"></image>
     </view>
   </view>
   <view class='sure_btn_active' bindtap='addClick'>
     <view class='sure_text_active'>添加好友</view>
   </view>
   <view class='chat_btn_active' bindtap='onChat'>
-    <view class='chat_text_active'>在线聊天</view>
+    <view class='chat_text_active'>在线联系</view>
   </view>
 </view>

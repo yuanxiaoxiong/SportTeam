@@ -61,7 +61,7 @@
 
 .duiwu {
   position: absolute;
-  left: 95rpx;
+  left: 98rpx;
   top: 30rpx;
   font-size: 34rpx;
   color: #353535;
@@ -150,9 +150,10 @@
 }
 
 .img_bz {
-  width: 35rpx;
-  height: 29rpx;
-  margin-left: 44rpx;
+  width: 36rpx;
+  height: 36rpx;
+  margin-left: 43rpx;
+  margin-top: 3rpx;
 }
 
 .cont {

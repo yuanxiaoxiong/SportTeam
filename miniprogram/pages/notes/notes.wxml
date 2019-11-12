@@ -1,0 +1,35 @@
+<!--pages/notes/notes.wxml-->
+<view class="page">
+  <view class="part1">
+    <view class="img_">
+      <image src="/images/image_item_first@2x.png" class="img"></image>
+      <view class="text">1</view>
+    </view>
+    <view class="txt_">你可以通过
+      <text style="color: #e38c36;">邀请</text>对方或
+      <text style="color: #e38c36;">发起约场</text>来进行和校园内的同学一起同场竞技。</view>
+  </view>
+  <view class="part2">
+    <view class="img_">
+      <image src="/images/image_item_secondorthird@2x.png" class="img"></image>
+      <view class="text">2</view>
+    </view>
+    <view class="txt_">
+      <text style="color: #e38c36;">邀请</text>成功后，对方会收到微信推送，你需要等待对方的确认。若对方同意你的邀请，你也会收到微信推送，点击推送即可进入小程序“添加好友”页面。</view>
+  </view>
+  <view class="part2">
+    <view class="img_">
+      <image src="/images/image_item_secondorthird@2x.png" class="img"></image>
+      <view class="text">3</view>
+    </view>
+    <view class="txt_">
+      <text style="color: #e38c36;">发起约场</text>后，你需要等待对方的邀请。若对方邀请成功后，你将会收到微信推送，点击推送即可进入小程序的“同意邀请”页面，选择是否要与对方进行竞技。</view>
+  </view>
+  <view class="part4">
+    <view class="img_">
+      <image src="/images/image_item_secondorthird@2x.png" class="img"></image>
+      <view class="text">4</view>
+    </view>
+    <view class="txt_">成功进入“添加好友”页面后，你需要点击“添加好友”按钮来复制对方的微信号，然后添加微信好友与对方商量事宜，确认无误后就可以进行体育竞技啦。点击“在线联系”按钮也可以与对方进行线上聊天。</view>
+  </view>
+</view>

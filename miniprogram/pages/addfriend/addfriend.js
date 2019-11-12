@@ -71,10 +71,16 @@ Page({
     }
 
   },
-  /* 在线聊天 */
+  /* 在线联系 */
   onChat(ev) {
     wx.navigateTo({
       url: '/pages/chat/chat?flag=0',
+    })
+  },
+  /* 流程须知 */
+  goto_notes(ev){
+    wx.navigateTo({
+      url: '/pages/notes/notes',
     })
   }
 })
