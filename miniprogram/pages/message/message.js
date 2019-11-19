@@ -9,24 +9,13 @@ Page({
    * 页面的初始数据
    */
   data: {
-    cardTeams: [{
-      "id": "432474",
-      "name": "android教程",
-      "url": "http://www.see-source.com",
-      "right": 0,
-      "startRight": 0
-    }, {
-      "id": "443931",
-      "name": "小程序教程",
-      "url": "http://www.see-source.com",
-      "right": 0,
-      "startRight": 0
-    }],
     key: false,
     startX: 0,
     maxRight: 140,
     conversationList: [], //会话列表
     times: [],
+    list: [],
+    userInfo: [],
     flag: 0
   },
 
@@ -34,7 +23,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-
     // 拉取会话列表
     let that = this
     let promise = app.globalData.tim.getConversationList();
@@ -42,20 +30,38 @@ Page({
       const conversationList = imResponse.data.conversationList; // 会话列表，用该列表覆盖原有的会话列表
       console.log('=====', conversationList)
       var times = []
+      var list = []
       for (var i = 0; i < conversationList.length; i++) {
+        let len = conversationList[i].conversationID.length
+        let openId = conversationList[i].conversationID.substring(3, len)
+        list.push(openId)
         times.push({
           time: time.formatTimeTwo(conversationList[i].lastMessage.lastTime, 'h:m'),
           right: 0,
           startRight: 0
         })
       }
-      console.log(times)
       that.setData({
         conversationList: conversationList,
-        times: times
+        times: times,
+        list: list
       })
       console.log(time.formatTimeTwo(conversationList[0].lastMessage.lastTime, 'Y-M-D h:m:s'));
+      /* 获取头像、微信名列表 */
+      let userInfo = []
+      wx.cloud.callFunction({ //调用云函数
+        name: 'getUserInfo',
+        data: {
+          openId: JSON.stringify(list).substring(1, JSON.stringify(list).length - 1)
+        }
+      }).then(res => {
+        userInfo.push(...res.result.data)
+        that.setData({
+          userInfo: userInfo
+        })
+      }).catch(err => {
 
+      })
     }).catch(function(imError) {
       console.warn('getConversationList error:', imError); // 获取会话列表失败的相关信息
     });
@@ -141,25 +147,54 @@ Page({
   },
   /* 删除item */
   delItem: function(e) {
+    console.log(e, "=========")
     var dataId = e.currentTarget.dataset.id;
+    var index = e.currentTarget.dataset.index;
     let that = this
     console.log("删除" + dataId);
-    //删除某会话
-    let promise = app.globalData.tim.deleteConversation(dataId);
-    promise.then(function(imResponse) {
-      // 拉取会话列表
-      let promises = app.globalData.tim.getConversationList();
-      promises.then(function(imResponse) {
-        const conversationList = imResponse.data.conversationList; // 会话列表，用该列表覆盖原有的会话列表
-        that.setData({
-          conversationList: conversationList
-        })
-      }).catch(function(imError) {
-        console.warn('getConversationList error:', imError); // 获取会话列表失败的相关信息
-      });
-    }).catch(function(imError) {
-      console.warn('deleteConversation error:', imError); // 删除会话失败的相关信息
-    });
+    wx.showModal({
+      title: '',
+      cancelColor: '#353535',
+      confirmColor: '#de213a',
+      content: '确认要删除这消息吗？',
+      success(res) {
+        if (res.confirm) {
+          console.log('确认')
+          //删除某会话
+          let promise = app.globalData.tim.deleteConversation(dataId);
+          promise.then(function(imResponse) {
+            // 拉取会话列表
+            let promises = app.globalData.tim.getConversationList();
+            promises.then(function(imResponse) {
+              const conversationList = imResponse.data.conversationList; // 会话列表，用该列表覆盖原有的会话列表 
+
+              var list = []
+              for (var i = 0; i < conversationList.length; i++) {
+                let len = conversationList[i].conversationID.length
+                let openId = conversationList[i].conversationID.substring(3, len)
+                list.push(openId)
+              }
+              that.setData({
+                conversationList: conversationList,
+                list: list
+              })
+            }).catch(function(imError) {
+              console.warn('getConversationList error:', imError); // 获取会话列表失败的相关信息
+            });
+          }).catch(function(imError) {
+            console.warn('deleteConversation error:', imError); // 删除会话失败的相关信息
+          });
+        } else if (res.cancel) {
+          console.log('取消')
+          var times = that.data.times
+          times[index].right = 0
+          times[index].startRight = 0
+          that.setData({
+            times: times
+          })
+        }
+      }
+    })
   },
   /* 去聊天 */
   goTochat(ev) {
@@ -198,6 +233,31 @@ Page({
         that.setData({
           conversationList: conversationList
         })
+        var list = []
+        for (var i = 0; i < conversationList.length; i++) {
+          let len = conversationList[i].conversationID.length
+          let openId = conversationList[i].conversationID.substring(3, len)
+          list.push(openId)
+        }
+        that.setData({
+          conversationList: conversationList,
+          list: list
+        })
+        /* 获取头像、微信名列表 */
+        let userInfo = []
+        wx.cloud.callFunction({ //调用云函数
+          name: 'getUserInfo',
+          data: {
+            openId: JSON.stringify(list).substring(1, JSON.stringify(list).length - 1)
+          }
+        }).then(res => {
+          userInfo.push(...res.result.data)
+          that.setData({
+            userInfo: userInfo
+          })
+        }).catch(err => {
+
+        })
       }).catch(function(imError) {
         console.warn('getConversationList error:', imError); // 获取会话列表失败的相关信息
       });
@@ -208,8 +268,30 @@ Page({
       let promise = app.globalData.tim.getConversationList();
       promise.then(function(imResponse) {
         const conversationList = imResponse.data.conversationList; // 会话列表，用该列表覆盖原有的会话列表
+        var list = []
+        for (var i = 0; i < conversationList.length; i++) {
+          let len = conversationList[i].conversationID.length
+          let openId = conversationList[i].conversationID.substring(3, len)
+          list.push(openId)
+        }
         that.setData({
-          conversationList: conversationList
+          conversationList: conversationList,
+          list: list
+        })
+        /* 获取头像、微信名列表 */
+        let userInfo = []
+        wx.cloud.callFunction({ //调用云函数
+          name: 'getUserInfo',
+          data: {
+            openId: JSON.stringify(list).substring(1, JSON.stringify(list).length - 1)
+          }
+        }).then(res => {
+          userInfo.push(...res.result.data)
+          that.setData({
+            userInfo: userInfo
+          })
+        }).catch(err => {
+
         })
       }).catch(function(imError) {
         console.warn('getConversationList error:', imError); // 获取会话列表失败的相关信息

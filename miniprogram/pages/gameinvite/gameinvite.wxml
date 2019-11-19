@@ -1,0 +1,30 @@
+<!--pages/gameinvite/gameinvite.wxml-->
+<view class='page'>
+  <!-- 填写信息栏 -->
+  <view class='card'>
+    <view class='msg_wx'>
+      <text class='msg_text'>游戏名称</text>
+      <input type='text' placeholder='请输入您的游戏名称' class='input_wx' maxlength='{{30}}' bindinput='wx_input'></input>
+    </view>
+    <view class='msg_duiwu'>
+      <text class='msg_text'>队伍名称</text>
+      <input type='text' placeholder='请输入队伍名称' class='input_wx' maxlength='{{30}}' bindinput='duiwu_input'></input>
+    </view>
+  </view>
+  <view class='card2'>
+    <view class='msg_duiwu'>
+      <text class='msg_text1'>留言信息</text>
+    </view>
+    <view class='msg_'>
+      <textarea bindinput="textarea_input" class="textarea1" placeholder="请输入留言信息（选填）" maxlength="100" />
+    </view>
+  </view>
+  <!-- 确认按钮 -->
+  <view class='{{disabled==true?"sure_btn":"sure_btn_active"}}'>
+    <view class='{{disabled==true?"sure_text":"sure_text_active"}}'>
+      <form bindsubmit='{{disabled==true?"":"sureClick"}}' report-submit>
+        <button formType="submit" style="color:#fff;background:none ;height:88rpx;line-height:88rpx;">确认</button>
+      </form>
+    </view>
+  </view>
+</view>

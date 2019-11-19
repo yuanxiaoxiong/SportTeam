@@ -2,7 +2,7 @@
 <view class='page'>
   <scroll-view class='main' scroll-y>
     <block wx:for="{{mainContent}}" wx:key="{{index}}">
-      <button class='card' type='default' hover-class='none' open-type='getUserInfo' data-index='{{index}}' bindgetuserinfo='bindgetuserinfo'>
+      <button class='card' type='default' hover-class='none'data-index='{{index}}' bindtap="bindgetuserinfo">
         <image src="{{item.imgUrl}}" class='background_img'></image>
         <image src='{{item.mainIcon}}' class='icon'></image>
         <text class='text'>{{item.mainName}}</text>

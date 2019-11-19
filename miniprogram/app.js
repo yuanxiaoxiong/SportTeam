@@ -22,9 +22,9 @@ App({
         traceUser: true,
       })
     }
-
     this.globalData = {
-      tim: tim
+      tim: tim,
+      tourist: -1
     }
 
   }

@@ -1,4 +1,4 @@
-// pages/acceptinvite/acceptinvite.js
+// pages/acceptinvite_game/acceptinvite_game.js
 import TIM from "../../modules/tim-wx-sdk/tim-wx.js";
 import COS from "../../modules/cos-wx-sdk-v5/demo/app.js";
 var userSig = require("../../utils/GenerateTestUserSig.js")
@@ -17,7 +17,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    console.log(options.flag, "------------")
     var that = this
     // if (options.flag == 0) {
     //   /* IM登录 */
@@ -29,6 +28,11 @@ Page({
     //   });
     //   promise.then(function(imResponse) {
     //     console.log(imResponse.data); // 登录成功
+    //     if (imResponse.data.actionStatus == 'OK') {
+    //       that.setData({
+    //         isLogin: true
+    //       })
+    //     }
     //   }).catch(function(imError) {
     //     console.warn('login error:', imError); // 登录失败的相关信息
     //   });
@@ -42,7 +46,7 @@ Page({
     })
     //判断是否已确认
     wx.cloud.callFunction({ //调用云函数
-      name: 'isSure', //云函数名为isSure
+      name: 'isSure_game', //云函数名为isSure
       data: { // 传给云函数的参数
         orderId: options.orderId
       }
@@ -60,6 +64,7 @@ Page({
               title: '',
               cancelColor: '#353535',
               confirmColor: '#de213a',
+              confirmText: '好的',
               showCancel: false,
               content: '用户已失效，请重新登录',
               success(res) {
@@ -100,7 +105,7 @@ Page({
                 }
                 wx.navigateTo({
                   url: '/pages/addfriend/addfriend?myTeamName=' + list.myTeamName + '&teamName=' + list.teamName +
-                    '&time=' + list.time + '&weiXin2Id=' + list.weiXin2Id + '&token=' + list.token + '&weiXinId=' + list.weiXinId + '&info=2' + '&type=ball' + '&orderId='+list.orderId,
+                    '&time=' + list.time + '&weiXin2Id=' + list.weiXin2Id + '&token=' + list.token + '&weiXinId=' + list.weiXinId + '&info=2' + '&type=game' + '&orderId=' + list.orderId,
                 })
               }
             })
@@ -120,7 +125,7 @@ Page({
       title: '正在载入...',
     })
     wx.cloud.callFunction({ //调用云函数
-      name: 'acceptOrder', //云函数名为acceptOrder
+      name: 'acceptGame', //云函数名为acceptOrder
       data: { // 传给云函数的参数
         orderId: that.data.orderId,
         state: 4,
@@ -141,7 +146,7 @@ Page({
             result: encodeURIComponent('已同意'),
             message: encodeURIComponent('请您前往该小程序【添加好友】或【在线联系】'),
             sure_formId: that.data.list.remarks_other,
-            type: 'ball'
+            type: 'game'
           }
         }).then(res => { //Promise
           console.log(res, "------------")
@@ -151,7 +156,7 @@ Page({
             icon: 'none'
           })
           var list = that.data.list
-          console.log(list)
+          //console.log(list)
           var info = 0
           if (list.openId == wx.getStorageSync("openId")) {
             info = 1
@@ -161,7 +166,7 @@ Page({
           }
           wx.redirectTo({
             url: '/pages/addfriend/addfriend?myTeamName=' + list.myTeamName + '&teamName=' + list.teamName +
-              '&time=' + list.time + '&weiXin2Id=' + list.weiXin2Id + '&token=' + list.token + '&weiXinId=' + list.weiXinId + '&info=2' + '&type=ball' + '&orderId=' + list.orderId,
+              '&time=' + list.time + '&weiXin2Id=' + list.weiXin2Id + '&token=' + list.token + '&weiXinId=' + list.weiXinId + '&info=2' + '&type=game' + '&orderId=' + list.orderId,
           })
         })
       } else {
@@ -185,7 +190,7 @@ Page({
       title: '正在加载...',
     })
     wx.cloud.callFunction({ //调用云函数
-      name: 'acceptOrder', //云函数名为acceptOrder
+      name: 'acceptGame', //云函数名为acceptOrder
       data: { // 传给云函数的参数
         orderId: that.data.orderId,
         state: 0,

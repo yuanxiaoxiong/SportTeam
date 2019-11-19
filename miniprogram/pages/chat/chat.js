@@ -31,7 +31,9 @@ Page({
     to: '',
     connId: '', //会话id
     scrollTop: 0,
-    full: false
+    full: false,
+    rightUrl: '', //我的头像
+    leftUrl: '' //对方的头像
   },
 
 
@@ -41,6 +43,9 @@ Page({
   onLoad(options) {
     let id = ''
     let that = this
+    that.setData({
+      rightUrl: wx.getStorageSync('url')
+    })
     if (options.flag == 0) {
       id = 'C2C' + wx.getStorageSync('token_other')
       that.setData({
@@ -54,6 +59,7 @@ Page({
         to: options.to,
         connId: options.id,
       })
+      wx.setStorageSync('token_other', options.to)
       // 打开某个会话时，第一次拉取消息列表
       let promise = app.globalData.tim.getMessageList({
         conversationID: options.id,
@@ -73,9 +79,29 @@ Page({
         })
       });
     }
-    wx.setNavigationBarTitle({
-      title: '队伍名称'
-    });
+    /* 获取对方头像、微信名 */
+    wx.cloud.callFunction({ //调用云函数
+      name: 'getUser',
+      data: {
+        openId: wx.getStorageSync("token_other")
+      }
+    }).then(res => { //Promise
+      console.log(res.result, "=======")
+      if (res.result.message == 'SUCCESS') {
+        wx.setNavigationBarTitle({
+          title: res.result.data.wxName
+        });
+        that.setData({
+          leftUrl: res.result.data.url
+        })
+      } else {
+        wx.setNavigationBarTitle({
+          title: '...'
+        });
+      }
+    }).catch(err => {
+
+    })
   },
   onReady() {
     this.chatInput = this.selectComponent('#chatInput');

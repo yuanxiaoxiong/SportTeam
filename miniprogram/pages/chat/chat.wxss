@@ -9,8 +9,8 @@
 
 .from {
   height: auto;
-  border-top: 5rpx solid #efefef;
-  border-bottom: 5rpx solid #efefef;
+  border-top: 8rpx solid #efefef;
+  border-bottom: 8rpx solid #efefef;
 }
 
 .text_my {
@@ -63,8 +63,8 @@
 
 .to {
   height: auto;
-  border-top: 5rpx solid #efefef;
-  border-bottom: 5rpx solid #efefef;
+  border-top: 8rpx solid #efefef;
+  border-bottom: 8rpx solid #efefef;
 }
 
 .text_other {

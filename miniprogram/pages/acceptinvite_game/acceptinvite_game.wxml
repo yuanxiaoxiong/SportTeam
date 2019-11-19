@@ -1,0 +1,17 @@
+<!--pages/acceptinvite_game/acceptinvite_game.wxml-->
+<view class='page'>
+  <image src='/images/image_agree@2x.png' class='img'></image>
+  <view class='tip_text'>是否同意对方的约场邀请？</view>
+
+  <view class='sure_btn_accept' bindtap='acceptClick'>
+    <view class='sure_text_accept'>同意</view>
+  </view>
+
+  <view class='sure_btn_refuse'>
+    <view class='sure_text_refuse'>
+      <form bindsubmit="refuseClick" report-submit>
+        <button formType="submit" style="color:#ee3c3c;background:none ;height:88rpx;line-height:88rpx;">拒绝</button>
+      </form>
+    </view>
+  </view>
+</view>

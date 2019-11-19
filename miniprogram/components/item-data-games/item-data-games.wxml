@@ -3,9 +3,9 @@
 <block wx:for='{{list}}' wx:key='{{index}}'>
   <view class='card' hidden="{{item.orderState==4||(item.orderState==3&&acceptStatus==2)}}">
     <view class='title'>
-      <image src="{{type!=0?'/images/home_bg_lol@2x.png':'/images/home_bg_wangzhe@2x.png'}}" class="img_type"></image>
-      <view class="text">{{type!=0?'英雄联盟':'王者荣耀'}}</view>
-      <view class="vs">{{number==0?'5v5':'3v3'}}</view>
+      <image src="{{item.gameState!=0?'/images/home_bg_lol@2x.png':'/images/home_bg_wangzhe@2x.png'}}" class="img_type"></image>
+      <view class="text">{{item.gameState!=0?'英雄联盟':'王者荣耀'}}</view>
+      <view class="vs">{{item.gameState==0?'3v3':'5v5'}}</view>
     </view>
     <view class='con'>
       <view class='left'>
@@ -20,12 +20,12 @@
         </view>
       </view>
     </view>
-    <view class='line' />
-    <view class="beizhu" bind:tap="openClick" data-index="{{index}}">
+    <view class='line' hidden="{{item.remarks==''||item.remarks==''}}" />
+    <view class="beizhu" bind:tap="openClick" data-index="{{index}}" hidden="{{item.remarks==''||item.remarks==''}}">
       <view class="bz">
         <image src="/images/icon_message@2x.png" class="img_bz"></image>
       </view>
-      <view class="cont" style="-webkit-line-clamp: {{open[index]?10:1}};">{{'非诚勿扰，有意者一起来玩哈。非诚勿扰，有意者一起来玩哈。非诚勿扰，有意者一起来玩哈。非诚勿扰，有意者一起来玩哈。非诚勿扰，有意者一起来玩哈。'}}</view>
+      <view class="cont" style="-webkit-line-clamp: {{open[index]?10:1}};">{{item.remarks}}</view>
       <image src="{{open[index]?'/images/btn_arrow_selected@2x.png':'/images/btn_arrow_nor@2x.png'}}" class="down_open"></image>
     </view>
   </view>

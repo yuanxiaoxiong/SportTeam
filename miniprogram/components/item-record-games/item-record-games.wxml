@@ -1,10 +1,10 @@
 <!--components/item-record-games/item-record-games.wxml-->
 <block wx:for='{{list}}' wx:key='{{index}}'>
 
-  <view class="card {{space[index].right==160&&recordStatus==5?'active_':''}}" bindtouchstart='{{recordStatus==3&&item.token!=token?"onClickTosure":""}}' bind:tap='{{recordStatus==4?"onClickToRunning":""}}' bindtouchstart="drawStart" bindtouchmove="drawMove"
+  <view class="card {{space[index].right==160&&recordStatus==5?'active_':''}}" bindtouchstart='{{}}' bind:tap='{{recordStatus==4?"onClickToRunning":""||recordStatus==3&&item.token!=token?"onClickTosure":""}}' bindtouchstart="drawStart" bindtouchmove="drawMove"
     bindtouchend="drawEnd" data-item='{{item}}' data-id="{{item.orderId}}">
     <image class='icon' src='/images/btn_arrow@2x.png' hidden='{{recordStatus!=4}}'></image>
-    <view class='title'>{{type==0?'英雄联盟':'王者荣耀'}}</view>
+    <view class='title'>{{item.gameState!=0?'英雄联盟':'王者荣耀'}}</view>
     <view class='right' data-index='{{index}}' item="{{index}}">
       <view class='{{recordStatus==3?"daiqueren":""||recordStatus==4?"jinxingzhong":""||recordStatus==5?"yishixiao":""}}' hidden="{{item.token!=token}}">{{recordText}}</view>
       <view class='{{recordStatus==3?"daiqueren_come":""||recordStatus==4?"jinxingzhong":""||recordStatus==5?"yishixiao":""}}' hidden="{{item.token==token}}">{{recordText}}</view>
@@ -13,7 +13,7 @@
     <view class='line' />
     <view class='content'>
       <view class='duiwu'>
-        <text>队伍人数：</text>{{item.token==token?'5v5':'3v3'}}
+        <text>队伍人数：</text>{{item.gameState!=0?'5v5':'3v3'}}
       </view>
       <view class='duiwu'>
         <text>我的队伍：</text>{{item.token==token?item.teamName:item.myTeamName}}
@@ -26,7 +26,7 @@
       </view>
       <image src="{{item.token==token?'':'/images/sport_record_bg_faqi@2x.png'}}" class="img_mine"></image>
     </view>
-    <view class="del" hidden="{{recordStatus!=5}}" data-id="{{item.orderId}}" catchtap="delItem">
+    <view class="del" hidden="{{recordStatus!=5}}" data-id="{{item.orderId}}" data-index='{{index}}' catchtap="delItem">
       <view class="text">删除</view>
     </view>
   </view>

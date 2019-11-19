@@ -37,46 +37,50 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    var my_token = wx.getStorageSync('openId')
-    //console.log(my_token, "99999999999999")
-    var user = userSig.genTestUserSig(my_token)
-    console.log(user, "------------")
-    /* IM登录 */
-    var that = this
-    let promise = app.globalData.tim.login({
-      userID: my_token,
-      userSig: user.userSig
-    });
-    promise.then(function(imResponse) {
-      console.log(imResponse.data); // 登录成功
-      if (imResponse.data.actionStatus == 'OK') {
-        that.setData({
-          isLogin: true
-        })
-      }
-    }).catch(function(imError) {
-      console.warn('login error:', imError); // 登录失败的相关信息
-    });
-    //监听事件，如：获取会话列表
-    app.globalData.tim.on(TIM.EVENT.SDK_READY, function(event) {
-      // 收到离线消息和会话列表同步完毕通知，接入侧可以调用 sendMessage 等需要鉴权的接口
-      // event.name - TIM.EVENT.SDK_READY
-      /* 拉取会话列表 */
-      let promise2 = app.globalData.tim.getConversationList();
-      promise2.then(function(imResponse) {
-        const conversationList = imResponse.data.conversationList; // 会话列表，用该列表覆盖原有的会话列表
-        console.log('------', conversationList)
-        var count = 0;
-        for (var i = 0; i < conversationList.length; i++) {
-          count += conversationList[i].unreadCount
-        }
-        that.setData({
-          unreadCount: count
-        })
-      }).catch(function(imError) {
-        console.warn('getConversationList error:', imError); // 获取会话列表失败的相关信息
+    wx.hideHomeButton()//隐藏返回首页图标
+    if (app.globalData.tourist != -1) {
+      wx.setStorageSync('user', 1)
+      var my_token = wx.getStorageSync('openId')
+      //console.log(my_token, "99999999999999")
+      var user = userSig.genTestUserSig(my_token)
+      console.log(user, "------------")
+      /* IM登录 */
+      var that = this
+      let promise = app.globalData.tim.login({
+        userID: my_token,
+        userSig: user.userSig
       });
-    });
+      promise.then(function(imResponse) {
+        console.log(imResponse.data); // 登录成功
+        if (imResponse.data.actionStatus == 'OK') {
+          that.setData({
+            isLogin: true
+          })
+        }
+      }).catch(function(imError) {
+        console.warn('login error:', imError); // 登录失败的相关信息
+      });
+      //监听事件，如：获取会话列表
+      app.globalData.tim.on(TIM.EVENT.SDK_READY, function(event) {
+        // 收到离线消息和会话列表同步完毕通知，接入侧可以调用 sendMessage 等需要鉴权的接口
+        // event.name - TIM.EVENT.SDK_READY
+        /* 拉取会话列表 */
+        let promise2 = app.globalData.tim.getConversationList();
+        promise2.then(function(imResponse) {
+          const conversationList = imResponse.data.conversationList; // 会话列表，用该列表覆盖原有的会话列表
+          console.log('------', conversationList)
+          var count = 0;
+          for (var i = 0; i < conversationList.length; i++) {
+            count += conversationList[i].unreadCount
+          }
+          that.setData({
+            unreadCount: count
+          })
+        }).catch(function(imError) {
+          console.warn('getConversationList error:', imError); // 获取会话列表失败的相关信息
+        });
+      });
+    }
   },
   /**
    * 点击模块入口
@@ -84,92 +88,34 @@ Page({
   onClick(event) {
     console.log('-----', event.detail.index)
     const index = event.detail.index
-    const detail = event.detail.detail
+    //const detail = event.detail.detail
     //console.log('-----', detail.userInfo)
     switch (index) {
       /* 游戏对战 */
       case 0:
-        if (detail.errMsg == "getUserInfo:ok") {
-          wx.showLoading({
-            title: '正在加载模块...',
-            duration: 2000
-          })
-          //wx.hideLoading()
-          wx.navigateTo({
-            url: '/pages/games/games'
-          })
-          //   //微信授权
-          //   wx.login({
-          //     success(res) {
-          //       //发起请求，转云函数私有网络
-          //       console.log(res.code)
-          //       wx.cloud.callFunction({ //调用云函数
-          //         name: 'login', //云函数名为login
-          //         data: { // 传给云函数的参数
-          //           code: res.code
-          //         }
-          //       }).then(res => { //Promise
-          //         console.log(res.result)
-          //         //本地存储openid、token
-          //         wx.setStorageSync("openId", res.result.data.openId)
-          //         wx.setStorageSync("token", res.result.data.token)
-          //         if (res.result.message == "SUCCESS") {
-          //           wx.hideLoading()
-          //           wx.navigateTo({
-          //             url: '/pages/games/games'
-          //           })
-          //         }
-          //       }).catch(err => {
-          //         wx.hideLoading()
-          //         wx.showToast({
-          //           title: err + "",
-          //         })
-          //       })
-          //     }
-          //   })
-        }
+        wx.showLoading({
+          title: '正在加载模块...',
+          duration: 2000,
+          success(res) {
+            wx.navigateTo({
+              url: '/pages/games/games'
+            })
+          }
+        })
+
         break
         /* 体育约场 */
       case 1:
-        if (detail.errMsg == "getUserInfo:ok") {
-          wx.showLoading({
-            title: '正在加载模块...',
-            duration: 2000
-          })
-          //wx.hideLoading()
-          wx.navigateTo({
-            url: '/pages/basketball/basketball'
-          })
-          //微信授权
-          // wx.login({
-          //   success(res) {
-          //     //发起请求，转云函数私有网络
-          //     console.log(res.code)
-          //     wx.cloud.callFunction({ //调用云函数
-          //       name: 'login', //云函数名为login
-          //       data: { // 传给云函数的参数
-          //         code: res.code
-          //       }
-          //     }).then(res => { //Promise
-          //       console.log(res.result)
-          //       //本地存储openid、token
-          //       wx.setStorageSync("openId", res.result.data.openId)
-          //       wx.setStorageSync("token", res.result.data.token)
-          //       if (res.result.message == "SUCCESS") {
-          //         wx.hideLoading()
-          //         wx.navigateTo({
-          //           url: '/pages/basketball/basketball'
-          //         })
-          //       }
-          //     }).catch(err => {
-          //       wx.hideLoading()
-          //       wx.showToast({
-          //         title: err + "",
-          //       })
-          //     })
-          //   }
-          // })
-        }
+        wx.showLoading({
+          title: '正在加载模块...',
+          duration: 2000,
+          success(res) {
+            wx.navigateTo({
+              url: '/pages/basketball/basketball'
+            })
+          }
+        })
+
         break
     }
   },
@@ -190,7 +136,7 @@ Page({
   /* 消息通知按钮*/
   getMessage(ev) {
     console.log(ev)
-    if (this.data.isLogin) {
+    if (app.globalData.tourist != -1 && this.data.isLogin) {
       this.setData({
         flag: 1
       })
@@ -199,8 +145,9 @@ Page({
       })
     } else {
       wx.showToast({
-        title: '无法获取消息列表，请登录',
-        icon: 'none'
+        title: '游客暂不开放此功能，请先登录',
+        icon: 'none',
+        duration: 3000
       })
     }
   },
@@ -217,6 +164,7 @@ Page({
   },
   onShow: function() {
     console.log("home show")
+    // wx.hideHomeButton()//隐藏返回首页图标
     let that = this
     onMessageReceived = function(event) {
       // event.data - 存储 Message 对象的数组 - [Message]
@@ -250,5 +198,6 @@ Page({
   onHide: function() {
     console.log("home hide")
     app.globalData.tim.off(TIM.EVENT.MESSAGE_RECEIVED, onMessageReceived);
+    //wx.hideLoading()
   },
 })

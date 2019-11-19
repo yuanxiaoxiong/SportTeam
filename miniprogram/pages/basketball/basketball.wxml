@@ -27,11 +27,11 @@
   <view class='card'>
     <view class='msg_wx'>
       <text class='msg_text'>微信号</text>
-      <input type='text' placeholder='请输入微信号' class='input_wx' maxlength='{{30}}' bindinput='wx_input'></input>
+      <input type='text' placeholder='请输入微信号' class='input_wx' maxlength='{{30}}' bindinput='wx_input' value="{{wx_name}}"></input>
     </view>
     <view class='msg_duiwu'>
       <text class='msg_text'>队伍/班级名</text>
-      <input type='text' placeholder='请输入队伍/班级名' class='input_wx' maxlength='{{30}}' bindinput='duiwu_input'></input>
+      <input type='text' placeholder='请输入队伍/班级名' class='input_wx' maxlength='{{30}}' bindinput='duiwu_input' value="{{wx_duiwu}}"></input>
     </view>
   </view>
   <view class="card">
@@ -52,6 +52,14 @@
           {{multiArray[0][multiIndex2[0]]}}{{multiArray[1][multiIndex2[1]]}}{{multiArray[2][multiIndex2[2]]}} {{multiArray[3][multiIndex2[3]]}}{{str_time2}}{{multiArray[4][multiIndex2[4]]}}
         </view>
       </picker>
+    </view>
+  </view>
+  <view class='card2'>
+    <view class='msg_duiwu'>
+      <text class='msg_text1'>留言信息</text>
+    </view>
+    <view class='msg_duiwu'>
+      <textarea bindinput="textarea_input" class="textarea1" placeholder="请输入留言信息（选填）" maxlength="100" value="{{string_textarea}}"/>
     </view>
   </view>
   <view class='{{disabled==true?"sure_btn":"sure_btn_active"}}' bindtap='{{disabled==true?"":"luanchClick"}}'>
@@ -84,7 +92,63 @@
 
 
 <!-- 计分板 -->
-<view class='shouye' hidden='{{currentIndex!=3}}'>计分板</view>
+<view class='page' hidden='{{currentIndex!=3}}'>
+  <view class="top_">
+    <view class="team_name_red">
+      <view class="team_red">主队</view>
+    </view>
+    <view class="vs">vs</view>
+    <view class="team_name_blue">
+      <view class="team_blue">客队</view>
+    </view>
+  </view>
+  <view class="score_red">
+    <image class="image" src="/images/jifenban_bg_fraction_hometeam@2x.png" />
+    <view class="score">{{left}}</view>
+  </view>
+  <view class="score_blue">
+    <image class="image" src="/images/jifenban_bg_fraction_Visitingteam@2x.png" />
+    <view class="score">{{right}}</view>
+  </view>
+  <view class="score_control_main">
+    <view class="reset1">
+      <text class="reset_text">重置比分</text>
+      <view class='reset_button' bindtap='reset_score'>
+        <view class='reset_button_text'>重置</view>
+      </view>
+    </view>
+    <view class="hometeam_score">
+      <text class="score_pm">分数加减:</text>
+      <view class='h_plus1_button' bindtap='h_plus1'>
+        <view class='h_plus_button_text'>+1</view>
+      </view>
+      <view class='h_plus2_button' bindtap='h_plus2'>
+        <view class='h_plus_button_text'>+2</view>
+      </view>
+      <view class='h_minus1_button' bindtap='h_minus1'>
+        <view class='h_plus_button_text'>-1</view>
+      </view>
+      <view class='h_plus3_button' bindtap='h_plus3'>
+        <view class='h_plus_button_text'>+3</view>
+      </view>
+    </view>
+    <view class="visitingteam_score">
+      <view class='v_plus1_button' bindtap='v_plus1'>
+        <view class='v_plus_button_text'>+1</view>
+      </view>
+      <view class='v_plus2_button' bindtap='v_plus2'>
+        <view class='v_plus_button_text'>+2</view>
+      </view>
+      <view class='v_minus1_button' bindtap='v_minus1'>
+        <view class='v_plus_button_text'>-1</view>
+      </view>
+      <view class='v_plus3_button' bindtap='v_plus3'>
+        <view class='v_plus_button_text'>+3</view>
+      </view>
+    </view>
+  </view>
+</view>
+
 
 
 

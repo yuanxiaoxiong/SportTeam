@@ -6,7 +6,17 @@
 		"es6": true,
 		"postcss": true,
 		"minified": true,
-		"newFeature": true
+		"newFeature": true,
+		"coverView": true,
+		"autoAudits": false,
+		"checkInvalidKey": true,
+		"checkSiteMap": true,
+		"uploadWithSourceMap": true,
+		"babelSetting": {
+			"ignore": [],
+			"disablePlugins": [],
+			"outputPath": ""
+		}
 	},
 	"appid": "wx69d3afd84fd31041",
 	"projectname": "Sports%20platform",
@@ -126,6 +136,19 @@
 					"name": "流程须知",
 					"pathName": "pages/notes/notes",
 					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "游戏确认邀请",
+					"pathName": "pages/acceptinvite_game/acceptinvite_game",
+					"query": "",
+					"scene": null
+				},
+				{
+					"id": -1,
+					"name": "pages/acceptinviteGame/acceptinviteGame",
+					"pathName": "pages/acceptinviteGame/acceptinviteGame",
 					"scene": null
 				}
 			]

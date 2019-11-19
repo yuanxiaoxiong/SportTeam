@@ -6,21 +6,23 @@
     <block wx:for='{{conversationList}}' wx:key="{{index}}" wx:for-item="cardTeam">
       <view class="item {{times[index].right==140?'active':''}}" bindtouchstart="drawStart" bindtouchmove="drawMove" bindtouchend="drawEnd" id="{{cardTeam.conversationID}}" bindtap="goTochat" data-item="{{cardTeam}}" hover-class="active_down">
         <view class="img">
-          <image class="img_icon" src="{{cardTeam.unreadCount!=0?'/images/headportrait_lol_new.png':'/images/headportrait_lol_nor@2x.png'}}" mode="scaleToFill"></image>
-        </view>
-        <view class="text_c">
-          <view class="title">
-            <text class="tit">队伍名称{{}}</text>
-            <text class="time">{{times[index].time}}</text>
+          <image class="img_icon" src="{{userInfo[index].url}}" mode="scaleToFill"></image>
+          <view class="shape" hidden="{{cardTeam.unreadCount==0}}">{{cardTeam.unreadCount
+            <99?cardTeam.unreadCount: '...'}}</view>
           </view>
-          <view class="content">
-            <text class="con_txt">{{cardTeam.lastMessage.payload.text}}</text>
+          <view class="text_c">
+            <view class="title">
+              <text class="tit">{{userInfo[index].wxName}}</text>
+              <text class="time">{{times[index].time}}</text>
+            </view>
+            <view class="content">
+              <text class="con_txt">{{cardTeam.lastMessage.payload.text}}</text>
+            </view>
+          </view>
+          <view class="remove" data-id="{{cardTeam.conversationID}}" data-index='{{index}}' catchtap="delItem">
+            <view>删除</view>
           </view>
         </view>
-        <view class="remove" data-id="{{cardTeam.conversationID}}" catchtap="delItem">
-          <view>删除</view>
-        </view>
-      </view>
     </block>
   </scroll-view>
 
@@ -29,4 +31,4 @@
     <image src="/images/icon_null@2x.png" class="null_img"></image>
     <view class="text">这里空空如也~</view>
   </view>
-</view>
+  </view>

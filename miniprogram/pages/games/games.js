@@ -1,4 +1,5 @@
 // pages/games/games.js
+var app = getApp()
 Page({
 
   /**
@@ -45,7 +46,13 @@ Page({
     x: 0,
     token: '',
     open: [],
-    space: []
+    space: [],
+    str_game: '请选择游戏类型',
+    strgame: false,
+    string_textarea: '',
+    index1: -1,
+    array: ['王者荣耀', '英雄联盟'],
+    page: 0
   },
 
   /**
@@ -61,7 +68,7 @@ Page({
     })
     //请求体育圈接口
     wx.cloud.callFunction({ //调用云函数
-      name: 'showOrder', //云函数名为showOrder
+      name: 'showGame', //云函数名为showOrder
       data: {
         openId: wx.getStorageSync("openId")
       }
@@ -85,7 +92,7 @@ Page({
     })
     //请求我的发起接口
     wx.cloud.callFunction({ //调用云函数
-      name: 'showMyOrder', //云函数名为showOrder
+      name: 'showMyGame', //云函数名为showOrder
       data: {
         openId: wx.getStorageSync("openId")
       }
@@ -199,87 +206,106 @@ Page({
   },
   //formId，用于发送模板(发起对战按钮)
   formSubmit(ev) {
-    if (this.data.str_FullTime != '') {
-      const formId = ev.detail.formId
-      console.log(formId, "------------")
-      wx.showLoading({
-        title: '正在发起...',
-      })
-      var that = this
-      //发起对战接口
-      wx.cloud.callFunction({ //调用云函数
-        name: 'addOrder', //云函数名为addOrder
-        data: {
-          openId: wx.getStorageSync("openId"),
-          wxId: encodeURIComponent(this.data.wx_name),
-          myTeamName: encodeURIComponent(this.data.wx_duiwu),
-          time: encodeURIComponent(this.data.str_FullTime),
-          formId: formId
-        }
-      }).then(res => { //Promise
-        console.log(res.result, "---------")
-        if (res.result.message == "SUCCESS") {
-          wx.hideLoading()
-          //请求我的队伍接口
-          wx.cloud.callFunction({ //调用云函数
-            name: 'showMyOrder', //云函数名为showOrder
-            data: {
-              openId: wx.getStorageSync("openId")
-            }
-          }).then(res => { //Promise
-            console.log(res.result)
-            var mylist = res.result.data
-            var list = []
-            for (var i = 0; i < mylist.length; i++) {
-              if (mylist[i].orderState == 0 || mylist[i].orderState == 3) {
-                list.push(mylist[i])
+    if (app.globalData.tourist != -1) {
+      if (this.data.str_FullTime != '') {
+        const formId = ev.detail.formId
+        console.log(formId, "------------")
+        wx.showLoading({
+          title: '正在发起...',
+        })
+        var that = this
+        //发起对战接口
+        wx.cloud.callFunction({ //调用云函数
+          name: 'addGame', //云函数名为addOrder
+          data: {
+            openId: wx.getStorageSync("openId"),
+            wxId: encodeURIComponent(that.data.wx_name),
+            myTeamName: encodeURIComponent(that.data.wx_duiwu),
+            time: encodeURIComponent(that.data.str_FullTime),
+            formId: formId,
+            gameType: that.data.index1,
+            remarks: encodeURIComponent(that.data.string_textarea)
+          }
+        }).then(res => { //Promise
+          console.log(res.result, "---------")
+          if (res.result.message == "SUCCESS") {
+            wx.hideLoading()
+            //请求我的队伍接口
+            wx.cloud.callFunction({ //调用云函数
+              name: 'showMyGame', //云函数名为showOrder
+              data: {
+                openId: wx.getStorageSync("openId")
               }
-            }
-            that.setData({
-              currentIndex: 0,
-              myOrderList: list
-            })
-            if (that.data.index_ == 1) {
-              const list = res.result.data
-              var list_ = []
-              for (var i = 0; i < list.length; i++) {
-                if (list[i].orderState == 0) {
-                  list_.push(list[i])
+            }).then(res => { //Promise
+              console.log(res.result)
+              var mylist = res.result.data
+              var list = []
+              for (var i = 0; i < mylist.length; i++) {
+                if (mylist[i].orderState == 0 || mylist[i].orderState == 3) {
+                  list.push(mylist[i])
                 }
               }
               that.setData({
-                list: list_
+                currentIndex: 0,
+                myOrderList: list
               })
-            }
-            if (res.result.message == "SUCCESS") {
-              wx.showToast({
-                title: '发起成功',
-                duration: 2000,
-                mask: true,
-                icon: 'success'
-              })
-            }
-          }).catch(err => {
-            console.log(err)
-          })
-        } else {
+              if (that.data.index_ == 1) {
+                const list = res.result.data
+                var list_ = []
+                for (var i = 0; i < list.length; i++) {
+                  if (list[i].orderState == 0) {
+                    list_.push(list[i])
+                  }
+                }
+                that.setData({
+                  list: list_
+                })
+              }
+              if (res.result.message == "SUCCESS") {
+                wx.showToast({
+                  title: '发起成功',
+                  duration: 2000,
+                  mask: true,
+                  icon: 'success'
+                })
+              }
+            }).catch(err => {
+              console.log(err)
+            })
+          } else {
+            wx.showToast({
+              title: res.result.message,
+              icon: 'none'
+            })
+          }
+        }).catch(err => {
+          console.log(err)
+          wx.hideLoading()
           wx.showToast({
-            title: res.result.message,
+            title: String(err),
             icon: 'none'
           })
-        }
-      }).catch(err => {
-        console.log(err)
-        wx.hideLoading()
+        })
+      } else {
         wx.showToast({
-          title: String(err),
+          title: '起始时间与结束时间还没选择哦~',
           icon: 'none'
         })
-      })
+      }
     } else {
-      wx.showToast({
-        title: '起始时间与结束时间还没选择哦~',
-        icon: 'none'
+      wx.showModal({
+        title: '',
+        cancelColor: '#353535',
+        confirmColor: '#de213a',
+        content: '若需使用该功能，请先去登录',
+        confirmText: '好的',
+        success(res) {
+          if (res.confirm) {
+            wx.redirectTo({
+              url: '/pages/login/login',
+            })
+          }
+        }
       })
     }
   },
@@ -297,63 +323,101 @@ Page({
     switch (this.data.acceptStatus) {
       /* 邀请 */
       case 0:
-        wx.navigateTo({
-          url: '/pages/invite/invite?orderId=' + orderId + '&openId=' + openId + '&formId=' + formId + '&time=' + time,
-        })
+        if (app.globalData.tourist != -1) {
+          wx.navigateTo({
+            url: '/pages/gameinvite/gameinvite?orderId=' + orderId + '&openId=' + openId + '&formId=' + formId + '&time=' + time,
+          })
+          that.setData({
+            page: 1
+          })
+        } else {
+          wx.showModal({
+            title: '',
+            cancelColor: '#353535',
+            confirmColor: '#de213a',
+            content: '若需使用该功能，请先去登录',
+            confirmText: '好的',
+            success(res) {
+              if (res.confirm) {
+                wx.redirectTo({
+                  url: '/pages/login/login',
+                })
+              }
+            }
+          })
+        }
+
         break
         /* 撤销 */
       case 2:
-        wx.showModal({
-          title: '',
-          cancelColor: '#353535',
-          confirmColor: '#de213a',
-          content: '是否撤销你发起的对战？',
-          success(res) {
-            if (res.confirm) {
-              console.log('确认')
-              //撤销接口
-              wx.cloud.callFunction({ //调用云函数
-                name: 'delOrder', //云函数名为delOrder
-                data: {
-                  orderId: that.data.myOrderList[index].orderId
-                }
-              }).then(res => { //Promise
-                console.log(res.result, "---------")
-                if (res.result.message == "SUCCESS") {
-                  wx.showToast({
-                    title: '撤销成功',
-                    icon: 'none'
-                  })
-                  //请求我的队伍接口
-                  wx.cloud.callFunction({ //调用云函数
-                    name: 'showMyOrder', //云函数名为showOrder
-                    data: {
-                      openId: wx.getStorageSync("openId")
-                    }
-                  }).then(res => { //Promise
-                    console.log(res.result)
-                    that.setData({
-                      myOrderList: res.result.data,
-                      list: res.result.data
+        if (app.globalData.tourist != -1) {
+          wx.showModal({
+            title: '',
+            cancelColor: '#353535',
+            confirmColor: '#de213a',
+            content: '是否撤销你发起的对战？',
+            success(res) {
+              if (res.confirm) {
+                console.log('确认')
+                //撤销接口
+                wx.cloud.callFunction({ //调用云函数
+                  name: 'delGame', //云函数名为delOrder
+                  data: {
+                    orderId: that.data.myOrderList[index].orderId
+                  }
+                }).then(res => { //Promise
+                  console.log(res.result, "---------")
+                  if (res.result.message == "SUCCESS") {
+                    wx.showToast({
+                      title: '撤销成功',
+                      icon: 'none'
                     })
-                  }).catch(err => {
-                    console.log(err)
-                  })
-                } else {
-                  wx.showToast({
-                    title: '撤销失败',
-                    icon: 'none',
-                    time: 1500
-                  })
-                }
-              }).catch(err => {
-                console.log(err)
-              })
-            } else if (res.cancel) {
-              console.log('取消')
+                    //请求我的队伍接口
+                    wx.cloud.callFunction({ //调用云函数
+                      name: 'showMyGame', //云函数名为showOrder
+                      data: {
+                        openId: wx.getStorageSync("openId")
+                      }
+                    }).then(res => { //Promise
+                      console.log(res.result)
+                      that.setData({
+                        myOrderList: res.result.data,
+                        list: res.result.data
+                      })
+                    }).catch(err => {
+                      console.log(err)
+                    })
+                  } else {
+                    wx.showToast({
+                      title: '撤销失败',
+                      icon: 'none',
+                      time: 1500
+                    })
+                  }
+                }).catch(err => {
+                  console.log(err)
+                })
+              } else if (res.cancel) {
+                console.log('取消')
+              }
             }
-          }
-        })
+          })
+        } else {
+          wx.showModal({
+            title: '',
+            cancelColor: '#353535',
+            confirmColor: '#de213a',
+            content: '若需使用该功能，请先去登录',
+            confirmText: '好的',
+            success(res) {
+              if (res.confirm) {
+                wx.redirectTo({
+                  url: '/pages/login/login',
+                })
+              }
+            }
+          })
+        }
         break
     }
   },
@@ -435,29 +499,70 @@ Page({
   },
   //点击进行中的item，跳转到添加好友页面
   onClickToRunning(ev) {
-    var list = ev.detail.item
-    console.log(list)
-    var info = 0
-    if (list.openId == wx.getStorageSync("openId")) {
-      info = 1
-      wx.setStorageSync('token_other', list.token)
+    if (app.globalData.tourist != -1) {
+      var list = ev.detail.item
+      console.log(list)
+      var info = 0
+      if (list.openId == wx.getStorageSync("openId")) {
+        info = 1
+        wx.setStorageSync('token_other', list.token)
+      } else {
+        wx.setStorageSync('token_other', list.openId)
+      }
+      wx.navigateTo({
+        url: '/pages/addfriend/addfriend?myTeamName=' + list.myTeamName + '&teamName=' + list.teamName +
+          '&time=' + list.time + '&weiXin2Id=' + list.weiXin2Id + '&token=' + list.token + '&weiXinId=' + list.weiXinId + '&info=' + info + '&type=game',
+      })
     } else {
-      wx.setStorageSync('token_other', list.openId)
+      wx.showModal({
+        title: '',
+        cancelColor: '#353535',
+        confirmColor: '#de213a',
+        content: '若需使用该功能，请先去登录',
+        confirmText: '好的',
+        success(res) {
+          if (res.confirm) {
+            wx.redirectTo({
+              url: '/pages/login/login',
+            })
+          }
+        }
+      })
     }
-    wx.navigateTo({
-      url: '/pages/addfriend/addfriend?myTeamName=' + list.myTeamName + '&teamName=' + list.teamName +
-        '&time=' + list.time + '&weiXin2Id=' + list.weiXin2Id + '&token=' + list.token + '&weiXinId=' + list.weiXinId + '&info=' + info,
-    })
+
   },
   /*  点击待确认的item,跳转到确认邀请页面，注意是，我的发起才可以*/
   onClickTosure(ev) {
     console.log(ev.detail.item)
-    wx.navigateTo({
-      url: '/pages/acceptinvite/acceptinvite',
-      success: function(res) {},
-      fail: function(res) {},
-      complete: function(res) {},
-    })
+    let that = this
+    if (app.globalData.tourist != -1) {
+      wx.navigateTo({
+        url: '/pages/acceptinvite_game/acceptinvite_game?orderId=' + ev.detail.item.orderId + '&flag=1',
+        success: function(res) {
+          that.setData({
+            page: 1
+          })
+        },
+        fail: function(res) {},
+        complete: function(res) {},
+      })
+    } else {
+      wx.showModal({
+        title: '',
+        cancelColor: '#353535',
+        confirmColor: '#de213a',
+        content: '若需使用该功能，请先去登录',
+        confirmText: '好的',
+        success(res) {
+          if (res.confirm) {
+            wx.redirectTo({
+              url: '/pages/login/login',
+            })
+          }
+        }
+      })
+    }
+
   },
   /* 输入微信号 */
   wx_input(event) {
@@ -563,7 +668,7 @@ Page({
       str_time: ":",
       str_FullTime: this.data.multiArray[0][this.data.multiIndex[0]] + this.data.multiArray[1][this.data.multiIndex[1]] + this.data.multiArray[2][this.data.multiIndex[2]] + this.data.multiArray[3][this.data.multiIndex[3]] + ":" + this.data.multiArray[4][this.data.multiIndex[4]] + "-" + this.data.multiArray[3][this.data.multiIndex2[3]] + ":" + this.data.multiArray[4][this.data.multiIndex2[4]]
     })
-    if (this.data.wx_name != '' && this.data.wx_duiwu != '' && this.data.str_time != '' && this.data.str_time2 != '') {
+    if (this.data.wx_name != '' && this.data.wx_duiwu != '' && this.data.str_time != '' && this.data.str_time2 != '' && this.data.index1 != -1) {
       this.setData({
         disabled: false
       })
@@ -619,7 +724,7 @@ Page({
       str_time2: ":",
       str_FullTime: this.data.multiArray[0][this.data.multiIndex[0]] + this.data.multiArray[1][this.data.multiIndex[1]] + this.data.multiArray[2][this.data.multiIndex[2]] + this.data.multiArray[3][this.data.multiIndex[3]] + ":" + this.data.multiArray[4][this.data.multiIndex[4]] + "-" + this.data.multiArray[3][this.data.multiIndex2[3]] + ":" + this.data.multiArray[4][this.data.multiIndex2[4]]
     })
-    if (this.data.wx_name != '' && this.data.wx_duiwu != '' && this.data.str_time != '' && this.data.str_time2 != '') {
+    if (this.data.wx_name != '' && this.data.wx_duiwu != '' && this.data.str_time != '' && this.data.str_time2 != '' && this.data.index1 != -1) {
       this.setData({
         disabled: false
       })
@@ -630,6 +735,23 @@ Page({
     }
     console.log(this.data.str_FullTime)
   },
+  /* 输入游戏名称 */
+  game_input(event) {
+    //console.log(event)
+    var wx_name = event.detail.value
+    this.setData({
+      wx_name: wx_name.replace(/\s+/g, '')
+    })
+    if (this.data.wx_name != '' && this.data.wx_duiwu != '' && this.data.str_time != '' && this.data.str_time2 != '' && this.data.index1 != -1) {
+      this.setData({
+        disabled: false
+      })
+    } else {
+      this.setData({
+        disabled: true
+      })
+    }
+  },
   /* 输入班级/队伍名 */
   duiwu_input(event) {
     //console.log(event)
@@ -637,7 +759,7 @@ Page({
     this.setData({
       wx_duiwu: wx_duiwu.replace(/\s+/g, '')
     })
-    if (this.data.wx_name != '' && this.data.wx_duiwu != '' && this.data.str_time != '' && this.data.str_time2 != '') {
+    if (this.data.wx_name != '' && this.data.wx_duiwu != '' && this.data.str_time != '' && this.data.str_time2 != '' && this.data.index1 != -1) {
       this.setData({
         disabled: false
       })
@@ -651,7 +773,7 @@ Page({
   onPullDownRefresh() {
     //请求对方发起接口
     wx.cloud.callFunction({ //调用云函数
-      name: 'showOrder', //云函数名为showOrder
+      name: 'showGame', //云函数名为showOrder
       data: {
         openId: wx.getStorageSync("openId")
       }
@@ -678,7 +800,7 @@ Page({
     })
     //请求我的发起接口
     wx.cloud.callFunction({ //调用云函数
-      name: 'showMyOrder', //云函数名为showOrder
+      name: 'showMyGame', //云函数名为showOrder
       data: {
         openId: wx.getStorageSync("openId")
       }
@@ -704,6 +826,24 @@ Page({
     }).catch(err => {
       console.log(err)
     })
+    /* 记录页面 */
+    const list = []
+    for (var i = 0; i < this.data.myOrderList.length; i++) {
+      if (this.data.myOrderList[i].orderState == 3) {
+        list.push(this.data.myOrderList[i])
+      }
+    }
+    for (var i = 0; i < this.data.orderList.length; i++) {
+      if (this.data.orderList[i].token == this.data.token &&
+        this.data.orderList[i].orderState == 3) {
+        list.push(this.data.orderList[i])
+      }
+    }
+    this.setData({
+      indexTab: 0,
+      listRecord: list,
+      recordText: '待确认'
+    })
   },
   /* 展开备注列表 */
   openClick(ev) {
@@ -723,10 +863,100 @@ Page({
   },
   /* 删除已失效的item */
   delItem(ev) {
-    console.log("删除", ev.detail.id)
-    wx.showToast({
-      title: '成功删除' + ev.detail.id,
-      icon: 'none'
+    if (app.globalData.tourist != -1) {
+      console.log("删除", ev.detail.id)
+      var index = ev.detail.index
+      let that = this
+      wx.showModal({
+        title: '',
+        cancelColor: '#353535',
+        confirmColor: '#de213a',
+        content: '确认要删除这条记录吗？',
+        success(res) {
+          if (res.confirm) {
+            console.log('确认')
+            wx.cloud.callFunction({ //调用云函数
+              name: 'delInvalid', //云函数名为delInvalid
+              data: {
+                orderId: ev.detail.id
+              }
+            }).then(res => { //Promise
+              //console.log(res.result)
+              if (res.result.message == "SUCCESS") {
+                wx.startPullDownRefresh()
+                that.setData({
+                  recordStatus: '5',
+                })
+              }
+              wx.showToast({
+                title: res.result.data,
+                icon: 'none'
+              })
+            }).catch(err => {})
+          } else if (res.cancel) {
+            console.log('取消')
+            var space = that.data.space
+            space[index].right = 0
+            space[index].startRight = 0
+            that.setData({
+              space: space
+            })
+          }
+        }
+      })
+    } else {
+      wx.showModal({
+        title: '',
+        cancelColor: '#353535',
+        confirmColor: '#de213a',
+        content: '若需使用该功能，请先去登录',
+        confirmText: '好的',
+        success(res) {
+          if (res.confirm) {
+            wx.redirectTo({
+              url: '/pages/login/login',
+            })
+          }
+        }
+      })
+    }
+  },
+  /* 游戏类型选择 */
+  bindPickerChange: function(e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      index1: e.detail.value,
+      str_game: '',
+      strgame: true
     })
+    if (this.data.index1 == -1) {
+      this.setData({
+        index1: 0
+      })
+    }
+    if (this.data.wx_name != '' && this.data.wx_duiwu != '' && this.data.str_time != '' && this.data.str_time2 != '' && this.data.index1 != -1) {
+      this.setData({
+        disabled: false
+      })
+    } else {
+      this.setData({
+        disabled: true
+      })
+    }
+  },
+
+  /* 留言文本输入 */
+  textarea_input(event) {
+    //console.log(event)
+    var string_textarea = event.detail.value
+    this.setData({
+      string_textarea: string_textarea.replace(/\s+/g, '')
+    })
+  },
+  onShow: function() {
+    let that = this
+    if (that.data.page == 1) {
+      that.onLoad() //直接获取到当前页面的onload()进行刷新
+    }
   }
 })

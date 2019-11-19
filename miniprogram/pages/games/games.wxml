@@ -22,16 +22,30 @@
 </view>
 
 
-<!-- 约场 -->
+<!-- 对战 -->
 <view class='page' hidden='{{currentIndex!=1}}'>
-  <view class='card'>
-    <view class='msg_wx'>
-      <text class='msg_text'>微信号</text>
-      <input type='text' placeholder='请输入微信号' class='input_wx' maxlength='{{30}}' bindinput='wx_input'></input>
-    </view>
+  <view class='card1'>
     <view class='msg_duiwu'>
-      <text class='msg_text'>队伍/班级名</text>
-      <input type='text' placeholder='请输入队伍/班级名' class='input_wx' maxlength='{{30}}' bindinput='duiwu_input'></input>
+      <text class='msg_text1'>游戏类型</text>
+      <picker bindchange="bindPickerChange" value="{{index1}}" range="{{array}}">
+        <text class="selector_ph1" hidden='{{strgame}}'>{{str_game}}</text>
+        <image class="arrow_right" src="/images/btn_arrow@2x.png" />
+        <view class="msg_selector1">
+          {{array[index1]}}
+        </view>
+      </picker>
+    </view>
+  </view>
+  <view class='card1'>
+    <view class='msg_duiwu'>
+      <text class='msg_text1'>游戏昵称</text>
+      <input type='text' placeholder='请输入您的游戏昵称' class='input_wx1' maxlength='{{30}}' bindinput='game_input'></input>
+    </view>
+  </view>
+  <view class='card1'>
+    <view class='msg_duiwu'>
+      <text class='msg_text1'>队伍名</text>
+      <input type='text' placeholder='请输入队伍名' class='input_wx1' maxlength='{{30}}' bindinput='duiwu_input'></input>
     </view>
   </view>
   <view class="card">
@@ -42,6 +56,7 @@
         <view class="msg_selector">
           {{multiArray[0][multiIndex[0]]}}{{multiArray[1][multiIndex[1]]}}{{multiArray[2][multiIndex[2]]}} {{multiArray[3][multiIndex[3]]}}{{str_time}}{{multiArray[4][multiIndex[4]]}}
         </view>
+        <image class="arrow_right" src="/images/btn_arrow@2x.png" />
       </picker>
     </view>
     <view class="msg_duiwu">
@@ -51,16 +66,26 @@
         <view class="msg_selector">
           {{multiArray[0][multiIndex2[0]]}}{{multiArray[1][multiIndex2[1]]}}{{multiArray[2][multiIndex2[2]]}} {{multiArray[3][multiIndex2[3]]}}{{str_time2}}{{multiArray[4][multiIndex2[4]]}}
         </view>
+        <image class="arrow_right" src="/images/btn_arrow@2x.png" />
       </picker>
+    </view>
+  </view>
+  <view class='card2'>
+    <view class='msg_duiwu'>
+      <text class='msg_text1'>留言信息</text>
+    </view>
+    <view class='msg_duiwu'>
+      <textarea bindinput="textarea_input" class="textarea1" placeholder="请输入留言信息（选填）" maxlength="100" />
     </view>
   </view>
   <view class='{{disabled==true?"sure_btn":"sure_btn_active"}}'>
     <view class='{{disabled==true?"sure_text":"sure_text_active"}}'>
       <form bindsubmit='{{disabled==true?"":"formSubmit"}}' report-submit>
-        <button formType="submit" style="color:#fff;background:none ;height:88rpx;line-height:88rpx;">发起约场</button>
+        <button formType="submit" style="color:#fff;background:none ;height:88rpx;line-height:88rpx;">发起对战</button>
       </form>
     </view>
   </view>
+
 </view>
 
 

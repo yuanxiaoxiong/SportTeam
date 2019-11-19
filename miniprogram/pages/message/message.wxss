@@ -68,6 +68,7 @@
   height: 100rpx;
   margin-top: 20rpx;
   margin-left: 20rpx;
+  border-radius: 50rpx;
 }
 
 .text_c {
@@ -117,7 +118,7 @@
 .item .remove {
   width: 140rpx;
   height: 100%;
-  background-color: red;
+  background-color: #ee3c3c;
   position: absolute;
   top: 0;
   right: -140rpx;
@@ -126,4 +127,18 @@
   align-items: center;
   color: white;
   font-size: 30rpx;
+}
+
+.shape {
+  width: 36rpx;
+  height: 36rpx;
+  line-height: 36rpx;
+  background-color: #ee3c3c;
+  border-radius: 18rpx;
+  position: absolute;
+  right: 35rpx;
+  top: 65rpx;
+  text-align: center;
+  color: #fff;
+  font-size: 20rpx;
 }

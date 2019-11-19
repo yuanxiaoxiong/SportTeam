@@ -1,16 +1,16 @@
 <!--pages/addfriend/addfriend.wxml-->
 <view class="page">
-  <image src="/images/image_add.png" class="image"></image>
+  <image src="{{type=='game'?'/images/game_imge_add@2x.png':'/images/sport_image_add@2x.png'}}" class="image"></image>
   <view class='card'>
     <view class='msg_wx'>
-      <image src="/images/icon_wechat@2x.png" class="img_wxh" />
-      <text class='msg_wxh' hidden="{{info==0}}">{{weiXin2Id}}</text>
-      <text class='msg_wxh' hidden="{{info==1}}">{{this_token==token?weiXinId:''}}</text>
+      <image src="{{type=='game'?'/images/icon_gamename@2x.png':'/images/icon_wechat@2x.png'}}" class="img_wxh" />
+      <!-- <text class='msg_wxh' hidden="{{this_token!=token}}">{{weiXin2Id}}</text> -->
+      <text class='msg_wxh'>{{this_token==token?weiXinId:weiXin2Id}}</text>
     </view>
     <view class='msg_wx'>
       <image src="/images/icon_team@2x.png" class="img_team" />
-      <text class='msg_class' hidden="{{info==0}}">{{teamName}}</text>
-      <text class='msg_class' hidden="{{info==1}}">{{this_token==token?myTeamName:''}}</text>
+      <!-- <text class='msg_class' hidden="{{this_token!=token}}">{{teamName}}</text> -->
+      <text class='msg_class'>{{this_token==token?myTeamName:teamName}}</text>
     </view>
     <view class='msg_duiwu'>
       <image class="img_time" src="/images/icon_time@2x.png" />

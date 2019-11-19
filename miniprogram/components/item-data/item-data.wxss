@@ -51,7 +51,7 @@
 
 .duiwu {
   position: absolute;
-  left: 95rpx;
+  left: 98rpx;
   top: 30rpx;
   font-size: 34rpx;
   color: #353535;
@@ -140,8 +140,9 @@
 }
 
 .img_bz {
-  width: 35rpx;
-  height: 29rpx;
+  width: 36rpx;
+  height: 36rpx;
+  margin-top: 6rpx;
   margin-left: 44rpx;
 }
 
@@ -149,8 +150,10 @@
   flex: 6;
   color: #353535;
   font-size: 26rpx;
+  margin-top: 12rpx;
   margin-right: 82rpx;
-  padding-top: 7rpx;
+  line-height: 36rpx;
+  height: 36rpx;
   padding-left: 20rpx;
   padding-right: 20rpx;
   display: -webkit-box;

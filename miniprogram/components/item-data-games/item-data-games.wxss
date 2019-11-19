@@ -153,15 +153,15 @@
   width: 36rpx;
   height: 36rpx;
   margin-left: 43rpx;
-  margin-top: 3rpx;
+  margin-top: 6rpx;
 }
 
 .cont {
   flex: 6;
   color: #353535;
   font-size: 26rpx;
+  line-height: 36rpx;
   margin-right: 82rpx;
-  padding-top: 7rpx;
   padding-left: 20rpx;
   padding-right: 20rpx;
   display: -webkit-box;
@@ -170,8 +170,10 @@
   -webkit-line-clamp: 1; /* 1行*/
   overflow: hidden;
   text-overflow: ellipsis;
+  margin-top: 12rpx;
 }
-.down_open{
+
+.down_open {
   width: 25rpx;
   height: 16rpx;
   margin-right: 38rpx;

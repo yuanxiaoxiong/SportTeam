@@ -138,9 +138,11 @@ Component({
     delItem(ev) {
       //console.log("删除", ev.currentTarget.dataset.id)
       var id = ev.currentTarget.dataset.id
+      var index = ev.currentTarget.dataset.index
       //通知页面内部的点击事件
       this.triggerEvent('delItem', {
-        id
+        id,
+        index
       }, {})
     }
   }

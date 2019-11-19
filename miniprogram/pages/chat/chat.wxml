@@ -7,7 +7,7 @@
       <!-- hidden="{{messageList[index].from!=from_}}" -->
       <view class="from" hidden="{{messageList[index].from!=from_}}">
         <view class="my">
-          <image src="/images/right.jpg" class="img"></image>
+          <image src="{{rightUrl==''?'/images/right.jpg':rightUrl}}" class="img"></image>
         </view>
         <view class="text_my">
           <view class='text'>{{messageList[index].payload.text}}</view>
@@ -18,7 +18,7 @@
       <!-- hidden="{{messageList[index].from!=to}}" -->
       <view class="to" hidden="{{messageList[index].from!=to}}">
         <view class="other">
-          <image src="/images/left.jpg" class="img"></image>
+          <image src="{{leftUrl}}" class="img"></image>
         </view>
         <view class="text_other">
           <view class='text_'>{{messageList[index].payload.text}}</view>

@@ -1,4 +1,5 @@
 // pages/login/login.js
+var app = getApp()
 Page({
 
   /**
@@ -8,19 +9,35 @@ Page({
     isClick: true,
     no: '' //学号
   },
-
+  onReady: function(options) {
+    if (wx.getStorageSync("openId") != '' && wx.getStorageSync("openId") != null) {
+      /* token有效性验证 */
+      wx.cloud.callFunction({ //调用云函数
+        name: 'token',
+        data: {
+          openId: wx.getStorageSync("openId")
+        }
+      }).then(res => {
+        console.log(res.result.data, "-----")
+        console.log(wx.getStorageSync("token", "-----"))
+        if (res.result.data == wx.getStorageSync("token")) {
+          app.globalData.tourist = 1
+          wx.redirectTo({
+            url: '/pages/home/home',
+          })
+        }
+      }).catch(err => {})
+    }
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function(options) {
-    wx.login({
-      success(res) {
-        console.log(res)
-      }
-    })
+
   },
   /* 输入账号 */
   handleNo(ev) {
+    //console.log(ev, "==============")
     if (ev.detail.value.length == 12) {
       this.setData({
         isClick: false,
@@ -35,14 +52,16 @@ Page({
   },
   /* 快速登录 */
   login(ev) {
-    //console.log(ev.detail.errMsg)
-    //console.log(this.data.isClick, "88888")
+    console.log(ev, "==============")
+    var url = ev.detail.userInfo.avatarUrl //头像
+    var name = ev.detail.userInfo.nickName //微信名
     let that = this
     if (!this.data.isClick) {
       if (ev.detail.errMsg == 'getUserInfo:ok') {
         wx.showLoading({
           title: '加载中',
         })
+        wx.setStorageSync("url", url)
         //微信授权
         wx.login({
           success(res) {
@@ -54,8 +73,8 @@ Page({
               data: { // 传给云函数的参数
                 code: res.code,
                 no: no,
-                url: "",
-                wxName: ""
+                url: url,
+                wxName: encodeURIComponent(name)
               }
             }).then(res => { //Promise
               console.log(res.result)
@@ -65,21 +84,40 @@ Page({
                 wx.setStorageSync("token", res.result.data.token)
               }
               if (res.result.message == "SUCCESS") {
+                app.globalData.tourist = 1
                 wx.hideLoading()
                 wx.redirectTo({
                   url: '/pages/home/home'
                 })
               } else if (res.result.message == "学号不存在") {
                 wx.hideLoading()
-                wx.showToast({
-                  title: "该学号不存在，请重新输入",
-                  icon: "none"
+                wx.showModal({
+                  title: '',
+                  showCancel: false,
+                  cancelColor: '#353535',
+                  confirmColor: '#de213a',
+                  confirmText: '确定',
+                  content: '该学号不存在，请重新输入',
+                  success(res) {
+                    if (res.confirm) {
+
+                    }
+                  }
                 })
               } else if (res.result.message == "用户已经绑定学号") {
                 wx.hideLoading()
-                wx.showToast({
-                  title: "该微信号已绑定其他学号，请联系客服",
-                  icon: "none"
+                wx.showModal({
+                  title: '',
+                  showCancel: false,
+                  cancelColor: '#353535',
+                  confirmColor: '#de213a',
+                  confirmText: '确定',
+                  content: '该微信号已绑定其他学号，如有疑问请联系客服',
+                  success(res) {
+                    if (res.confirm) {
+
+                    }
+                  }
                 })
               }
             }).catch(err => {

@@ -155,3 +155,74 @@
   top: 30rpx;
   left: 185rpx;
 }
+
+.textarea1 {
+  color: #353535;
+  font-size: 30rpx;
+  top: 90rpx;
+  left: 30rpx;
+}
+
+.arrow_right {
+  height: 25rpx;
+  width: 16rpx;
+  top: 38rpx;
+  right: 30rpx;
+  position: absolute;
+}
+
+.msg_text1 {
+  font-size: 30rpx;
+  color: #353535;
+  position: absolute;
+  left: 0rpx;
+  top: 28rpx;
+}
+
+.msg_selector1 {
+  font-size: 30rpx;
+  color: #353535;
+  position: absolute;
+  left: 215rpx;
+  top: 26rpx;
+}
+
+.selector_ph1 {
+  color: #888;
+  font-size: 30rpx;
+  position: absolute;
+  top: 26rpx;
+  left: 185rpx;
+}
+
+.card1 {
+  height: 90rpx;
+  background: #fff;
+  margin: 20rpx;
+  border-radius: 12rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.card2 {
+  height: 240srpx;
+  background: #fff;
+  margin: 20rpx;
+  border-radius: 12rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.input_wx1 {
+  color: #353535;
+  font-size: 30rpx;
+  position: absolute;
+  top: 25rpx;
+  left: 213rpx;
+}
+
+.msg_duiwu2 {
+  flex: 0;
+  position: relative;
+}
+
